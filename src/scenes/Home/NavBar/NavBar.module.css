@@ -1,0 +1,12 @@
+.nav {
+    padding: 20px;
+    background-color: cadetblue;
+    color: white;
+}
+
+.ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    list-style: none;
+}
