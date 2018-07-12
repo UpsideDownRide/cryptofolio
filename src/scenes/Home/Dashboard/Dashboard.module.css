@@ -1,3 +1,10 @@
 .body {
-    background-color: lightgray;
+    background-color: #eee;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: center;
 }

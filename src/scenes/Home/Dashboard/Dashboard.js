@@ -8,6 +8,9 @@ const Dashboard = () => {
         <div className={style.body}>
             <TextPane/>
             <TextPane/>
+            <TextPane/>
+            <TextPane/>
+            <TextPane/>
         </div>
     )
 }
