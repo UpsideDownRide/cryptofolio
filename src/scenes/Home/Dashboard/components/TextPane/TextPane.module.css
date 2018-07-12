@@ -1,0 +1,35 @@
+.body {
+    width: 250px;
+    padding: 10px;
+    margin: 10px;
+    background-color: white;
+    font-size: 75%;
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+.titlename {
+    font-size: 125%;
+}
+.titlenumber {
+    font-size: 75%;
+    font-weight: bold;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+.content {}
+.contentprimary {
+    font-size: 175%;
+    margin-right: 10px;
+}
+.contentsecondary {
+    font-size: 150%;
+    color: darkgrey;
+}
