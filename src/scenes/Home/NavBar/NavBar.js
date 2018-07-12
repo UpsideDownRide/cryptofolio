@@ -8,7 +8,9 @@ const navBar = () => {
         <nav className={style.nav}>
             <ul className={style.ul}>
                 <li>Cryptofolio</li>
-                <li><a href="#" onClick={notImplemented}>Login</a></li>
+                <li>
+                    <a href="#" onClick={notImplemented} class={style.a}>Login</a>
+                </li>
             </ul>
         </nav>
     )
