@@ -3,7 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@vx/group": "0.0.165",
+    "@vx/hierarchy": "0.0.165",
+    "@vx/mock-data": "0.0.165",
+    "@vx/scale": "0.0.165",
+    "@vx/shape": "0.0.168",
     "custom-react-scripts": "0.2.2",
+    "d3-hierarchy": "^1.1.6",
+    "d3-interpolate": "^1.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
