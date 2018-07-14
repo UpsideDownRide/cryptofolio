@@ -4,12 +4,12 @@ import style from './TextPane.module.css'
 
 const convertToPercent = (num) => (Math.round(num*10000)/100).toString() + '%'
 
-const textPane = () => {
-    const name = "Total value of coins:"
-    const number = convertToPercent(0.05329)
-    const primary = '4768 PLN'
-    const secondary = "0.79 BTC"
-    const numberClass = number > 0 ? style.red : style.green
+const textPane = (props) => {
+    const name = props.title || "Placeholder"
+    const number = convertToPercent(props.percentChange || 0.05329)
+    const primary = `${props.value || 4768} ${props.currency || "PLN"}`
+    const secondary = `${props.cryptoValue || 0.79} ${props.cryptoCurrency || "BTC"}`
+    const numberClass = (props.percentChange || 0.05329) > 0 ? style.green : style.red
     return (
         <div className={style.body}>
             <div className={style.title}>

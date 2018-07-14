@@ -9,7 +9,13 @@ const Dashboard = () => {
     return (
         <div className={style.body}>
             <div className={style.textPanes}>
-                <TextPane />
+                <TextPane 
+                    title="Total value of coins:"
+                    value={123} currency="GBP"
+                    percentChange={0.021}
+                    cryptoValue={0.28}
+                    cryptoCurrency="ETH"
+                />
                 <TextPane />
                 <TextPane />
                 <TextPane />
