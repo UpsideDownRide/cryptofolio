@@ -10,6 +10,7 @@ const textPane = (props) => {
     const primary = `${props.value || 4768} ${props.currency || "PLN"}`
     const secondary = `${props.cryptoValue || 0.79} ${props.cryptoCurrency || "BTC"}`
     const numberClass = (props.percentChange || 0.05329) > 0 ? style.green : style.red
+    
     return (
         <div className={style.body}>
             <div className={style.title}>

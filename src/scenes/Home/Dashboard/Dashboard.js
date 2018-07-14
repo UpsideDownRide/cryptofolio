@@ -20,6 +20,9 @@ const Dashboard = () => {
                 <TextPane />
                 <TextPane />
                 <TextPane />
+                <TextPane />
+                <TextPane />
+                <TextPane />
             </div>
             <div className={style.graphPanes}>
                 <GraphPane chart='treeMap'/>
