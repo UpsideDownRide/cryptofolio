@@ -43,11 +43,10 @@ const CustomizedContent = ({ root, depth, x, y, width, height, index, payload, c
         );
 };
 
-class SimpleTreemap extends React.Component {
-    render() {
+const SimpleTreemap = () => {
         return (
             <Treemap
-                width={400}
+                width={370}
                 height={200}
                 data={data}
                 dataKey="size"
@@ -56,10 +55,10 @@ class SimpleTreemap extends React.Component {
                 fill="#8884d8"
                 content={<CustomizedContent colors={COLORS}/>}
                 isAnimationActive={true}
-                animationDuration={800}
+                animationDuration={600}
+                animationEasing="ease-in-out"
             />
         );
-    }
 }
 
 export default SimpleTreemap

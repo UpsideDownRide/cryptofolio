@@ -13,8 +13,7 @@
     margin-bottom: 5px;
 }
 .titlename {
-    font-size: 100%;
-    color: darkgray;
+    font-size: 125%;
 }
 .titlenumber {
     font-size: 85%;
@@ -32,12 +31,11 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end; 
-    font-weight: 800;
 }
 .contentprimary {
     font-size: 175%;
 }
 .contentsecondary {
-    font-size: 130%;
+    font-size: 150%;
     color: darkgrey;
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import style from './TextPane.module.css'
 
-const convertToPercent = (num) => (Math.round(num*10000)/100).toString()
+const convertToPercent = (num) => (Math.round(num*10000)/100).toString() + '%'
 
 const textPane = () => {
     const name = "Total value of coins:"
