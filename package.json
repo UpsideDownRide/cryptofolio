@@ -11,8 +11,12 @@
     "custom-react-scripts": "0.2.2",
     "d3-hierarchy": "^1.1.6",
     "d3-interpolate": "^1.2.0",
+    "echarts": "^4.1.0",
+    "echarts-for-react": "^2.0.13",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-vis": "^1.10.3",
+    "recharts": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
