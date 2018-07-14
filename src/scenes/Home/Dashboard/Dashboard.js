@@ -18,8 +18,8 @@ const Dashboard = () => {
             <div className={style.graphPanes}>
                 <GraphPane chart='treeMap'/>
                 <GraphPane chart='treeMap'/>
-                <GraphPane chart='areaChart'/>
-                <GraphPane chart='areaChart'/>
+                <GraphPane chart='area'/>
+                <GraphPane chart='area'/>
                 <TablePane/>
             </div>
         </div>

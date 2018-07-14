@@ -5,7 +5,7 @@ import Treemap from '../../../../../components/TreeMap/TreeMap-Recharts'
 import Areachart from '../../../../../components/AreaChart/AreaChart'
 
 const GRAPHS = {
-    'areaChart': Areachart,
+    'area': Areachart,
     'treeMap': Treemap
 }
 

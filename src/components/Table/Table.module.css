@@ -1,0 +1,16 @@
+.table {
+    border: none;
+    flex: 1;
+}
+
+.right {
+    text-align: right;
+}
+
+.currency {
+    display: flex;
+}
+
+.cryptoIcon {
+    margin: 0 12px;
+}
