@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import style from './Dashboard.module.css'
 import TextPane from './components/TextPane/TextPane'
 import GraphPane from './components/GraphPane/GraphPane'
+import TablePane from './components/TablePane/TablePane'
 
 const Dashboard = () => {
     return (
@@ -19,6 +20,7 @@ const Dashboard = () => {
                 <GraphPane chart='treeMap'/>
                 <GraphPane chart='areaChart'/>
                 <GraphPane chart='areaChart'/>
+                <TablePane/>
             </div>
         </div>
     )
