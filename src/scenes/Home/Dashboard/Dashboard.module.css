@@ -2,23 +2,23 @@
     background-color: #eee;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .textPanes {
     display: flex;
     flex-direction: row;
-    flex: 1;
+    flex: none;
     flex-wrap: wrap;
     align-items: flex-start;
-    align-content: flex-start;
+    align-content: center;
     justify-content: flex-start;
-
 }
 
 .graphPanes {
     display: flex;
     flex-direction: row;
-    flex: 1;
+    flex: none;
     flex-wrap: wrap;
     align-items: flex-start;
     align-content: flex-start;
