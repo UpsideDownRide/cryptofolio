@@ -46,7 +46,7 @@ const CustomizedContent = ({ root, depth, x, y, width, height, index, payload, c
 const SimpleTreemap = () => {
         return (
             <Treemap
-                width={370}
+                width={280}
                 height={200}
                 data={data}
                 dataKey="size"

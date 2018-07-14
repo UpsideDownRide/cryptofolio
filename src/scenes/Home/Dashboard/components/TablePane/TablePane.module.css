@@ -4,7 +4,9 @@
     margin: 10px;
     background-color: white;
     font-size: 100%;
-    flex: 0 1 60%;
+    flex: 1 1 44%;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
 }
 .title {
     display: flex;

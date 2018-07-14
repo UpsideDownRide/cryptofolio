@@ -1,19 +1,22 @@
 .body {
-    min-width: 300px;
+    min-width: 280px;
     padding: 20px;
     margin: 10px;
     background-color: white;
     font-size: 100%;
-    flex: 0 1 30%;
+    flex: 1 1 22%;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
 }
 .title {
     display: flex;
     justify-content: space-between;
     align-items: flex-start; 
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 .titlename {
-    font-size: 125%;
+    font-size: 100%;
+    color: darkgray;
 }
 .titlenumber {
     font-size: 85%;
