@@ -12,3 +12,12 @@ body {
   font-family: 'Heebo', sans-serif;
   height: 100%;
 }
+
+.recharts-treemap-content rect{
+  transition: all 0.5s ease;
+}
+
+.recharts-treemap-content:hover rect{
+  fill: #000!important;
+  opacity: 0.5;
+}

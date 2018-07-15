@@ -1,5 +1,6 @@
-import  React from 'react'
-import { Treemap, ResponsiveContainer } from 'recharts'
+import React from 'react'
+import { Treemap, ResponsiveContainer, Tooltip } from 'recharts'
+
 
 
 const data = [
@@ -10,18 +11,20 @@ const data = [
     { name: 'DOGE', size: 1000 },
 ];
 
-const COLORS = ['cadetblue', '#bebada', '#fb8072', '#80b1d3', '#fdb462', '#b3de69', '#fccde5', '#d9d9d9'];
+const COLORS = ['cadetblue', '#bebada', '#fb8072', '#80b1d3', '#b3de69', '#fccde5', '#d9d9d9'];
 
 const CustomizedContent = ({ root, depth, x, y, width, height, index, payload, colors, rank, name }) => {
     return (
-        <g>
+        <g class="recharts-treemap-content">
             <rect
                 x={x}
                 y={y}
+                rx="2.5"
+                ry="2.5"
                 width={width}
                 height={height}
                 style={{
-                    fill: depth < 2 ? colors[Math.floor(index / root.children.length * 6)] : 'none',
+                    fill: depth < 2 ? colors[Math.floor(index / root.children.length * 6)] : "rgb(0, 0, 0, 0)",
                     stroke: '#fff',
                     strokeWidth: 2 / (depth + 1e-10),
                     strokeOpacity: 1 / (depth + 1e-10),
@@ -44,21 +47,6 @@ const CustomizedContent = ({ root, depth, x, y, width, height, index, payload, c
     );
 };
 
-function once(fn, context) { 
-	var result;
-
-	return function() { 
-		if(fn) {
-			result = fn.apply(context || this, arguments);
-			fn = null;
-		}
-
-		return result;
-	};
-}
-
-const initialWidth = once(() => 300) || "100%"
-
 class SimpleTreemap extends React.Component {
     render() {
         return (
@@ -74,8 +62,9 @@ class SimpleTreemap extends React.Component {
                     content={<CustomizedContent colors={COLORS} />}
                     isAnimationActive={false}
                     animationDuration={600}
-                    animationEasing="ease"
-                />
+                    animationEasing="ease-in"
+                >
+                </Treemap>
             </ResponsiveContainer>
         )
     }
