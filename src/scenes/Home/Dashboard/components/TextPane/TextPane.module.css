@@ -11,7 +11,7 @@
 .title {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; 
+    align-items: baseline; 
     margin-bottom: 15px;
 }
 .titlename {
@@ -33,7 +33,7 @@
 .content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end; 
+    align-items: baseline; 
     font-weight: 800;
 }
 .contentprimary {
