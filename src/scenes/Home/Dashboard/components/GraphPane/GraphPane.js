@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import style from './GraphPane.module.css'
-import Treemap from '../../../../../components/TreeMap/TreeMap-Recharts'
-import Areachart from '../../../../../components/AreaChart/AreaChart'
+import Treemap from 'components/TreeMap/TreeMap-Recharts'
+import Areachart from 'components/AreaChart/AreaChart'
 
 const GRAPHS = {
     'area': Areachart,
@@ -10,7 +10,7 @@ const GRAPHS = {
 }
 
 const graphPane = (props) => {
-    const name = 'Value of each currency in USD'
+    const name = props.name || 'Value of each currency in USD'
     const Chart = GRAPHS[props.chart]
     return (
         <div className={style.body}>
@@ -22,6 +22,11 @@ const graphPane = (props) => {
             </div>
         </div>
     )
+}
+
+graphPane.PropTypes = {
+    chart: PropTypes.string.isRequired,
+    name: PropTypes.string,
 }
 
 export default graphPane

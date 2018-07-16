@@ -1,0 +1,29 @@
+.body {
+    min-width: 600px;
+    padding: 10px 15px;
+    margin: 5px 5px;
+    background-color: white;
+    font-size: 100%;
+    flex: 1 1 44%;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    margin-bottom: 5px;
+}
+.titlename {
+    font-size: 125%;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; 
+}
+
+.tableCellNumbers {
+    text-align: right;
+}

@@ -1,21 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import style from './TextPane.module.css'
-
-const convertToPercent = (num) => (Math.round(num*10000)/100).toString() + '%'
+import StylePercent from 'common/utils/StylePercent'
 
 const textPane = (props) => {
     const name = props.title || "Placeholder"
-    const number = convertToPercent(props.percentChange || 0.05329)
+    const number = <StylePercent value={(props.percentChange || 0.05329)}/>
     const primary = `${props.value || 4768} ${props.currency || "PLN"}`
     const secondary = `${props.cryptoValue || 0.79} ${props.cryptoCurrency || "BTC"}`
-    const numberClass = (props.percentChange || 0.05329) > 0 ? style.green : style.red
     
     return (
         <div className={style.body}>
             <div className={style.title}>
                 <span className={style.titlename}>{name}</span>
-                <span className={[style.titlenumber, numberClass].join(' ')}>{number}</span>
+                <span className={style.titlenumber}>{number}</span>
             </div>
             <div className={style.content}>
                 <span className={style.contentprimary}>{primary}</span>
@@ -23,6 +21,15 @@ const textPane = (props) => {
             </div>
         </div>
     )
+}
+
+textPane.PropTypes = {
+    title: PropTypes.string,
+    percentChange: PropTypes.string,
+    value: PropTypes.string,
+    currency: PropTypes.string,
+    cryptoValue: PropTypes.string,
+    cryptoCurrency: PropTypes.string,
 }
 
 export default textPane

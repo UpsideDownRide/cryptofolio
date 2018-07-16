@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import style from './Dashboard.module.css'
 import TextPane from './components/TextPane/TextPane'
 import GraphPane from './components/GraphPane/GraphPane'
-import TablePane from './components/TablePane/TablePane'
+import BalanceTablePane from './components/BalanceTablePane/BalanceTablePane'
+
+import balanceData from 'common/mockData/balanceTable'
 
 const Dashboard = () => {
     return (
@@ -29,7 +30,7 @@ const Dashboard = () => {
                 <GraphPane chart='treeMap'/>
                 <GraphPane chart='area'/>
                 <GraphPane chart='area'/>
-                <TablePane/>
+                <BalanceTablePane data={balanceData}/>
             </div>
         </div>
     )
