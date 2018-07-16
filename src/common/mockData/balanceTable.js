@@ -1,10 +1,15 @@
+import { randomNumber as random, goodRound, randomElement }  from 'common/utils/random'
+import { SYMBOLS } from './currencies';
+
 const data = Array(20).fill().map(el => {
+    const amount = random(1, 100, 4)
+    const price = random(0, 100, 2)
     return {
-    currency: 'BTC',
-    amount: Math.round(Math.random()*100),
-    value: Math.round(Math.random()*100000)/100,
-    price: Math.round(Math.random()*10000)/100,
-    trend: Math.round((Math.random()-0.5)*2000)/10000
+    currency: randomElement(SYMBOLS),
+    amount: amount,
+    value: goodRound(amount*price, 2),
+    price: price,
+    trend: random(-0.1, 0.1, 4)
 }})
 
 export default data

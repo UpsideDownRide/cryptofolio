@@ -15,7 +15,7 @@ const COLORS = ['cadetblue', '#bebada', '#fb8072', '#80b1d3', '#b3de69', '#fccde
 
 const CustomizedContent = ({ root, depth, x, y, width, height, index, payload, colors, rank, name }) => {
     return (
-        <g class="recharts-treemap-content">
+        <g className="recharts-treemap-content">
             <rect
                 x={x}
                 y={y}

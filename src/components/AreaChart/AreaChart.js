@@ -29,19 +29,19 @@ const CustomTooltip = (props) => {
 const areaChart = () => {
     return (
         <ResponsiveContainer height={200}>
-            <AreaChart width={"100%"} height={200} data={data}
+            <AreaChart data={data}
                 margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
                 fontSize="75%" fontWeight={700}>
                 <XAxis dataKey="name"
-                    tickMargin="8"
+                    tickMargin={8}
                     tickLine={{strokeWidth: 0.5}}
-                    tickSize="3"/>
+                    tickSize={3}/>
                 <YAxis interval="preserveEnd"
                     axisLine={false}
-                    minTickGap="2"
-                    tickMargin="5"
+                    minTickGap={2}
+                    tickMargin={5}
                     tickLine={false}
-                    tickSize="3"
+                    tickSize={3}
                     tickFormatter={formatNumbers}/>
                 <CartesianGrid strokeWidth={0.75} vertical={false} stroke="#eee"/>
                 <Tooltip content={<CustomTooltip/>} cursor={{ strokeWidth: 0.75 }} coordinate={{x:0, y:0}} animationEasing="ease-in-out"/>

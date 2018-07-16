@@ -24,7 +24,7 @@ const graphPane = (props) => {
     )
 }
 
-graphPane.PropTypes = {
+graphPane.propTypes = {
     chart: PropTypes.string.isRequired,
     name: PropTypes.string,
 }

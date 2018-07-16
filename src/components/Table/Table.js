@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import 'react-table/react-table.css'
 import style from './Table.module.css'
 
-
 const Table = (props) => {
 
     return (
@@ -17,16 +16,15 @@ const Table = (props) => {
     )
 }
 
-export default Table
-
-Table.PropTypes = {
+Table.propTypes = {
     data: PropTypes.array.isRequired,
-    columns: PropTypes.arrayOf({
+    columns: PropTypes.arrayOf(PropTypes.shape({
         Header: PropTypes.string.isRequired,
         accessor: PropTypes.string.isRequired,
         className: PropTypes.string,
         Cell: PropTypes.func,
         style: PropTypes.string
-    })
+    }))
 }
 
+export default Table

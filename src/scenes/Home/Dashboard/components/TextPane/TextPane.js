@@ -23,12 +23,12 @@ const textPane = (props) => {
     )
 }
 
-textPane.PropTypes = {
+textPane.propTypes = {
     title: PropTypes.string,
-    percentChange: PropTypes.string,
-    value: PropTypes.string,
+    percentChange: PropTypes.number,
+    value: PropTypes.number,
     currency: PropTypes.string,
-    cryptoValue: PropTypes.string,
+    cryptoValue: PropTypes.number,
     cryptoCurrency: PropTypes.string,
 }
 
