@@ -35,9 +35,9 @@ const Dashboard = () => {
                     <Grid.Column><GraphPane chart='treeMap' /></Grid.Column>
                     <Grid.Column><GraphPane chart='area' /></Grid.Column>
                 </Grid.Row>
-                <Grid.Row columns={2}>
+                <Grid.Row>
                     <Grid.Column></Grid.Column>
-                    <Grid.Column><BalanceTablePane data={balanceData} /></Grid.Column>
+                    <Grid.Column style={{flex: 1}}><BalanceTablePane data={balanceData} /></Grid.Column>
                 </Grid.Row>
             </Grid>
         </Container>

@@ -1,17 +1,5 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, #root {
-  height: 100%;
-}
-
-body {
-  font-family: 'Heebo', sans-serif;
-  font-size: 13px;
-  height: 100%;
+#root {
+  height: 100%
 }
 
 .recharts-treemap-content rect{

@@ -10,11 +10,11 @@ import { Container } from 'semantic-ui-react'
 class App extends Component {
   render() {
     return (
-      <Container fluid>
+      <div style={{display: "flex", flexDirection: "column", height:"100%"}}>
         <NavBar/>
         <Main/>
         <Footer/>
-      </Container>
+      </div>
     );
   }
 }
