@@ -76,7 +76,6 @@ export default class AddTransactionForm extends Component {
                     </Form.Field>
                 </Form.Group>
                 <Form.Group>
-
                     <Form.Field>
                         <label>Amount:</label>
                         <input />

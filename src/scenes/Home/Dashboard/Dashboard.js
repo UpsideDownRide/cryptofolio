@@ -3,13 +3,15 @@ import style from './Dashboard.module.css'
 import TextPane from './components/TextPane/TextPane'
 import GraphPane from './components/GraphPane/GraphPane'
 import BalanceTablePane from './components/BalanceTablePane/BalanceTablePane'
+import BalanceTableContainer from './components/BalanceTablePane/BalanceTableContainer'
 import { Container, Grid, GridRow } from 'semantic-ui-react'
 import balanceData from 'common/mockData/balanceTable'
+import { Segment } from 'semantic-ui-react'
 
 const Dashboard = () => {
     return (
         <Container fluid as="section">
-            <Grid doubling columns={4} padded='horizontally' style={{paddingTop: "0.5em"}}>
+            <Grid doubling columns={4} padded='horizontally' style={{ paddingTop: "0.5em" }}>
                 <Grid.Row style={{ paddingBottom: 0 }}>
                     <Grid.Column>
                         <TextPane
@@ -24,7 +26,7 @@ const Dashboard = () => {
                     <Grid.Column><TextPane /></Grid.Column>
                     <Grid.Column><TextPane /></Grid.Column>
                 </Grid.Row>
-                <Grid.Row style={{ paddingTop: "0.25em", paddingBottom: "0.5em"}}>
+                <Grid.Row style={{ paddingTop: "0.25em", paddingBottom: "0.5em" }}>
                     <Grid.Column><TextPane /></Grid.Column>
                     <Grid.Column><TextPane /></Grid.Column>
                     <Grid.Column><TextPane /></Grid.Column>
@@ -37,7 +39,9 @@ const Dashboard = () => {
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column></Grid.Column>
-                    <Grid.Column style={{flex: 1}}><BalanceTablePane data={balanceData} /></Grid.Column>
+                    <Grid.Column style={{ flex: 1 }}>
+                            <BalanceTableContainer />
+                    </Grid.Column>
                 </Grid.Row>
             </Grid>
         </Container>
