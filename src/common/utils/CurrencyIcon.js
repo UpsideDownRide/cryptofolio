@@ -6,7 +6,7 @@ const CurrencyIcon = (props) => {
     const size = props.size || 16
     return (
         <React.Fragment>
-            <i style={{width: size+'px', height: size+'px'}} className={`crypto-icon-128 crypto-icon-color crypto-icon-color-${name}`}></i>
+            <i style={{width: size+'px', height: size+'px'}} className={`icon crypto-icon-128 crypto-icon-color crypto-icon-color-${name}`}></i>
         </React.Fragment >
     )
 }

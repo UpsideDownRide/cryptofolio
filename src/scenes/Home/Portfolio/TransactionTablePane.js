@@ -1,7 +1,7 @@
 import React from 'react'
-import StylePercent from 'common/utils/StylePercent'
+//import StylePercent from 'common/utils/StylePercent'
 import Table from 'components/Table/Table'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 import style from './TransactionTablePane.module.css'
 import CurrencyIcon from 'common/utils/CurrencyIcon';
 import { padDecimal } from '../../../common/utils/padNumber';
@@ -12,7 +12,7 @@ const currencyCell = props => {
         <React.Fragment>
             <span style={{ display: "flex", justifyContent: "flex-end" }}>
                 <p>{padDecimal(props.value.value, 2)}</p>
-                <div style={{ margin: "0 5px" }}><CurrencyIcon name={props.value.currency} /></div>
+                <div style={{ margin: "2.5px 0 0 0.5em" }}><CurrencyIcon name={props.value.currency} /></div>
             </span>
         </React.Fragment>
     )
@@ -43,11 +43,9 @@ const columnsSettings = [{
 
 const TransactionTable = (props) => {
     return (
-        <div>
-            <div>
-                <Table data={props.data} columns={columnsSettings} />
-            </div>
-        </div>
+        <React.Fragment>
+            <Table data={props.data} columns={columnsSettings} />
+        </React.Fragment>
     )
 }
 
