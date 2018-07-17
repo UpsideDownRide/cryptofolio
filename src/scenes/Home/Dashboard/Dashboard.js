@@ -4,6 +4,7 @@ import GraphPane from './components/GraphPane/GraphPane'
 import BalanceTableContainer from './components/BalanceTablePane/BalanceTableContainer'
 import { Container, Grid } from 'semantic-ui-react'
 import TotalValueContainer from './components/TextPane/TotalValueContainer';
+import ValueTreeMap from './components/GraphPane/ValueTreeMap'
 
 const Dashboard = () => {
     return (
@@ -31,7 +32,7 @@ const Dashboard = () => {
                 </Grid.Row>
                 <Grid.Row style={{ paddingTop: "0.5em" }} columns={3}>
                     <Grid.Column><GraphPane chart='treeMap' /></Grid.Column>
-                    <Grid.Column><GraphPane chart='treeMap' /></Grid.Column>
+                    <Grid.Column><ValueTreeMap/></Grid.Column>
                     <Grid.Column><GraphPane chart='area' /></Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
