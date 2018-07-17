@@ -5,15 +5,16 @@ import NavBar from './NavBar/NavBar'
 //import Dashboard from './Dashboard/Dashboard'
 import Footer from './Footer/Footer'
 import Main from './Main/Main'
+import { Container } from 'semantic-ui-react'
 
 class App extends Component {
   render() {
     return (
-      <div className={style.body}>
+      <Container fluid>
         <NavBar/>
         <Main/>
         <Footer/>
-      </div>
+      </Container>
     );
   }
 }

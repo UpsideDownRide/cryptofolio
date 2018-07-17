@@ -3,36 +3,44 @@ import style from './Dashboard.module.css'
 import TextPane from './components/TextPane/TextPane'
 import GraphPane from './components/GraphPane/GraphPane'
 import BalanceTablePane from './components/BalanceTablePane/BalanceTablePane'
-
+import { Container, Grid, GridRow } from 'semantic-ui-react'
 import balanceData from 'common/mockData/balanceTable'
 
 const Dashboard = () => {
     return (
-        <div className={style.body}>
-            <div className={style.textPanes}>
-                <TextPane 
-                    title="Total value of coins:"
-                    value={123} currency="GBP"
-                    percentChange={0.021}
-                    cryptoValue={0.28}
-                    cryptoCurrency="ETH"
-                />
-                <TextPane />
-                <TextPane />
-                <TextPane />
-                <TextPane />
-                <TextPane />
-                <TextPane />
-                <TextPane />
-            </div>
-            <div className={style.graphPanes}>
-                <GraphPane chart='treeMap'/>
-                <GraphPane chart='treeMap'/>
-                <GraphPane chart='area'/>
-                <GraphPane chart='area'/>
-                <BalanceTablePane data={balanceData}/>
-            </div>
-        </div>
+        <Container fluid as="section">
+            <Grid doubling columns={4} padded='horizontally' style={{paddingTop: "0.5em"}}>
+                <Grid.Row style={{ paddingBottom: 0 }}>
+                    <Grid.Column>
+                        <TextPane
+                            title="Total value of coins:"
+                            value={123} currency="GBP"
+                            percentChange={0.021}
+                            cryptoValue={0.28}
+                            cryptoCurrency="ETH"
+                        />
+                    </Grid.Column>
+                    <Grid.Column><TextPane /></Grid.Column>
+                    <Grid.Column><TextPane /></Grid.Column>
+                    <Grid.Column><TextPane /></Grid.Column>
+                </Grid.Row>
+                <Grid.Row style={{ paddingTop: "0.25em", paddingBottom: "0.5em"}}>
+                    <Grid.Column><TextPane /></Grid.Column>
+                    <Grid.Column><TextPane /></Grid.Column>
+                    <Grid.Column><TextPane /></Grid.Column>
+                    <Grid.Column><TextPane /></Grid.Column>
+                </Grid.Row>
+                <Grid.Row style={{ paddingTop: "0.5em" }} columns={3}>
+                    <Grid.Column><GraphPane chart='treeMap' /></Grid.Column>
+                    <Grid.Column><GraphPane chart='treeMap' /></Grid.Column>
+                    <Grid.Column><GraphPane chart='area' /></Grid.Column>
+                </Grid.Row>
+                <Grid.Row columns={2}>
+                    <Grid.Column></Grid.Column>
+                    <Grid.Column><BalanceTablePane data={balanceData} /></Grid.Column>
+                </Grid.Row>
+            </Grid>
+        </Container>
     )
 }
 

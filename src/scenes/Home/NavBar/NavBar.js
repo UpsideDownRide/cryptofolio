@@ -33,7 +33,7 @@ export default class MenuExampleInverted extends Component {
         const { activeItem } = this.state
 
         return (
-            <Container>
+            <Container fluid>
                 <Menu fixed='top' inverted>
                     <Menu.Item header as='a' position='left'>Cryptofolio</Menu.Item>
                     <Menu.Item name='dashboard' as={Link} to={LINKS.dashboard} active={activeItem === 'home'} onClick={this.handleItemClick} />
