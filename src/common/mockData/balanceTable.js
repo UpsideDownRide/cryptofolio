@@ -1,4 +1,5 @@
-import { randomNumber as random, goodRound, randomElement }  from 'common/utils/random'
+import { randomNumber as random, randomElement }  from 'common/utils/random'
+import goodRound from 'common/utils/round'
 import { SYMBOLS } from './currencies';
 
 const data = Array(20).fill().map(el => {

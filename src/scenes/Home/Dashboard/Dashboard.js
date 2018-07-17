@@ -1,12 +1,9 @@
 import React from 'react'
-import style from './Dashboard.module.css'
 import TextPane from './components/TextPane/TextPane'
 import GraphPane from './components/GraphPane/GraphPane'
-import BalanceTablePane from './components/BalanceTablePane/BalanceTablePane'
 import BalanceTableContainer from './components/BalanceTablePane/BalanceTableContainer'
-import { Container, Grid, GridRow } from 'semantic-ui-react'
-import balanceData from 'common/mockData/balanceTable'
-import { Segment } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
+import TotalValueContainer from './components/TextPane/TotalValueContainer';
 
 const Dashboard = () => {
     return (
@@ -22,7 +19,7 @@ const Dashboard = () => {
                             cryptoCurrency="ETH"
                         />
                     </Grid.Column>
-                    <Grid.Column><TextPane /></Grid.Column>
+                    <Grid.Column><TotalValueContainer/></Grid.Column>
                     <Grid.Column><TextPane /></Grid.Column>
                     <Grid.Column><TextPane /></Grid.Column>
                 </Grid.Row>

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { goodRound } from './random';
+import goodRound from './round';
 import { padDecimal } from './padNumber';
 
 const SIGNS = {positive: "▲", negative: "▼"}

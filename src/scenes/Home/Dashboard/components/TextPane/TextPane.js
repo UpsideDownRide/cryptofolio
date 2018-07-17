@@ -2,15 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import style from './TextPane.module.css'
 import StylePercent from 'common/utils/StylePercent'
+import round from 'common/utils/round'
+import { Segment } from 'semantic-ui-react'
 
-const textPane = (props) => {
+export const TotalValue = (props) => TextPane({title: "Total value of coins:", ...props})
+
+export const TextPane = (props) => {
+    const value = round(props.value)
     const name = props.title || "Placeholder"
     const number = <StylePercent value={(props.percentChange || 0.05329)}/>
-    const primary = `${props.value || 4768} ${props.currency || "PLN"}`
+    const primary = `${value || 4768} ${props.currency || "PLN"}`
     const secondary = `${props.cryptoValue || 0.79} ${props.cryptoCurrency || "BTC"}`
     
     return (
-        <div className={style.body}>
+        <Segment>
+        
             <div className={style.title}>
                 <span className={style.titlename}>{name}</span>
                 <span className={style.titlenumber}>{number}</span>
@@ -19,11 +25,11 @@ const textPane = (props) => {
                 <span className={style.contentprimary}>{primary}</span>
                 <span className={style.contentsecondary}>{secondary}</span>
             </div>
-        </div>
+        </Segment>
     )
 }
 
-textPane.propTypes = {
+TextPane.propTypes = {
     title: PropTypes.string,
     percentChange: PropTypes.number,
     value: PropTypes.number,
@@ -32,4 +38,4 @@ textPane.propTypes = {
     cryptoCurrency: PropTypes.string,
 }
 
-export default textPane
+export default TextPane
