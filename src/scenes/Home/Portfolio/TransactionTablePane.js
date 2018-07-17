@@ -43,11 +43,8 @@ const columnsSettings = [{
 
 const TransactionTable = (props) => {
     return (
-        <div className={style.body}>
-            <div className={style.title}>
-                <span className={style.titlename}>{props.name}</span>
-            </div>
-            <div className={style.content}>
+        <div>
+            <div>
                 <Table data={props.data} columns={columnsSettings} />
             </div>
         </div>
