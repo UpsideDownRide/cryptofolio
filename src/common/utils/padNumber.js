@@ -13,6 +13,5 @@ export const padNumber = (number, length, character="0", decimals=false, directi
 }
 
 export const padDecimal = (number, length, character="0") => {
-    console.log(number)
     return padNumber(number, length, character, true, "right")
 }
