@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 //import style from './NavBar.module.css'
 import { Link } from 'react-router-dom'
 import { Menu, Container } from 'semantic-ui-react'
