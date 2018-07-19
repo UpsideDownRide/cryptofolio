@@ -1,4 +1,4 @@
-import { randomNumber as random, goodRound } from 'common/utils/random'
+import { randomNumber as random } from 'common/utils/random'
 import { randomSymbol } from './currencies'
 import { randomElement } from 'common/utils/random';
 

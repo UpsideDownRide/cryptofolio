@@ -1,5 +1,4 @@
 import React from 'react'
-import style from './Portfolio.module.css'
 import TransactionTablePane from './TransactionTablePane'
 import data from 'common/mockData/transactionTable'
 import { Segment, Icon, Button, Container, Grid } from 'semantic-ui-react'
@@ -14,7 +13,9 @@ export default () => (
             <Grid.Row>
                 <Grid.Column>
                     <Button.Group attached='top'>
-                        <Modal />
+                        <Modal trigger={
+                            <Button positive><Icon name='plus' />Add Transaction</Button>}>
+                        </Modal>
                         <Button primary><Icon name='edit' />Edit Transactions</Button>
                     </Button.Group>
                     <Segment attached>

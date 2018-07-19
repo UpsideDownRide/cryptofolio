@@ -1,4 +1,4 @@
-const actions = {}
+// const actions = {}
 
 export default function reducer(store, action) {
     return store

@@ -8,7 +8,7 @@ export const padNumber = (number, length, character="0", decimals=false, directi
     else {
         if (direction==="right") return String(number).padEnd(length, character)
         else if (direction==="left") return String(number).padEnd(length, character)
-        else throw "Invalid direction"
+        else throw new Error("Invalid direction")
     }
 }
 

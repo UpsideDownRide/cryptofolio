@@ -3,8 +3,8 @@ import { Segment, Container } from 'semantic-ui-react'
 
 const Footer = () => {
     return (
-        <Segment inverted fluid style={{ borderRadius: 0 }}>
-            <Container fluid inverted as="footer" textAlign="center">The best ever cryptofolio</Container>
+        <Segment inverted style={{ borderRadius: 0 }}>
+            <Container as="footer" textAlign="center">The best ever cryptofolio</Container>
         </Segment>
     )
 }
