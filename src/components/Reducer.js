@@ -1,9 +1,13 @@
-// const actions = {}
+const actions = {}
 
-export default function reducer(store, action) {
-    return store
-    // return ({
-    //     default: store,
-    //     ...actions
-    // }[action.type || 'default'])
+function createReducer(initialState, handlers) {
+    return function reducer(state = initialState, action) {
+        if (handlers.hasOwnProperty(action.type)) {
+            return handlers[action.type](state, action)
+        } else {
+            return state
+        }
+    }
 }
+
+export default createReducer({}, actions)

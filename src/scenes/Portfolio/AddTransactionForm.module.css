@@ -3,8 +3,3 @@
     align-items: flex-end;
     flex: 1;
 } 
-
-.formRow div div {
-    background-color: "red";
-    color: "red";
-}

@@ -18,7 +18,7 @@ export class ValueTreeMap extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    treeMapData: state.balanceData
+    treeMapData: state.balance.data
         .map(el => ({name: el.currency, size: el.value}))
         .sort((a, b) => b.size - a.size)
 })

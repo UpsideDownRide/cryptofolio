@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
 //import PropTypes from 'prop-types';
 
-import { Field, Form } from 'react-final-form'
+import { Field, Form, FormSpy } from 'react-final-form'
 import MaskedInput from 'react-text-mask'
 
 import { Button, Icon, Segment, Dropdown, Grid } from 'semantic-ui-react'
@@ -14,15 +14,30 @@ import style from './AddTransactionForm.module.css'
 import { SYMBOLS } from 'common/mockData/currencies'
 
 // TODO: Top margins of inputs when the modal is narrow
+// TODO: Time control to change the same field as date
+// TODO: Dropdown icon at the select action button is not rounded
+// TODO: Top button group breaks when viewport is narrow
+// TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
 
+const INITIAL_VALUES = { "date": moment() }
 const SYMBOLS_ = SYMBOLS.map(el => ({ key: el, value: el, text: el }))
-const onSubmit = console.log
 const validate = () => true
 
 const TRANSACTIONS = [{ key: 'withdraw', value: 'withdraw', text: 'Withdraw' },
 { key: 'buy', value: 'buy', text: 'Buy' },
 { key: 'sell', value: 'sell', text: 'Sell' },
 { key: 'mining', value: 'mining', text: 'Mining' }]
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+const onSubmit = async values => {
+    await sleep(300);
+    window.alert(JSON.stringify(values, 0, 2));
+};
+
+const SUBMIT_FORM = 'SUBMIT_FORM'
+
+const submitForm = (form) => {{type: SUBMIT_FORM, form}}
 
 const DateSelectAdapter = ({ input, meta, ...rest }) => {
     const { value, ...props } = input
@@ -96,14 +111,14 @@ const metaExample = () => (
         )}
     </Field>
 )
-
-const LoginForm = props => (
+const LoginForm = ({ subscription }) => (
     <Grid centered padded>
         <Form
             onSubmit={onSubmit}
             validate={validate}
-            initialValues={{ "date": moment() }}
-            render={({ handleSubmit, pristine, invalid, values }) => (
+            subscription={subscription}
+            initialValues={INITIAL_VALUES}
+            render={({ handleSubmit, reset, submitting, pristine, invalid, values }) => (
 
                 <form onSubmit={handleSubmit} className="ui form">
                     <Segment.Group>
@@ -115,11 +130,30 @@ const LoginForm = props => (
                                         placeholder='Select action'
                                         labeled
                                         button
+                                        style={{ flex: 1000 }}
                                         options={TRANSACTIONS}
                                         onChange={(param, data) => input.onChange(data.value)} />
 
                                 )}
                             </Field>
+                            <Button
+                                icon
+                                labelPosition="right"
+                                onClick={() => reset(INITIAL_VALUES)}
+                                disabled={submitting || pristine}
+                            >
+
+                                <Icon name="redo"></Icon>
+                                Reset
+                            </Button>
+                            <Button
+                                icon
+                                labelPosition="right"
+                                negative>
+                                <Icon name="window close outline"></Icon>
+                                Cancel
+
+                            </Button>
                         </Button.Group>
                         <Segment>
                             <FieldsGroup>
@@ -145,9 +179,12 @@ const LoginForm = props => (
                             <Button as="button" type="submit" disabled={pristine || invalid} size="big" positive><Icon name='plus' />Add Transaction</Button>
                         </Button.Group>
                     </Segment.Group>
-                    <pre>{JSON.stringify(values, 0, 2)}</pre>
+                    <FormSpy subscription={{ values: true }}>
+                        {({ values }) => (
+                            <pre>{JSON.stringify(values, 0, 2)}</pre>
+                        )}
+                    </FormSpy>
                 </form>
-
             )}
         />
     </Grid>
@@ -166,8 +203,8 @@ const CurrencyRow = (props) => {
         <Segment className={style.formRow}>
             <CurrencyRowTitle label={label} />
             <FieldsGroup width="equal">
-                <div className="field fluid" style={{ flex: "1 0 0%" }}>
-                    <Field name={`${operation}-exchange`} style={{ flex: "1 0" }}>
+                <div className="field fluid" style={{ flex: "1 0" }}>
+                    <Field name={`${operation}-exchange`}>
                         {({ input, meta }) => (
                             <Dropdown className='fluid icon basic'
                                 placeholder='Select Currency'
@@ -175,8 +212,8 @@ const CurrencyRow = (props) => {
                         )}
                     </Field>
                 </div>
-                <div className="field fluid" style={{ flex: "1 0 0%" }}>
-                    <Field name={`${operation}-currency`} style={{ flex: "1 0" }}>
+                <div className="field fluid" style={{ flex: "1 0" }}>
+                    <Field name={`${operation}-currency`}>
                         {({ input, meta }) => (
                             <Dropdown className='fluid icon basic'
                                 placeholder='Select Currency'
@@ -184,14 +221,12 @@ const CurrencyRow = (props) => {
                         )}
                     </Field>
                 </div>
-                <div className="field fluid" style={{ flex: "1 0 0%" }}>
-                    <LabeledField
-                        label="Value"
-                        name={`${operation}-value`}
-                        component="input"
-                        placeholder="Enter amount"
-                    />
-                </div>
+                <LabeledField
+                    label="Value"
+                    name={`${operation}-value`}
+                    component="input"
+                    placeholder="Enter amount"
+                />
             </FieldsGroup>
         </Segment >
     )

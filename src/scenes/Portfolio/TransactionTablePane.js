@@ -4,7 +4,7 @@ import Table from 'components/Table/Table'
 //import PropTypes from 'prop-types'
 import style from './TransactionTablePane.module.css'
 import CurrencyIcon from 'common/utils/CurrencyIcon';
-import { padDecimal } from '../../../common/utils/padNumber';
+import { padDecimal } from 'common/utils/padNumber';
 
 
 const currencyCell = props => {

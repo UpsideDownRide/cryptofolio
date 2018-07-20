@@ -19,8 +19,8 @@ export class BalanceTableContainer extends Component {
 }
 
 const mapStateToProps = (store) => ({
-    data: store.balanceData,
-    columnSettings: store.balanceTableColumnSettings
+    data: store.balance.data,
+    columnSettings: store.balance.settings
 })
 
 const mapDispatchToProps = {

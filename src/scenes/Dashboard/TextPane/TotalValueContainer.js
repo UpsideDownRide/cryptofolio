@@ -19,7 +19,7 @@ export class TotalValueContainer extends Component {
 
 const mapStateToProps = (store) => {
     return ({
-    totalValue: store.balanceData.reduce((acc, el) => acc+el.value, 0),
+    totalValue: store.balance.data.reduce((acc, el) => acc+el.value, 0),
 })}
 
 const mapDispatchToProps = {

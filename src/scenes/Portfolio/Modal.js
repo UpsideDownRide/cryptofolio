@@ -9,7 +9,7 @@ const AddTransactionModal = (props) => (
     <Modal size="small" trigger={props.trigger}>
         <Modal.Header style={{ backgroundColor: "#21BA45", color: "#FFFFFF" }}>Add a new transaction</Modal.Header>
         <Modal.Content>
-            <FinalForm />
+            <FinalForm subscription={{ submitting: true, pristine: true }}/>
         </Modal.Content>
     </Modal>
 )

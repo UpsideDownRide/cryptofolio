@@ -1,10 +1,10 @@
 import React from 'react'
-import TextPane from './components/TextPane/TextPane'
-import GraphPane from './components/GraphPane/GraphPane'
-import BalanceTableContainer from './components/BalanceTablePane/BalanceTableContainer'
+import TextPane from './TextPane/TextPane'
+import GraphPane from './GraphPane/GraphPane'
+import BalanceTableContainer from './BalanceTablePane/BalanceTableContainer'
 import { Container, Grid } from 'semantic-ui-react'
-import TotalValueContainer from './components/TextPane/TotalValueContainer';
-import ValueTreeMap from './components/GraphPane/ValueTreeMap'
+import TotalValueContainer from './TextPane/TotalValueContainer';
+import ValueTreeMap from './GraphPane/ValueTreeMap'
 
 const Dashboard = () => {
     return (
