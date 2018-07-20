@@ -7,17 +7,19 @@ import { BrowserRouter } from 'react-router-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from 'components/Reducer'
-import balanceData from 'common/mockData/balanceTable'
+import balanceData from 'common/mockData/balances'
 import balanceSettings from 'scenes/Dashboard/BalanceTablePane/BalanceTableColumnSettings'
+import transactionData from 'common/mockData/transactions'
+import transactionSettings from 'scenes/Portfolio/TransactionTableSettings'
 
 const initialState = {
     balance: {
         data: balanceData,
         settings: balanceSettings
     },
-    portfolio: {
-        data: null,
-        settings: null
+    transactions: {
+        data: transactionData,
+        settings: transactionSettings
     }
 }
 

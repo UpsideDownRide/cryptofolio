@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { TotalValue } from './TextPane'
 
 export class TotalValueContainer extends Component {
     static propTypes = {
-        prop: PropTypes
+        //prop: PropTypes
     }
 
     render() {
@@ -17,10 +17,9 @@ export class TotalValueContainer extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    return ({
-    totalValue: store.balance.data.reduce((acc, el) => acc+el.value, 0),
-})}
+const mapStateToProps = (state) => ({
+    totalValue: state.balance.data.reduce((acc, el) => acc+el.value, 0),
+})
 
 const mapDispatchToProps = {
 

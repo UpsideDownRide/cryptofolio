@@ -1,8 +1,7 @@
 import React from 'react'
-import TransactionTablePane from './TransactionTablePane'
-import data from 'common/mockData/transactionTable'
 import { Segment, Icon, Button, Container, Grid } from 'semantic-ui-react'
 import Modal from './Modal'
+import TransactionTableContainer from './TransactionTableContainer';
 
 export default () => (
     <Container as="section">
@@ -19,7 +18,7 @@ export default () => (
                         <Button primary><Icon name='edit' />Edit Transactions</Button>
                     </Button.Group>
                     <Segment attached>
-                        <TransactionTablePane data={data}>Table with history</TransactionTablePane>
+                        <TransactionTableContainer />
                     </Segment>
                 </Grid.Column>
             </Grid.Row>

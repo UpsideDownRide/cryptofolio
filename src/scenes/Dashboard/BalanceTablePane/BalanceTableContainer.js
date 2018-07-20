@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import BalanceTablePane from './BalanceTablePane'
 
 
 export class BalanceTableContainer extends Component {
     static propTypes = {
-        prop: PropTypes
+        //prop: PropTypes
     }
-
     render() {
         return (
             <React.Fragment>
