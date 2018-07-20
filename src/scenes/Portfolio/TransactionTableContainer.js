@@ -8,6 +8,8 @@ export class TransactionTableContainer extends Component {
     static propTypes = {
         //prop: PropTypes
     }
+
+
     render() {
         return (
             <React.Fragment>
@@ -18,7 +20,6 @@ export class TransactionTableContainer extends Component {
 }
 
 const mapStateToProps = (store) => {
-    console.log(store)
     return {
     data: store.transactions.data,
     columnSettings: store.transactions.settings

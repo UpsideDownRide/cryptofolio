@@ -2,14 +2,12 @@ import React from 'react'
 import Table from 'components/Table/Table'
 //import PropTypes from 'prop-types'
 
-const TransactionTable = (props) => {
-    console.log(props)
-    return (
+const TransactionTable = (props) => (
         <React.Fragment>
             <Table data={props.data} columns={props.columnSettings} />
         </React.Fragment>
-    )
-}
+)
+
 
 // TransactionTable.PropTypes = {
 //     name: PropTypes.string,

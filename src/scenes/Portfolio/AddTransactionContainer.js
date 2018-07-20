@@ -17,7 +17,6 @@ export class AddTransactionContainer extends Component {
 
     handleChange = (props) => {
         this.setState({ [props.target.name]: props.target.value })
-        console.log(this.state)
     }
 
     handleSubmit = (e) => {

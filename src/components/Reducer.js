@@ -1,4 +1,12 @@
-const actions = {}
+import _ from 'lodash/fp'
+
+const addTransaction = (state, action) => (
+    _.set('transactions.data', _.concat(state.transactions.data, action.transaction), state)
+)
+
+const actions = {
+    SUBMIT_TRANSACTION: addTransaction 
+}
 
 function createReducer(initialState, handlers) {
     return function reducer(state = initialState, action) {

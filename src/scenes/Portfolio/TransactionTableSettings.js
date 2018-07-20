@@ -22,7 +22,7 @@ const columnsSettings = [{
     accessor: 'operation',
 }, {
     Header: 'Exchange',
-    accessor: 'exchange',
+    accessor: 'in.exchange',
 }, {
     Header: 'In',
     accessor: 'in',
@@ -35,7 +35,7 @@ const columnsSettings = [{
     Cell: currencyCell,
 }, {
     Header: 'Fee',
-    accessor: 'fee',
+    accessor: 'fee.value',
     className: style.tableCellNumbers
 }, ]
 

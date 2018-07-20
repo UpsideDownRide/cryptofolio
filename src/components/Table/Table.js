@@ -5,13 +5,12 @@ import 'react-table/react-table.css'
 import style from './Table.module.css'
 
 const Table = (props) => {
-
     return (
         <ReactTable
             data={props.data}
             columns={props.columns}
             className={[style.table, '-striped', '-highlight'].join(' ')}
-            showPagination={false}
+            showPagination={true}
         />
     )
 }

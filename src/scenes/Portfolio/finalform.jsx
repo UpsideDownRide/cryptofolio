@@ -13,31 +13,32 @@ import { Button, Icon, Segment, Dropdown, Grid } from 'semantic-ui-react'
 import style from './AddTransactionForm.module.css'
 import { SYMBOLS } from 'common/mockData/currencies'
 
+import { connect } from 'react-redux'
+
 // TODO: Top margins of inputs when the modal is narrow
 // TODO: Time control to change the same field as date
 // TODO: Dropdown icon at the select action button is not rounded
 // TODO: Top button group breaks when viewport is narrow
 // TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
+// TODO: Z-Index of operations dropdown
+// TODO: Reset should reset transaction type displayed to select?
+// TODO: Closing the modal only with close button 
 
-const INITIAL_VALUES = { "date": moment() }
+const INITIAL_VALUES = { "date": moment().format('LLL') }
 const SYMBOLS_ = SYMBOLS.map(el => ({ key: el, value: el, text: el }))
 const validate = () => true
 
-const TRANSACTIONS = [{ key: 'withdraw', value: 'withdraw', text: 'Withdraw' },
-{ key: 'buy', value: 'buy', text: 'Buy' },
-{ key: 'sell', value: 'sell', text: 'Sell' },
-{ key: 'mining', value: 'mining', text: 'Mining' }]
+const OPERATIONS = ["Trade", "Withdraw", "Deposit", "Exchange", "Mining"]
+const EXCHANGES = ["Binance", "Coinbase", "GDAX"].map(el => ({key: el, value: el, text: el}))
+
+const TRANSACTIONS = OPERATIONS.map(el => ({key: el.toLowerCase(), value: el.toLowerCase(), text: el}))
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const onSubmit = async values => {
-    await sleep(300);
-    window.alert(JSON.stringify(values, 0, 2));
-};
-
-const SUBMIT_FORM = 'SUBMIT_FORM'
-
-const submitForm = (form) => {{type: SUBMIT_FORM, form}}
+//const onSubmit = async values => {
+//    await sleep(300);
+//    window.alert(JSON.stringify(values, 0, 2));
+//};
 
 const DateSelectAdapter = ({ input, meta, ...rest }) => {
     const { value, ...props } = input
@@ -111,7 +112,7 @@ const metaExample = () => (
         )}
     </Field>
 )
-const LoginForm = ({ subscription }) => (
+export const TransactionForm = ({ subscription, onSubmit }) => (
     <Grid centered padded>
         <Form
             onSubmit={onSubmit}
@@ -165,8 +166,8 @@ const LoginForm = ({ subscription }) => (
                                 <MaskedTimeField name="time" label="Enter time:" />
                             </FieldsGroup>
                         </Segment>
-                        <CurrencyRow label="Bought" operation="buy" />
-                        <CurrencyRow label="Sold" operation="sell" />
+                        <CurrencyRow label="Bought" operation="in" />
+                        <CurrencyRow label="Sold" operation="out" />
                         <CurrencyRow label="Fee" operation="fee" />
                         <Segment>
                             <Field className="field"
@@ -190,6 +191,17 @@ const LoginForm = ({ subscription }) => (
     </Grid>
 )
 
+const SUBMIT_TRANSACTION = 'SUBMIT_TRANSACTION'
+
+const submitTransaction = (transaction) => ({type: SUBMIT_TRANSACTION,
+                                            transaction: transaction})
+
+const mapDispatchToProps = dispatch => ({
+    onSubmit: (transaction) => dispatch(submitTransaction(transaction))
+})
+
+const dispatchLink = connect(() => ({}), mapDispatchToProps)(TransactionForm)
+
 const CurrencyRowTitle = (props) => (
     <div style={{ margin: "-1.8em 0 0.8em 0", background: "none" }}>
         <span style={{ background: "white", padding: "0 4em", fontWeight: "bold" }}>
@@ -204,16 +216,16 @@ const CurrencyRow = (props) => {
             <CurrencyRowTitle label={label} />
             <FieldsGroup width="equal">
                 <div className="field fluid" style={{ flex: "1 0" }}>
-                    <Field name={`${operation}-exchange`}>
+                    <Field name={`${operation}.exchange`}>
                         {({ input, meta }) => (
                             <Dropdown className='fluid icon basic'
-                                placeholder='Select Currency'
-                                labeled button search options={SYMBOLS_} onChange={(param, data) => input.onChange(data.value)} />
+                                placeholder='Select exchange'
+                                labeled button search options={EXCHANGES} onChange={(param, data) => input.onChange(data.value)} />
                         )}
                     </Field>
                 </div>
                 <div className="field fluid" style={{ flex: "1 0" }}>
-                    <Field name={`${operation}-currency`}>
+                    <Field name={`${operation}.currency`}>
                         {({ input, meta }) => (
                             <Dropdown className='fluid icon basic'
                                 placeholder='Select Currency'
@@ -223,7 +235,7 @@ const CurrencyRow = (props) => {
                 </div>
                 <LabeledField
                     label="Value"
-                    name={`${operation}-value`}
+                    name={`${operation}.value`}
                     component="input"
                     placeholder="Enter amount"
                 />
@@ -232,4 +244,4 @@ const CurrencyRow = (props) => {
     )
 }
 
-export default LoginForm
+export default dispatchLink
