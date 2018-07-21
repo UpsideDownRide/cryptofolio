@@ -1,7 +1,7 @@
 import React from 'react'
 import { Segment, Icon, Button, Container, Grid } from 'semantic-ui-react'
 import Modal from './Modal'
-import TransactionTableContainer from './TransactionTableContainer';
+import TransactionTableContainer from './TransactionTable/TransactionTableContainer';
 
 export default () => (
     <Container as="section">

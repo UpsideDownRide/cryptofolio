@@ -1,15 +1,13 @@
 import React from 'react'
-import { Modal, Button, Icon, ModalActions } from 'semantic-ui-react'
+import { Modal } from 'semantic-ui-react'
 
-import AddTransactionContainer from './AddTransactionContainer'
-import FinalForm from './finalform'
-import AddTransactionForm from './AddTransactionForm';
+import AddTransactionForm from './AddTransaction/finalform'
 
 const AddTransactionModal = (props) => (
     <Modal size="small" trigger={props.trigger}>
         <Modal.Header style={{ backgroundColor: "#21BA45", color: "#FFFFFF" }}>Add a new transaction</Modal.Header>
         <Modal.Content>
-            <FinalForm subscription={{ submitting: true, pristine: true }}/>
+            <AddTransactionForm subscription={{ submitting: true, pristine: true }}/>
         </Modal.Content>
     </Modal>
 )

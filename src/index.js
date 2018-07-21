@@ -10,7 +10,7 @@ import reducer from 'components/Reducer'
 import balanceData from 'common/mockData/balances'
 import balanceSettings from 'scenes/Dashboard/BalanceTablePane/BalanceTableColumnSettings'
 import transactionData from 'common/mockData/transactions'
-import transactionSettings from 'scenes/Portfolio/TransactionTableSettings'
+import transactionSettings from 'scenes/Portfolio/TransactionTable/TransactionTableSettings'
 
 const initialState = {
     balance: {
