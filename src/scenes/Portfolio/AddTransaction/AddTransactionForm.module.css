@@ -1,4 +1,4 @@
-.formRow div {
+.formRow > div {
     justify-content: space-between;
     align-items: flex-end;
     flex: 1;
@@ -8,11 +8,11 @@
     flex: 1000 0 !important;
 }
 
-.dropdown {
+.dropdown > div:first-of-type {
     z-index: 0 !important; 
 }
 
 .innerinput {
-    flex: 1 0 !important;
+    flex: 1 0 25% !important;
     margin: 0.5em 0em !important;
 }

@@ -1,19 +1,12 @@
 import React from 'react';
-
-import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
 //import PropTypes from 'prop-types';
-
 import { Field, Form, FormSpy } from 'react-final-form'
 import MaskedInput from 'react-text-mask'
-
 import { Button, Icon, Segment, Dropdown, Grid } from 'semantic-ui-react'
-
 import style from './AddTransactionForm.module.css'
-import { SYMBOLS } from 'common/mockData/currencies'
-
-import { connect } from 'react-redux'
+import moment from 'moment'
 
 // TODO: Validation of form input
 // TODO: Time control to change the same field as date
@@ -24,25 +17,34 @@ import { connect } from 'react-redux'
 // TODO: Reset should reset transaction type displayed to select?
 // TODO: Closing the modal only with close button 
 
-
-const INITIAL_VALUES = { "date": moment().format('LLL') }
-const SYMBOLS_ = SYMBOLS.map(el => ({ key: el, value: el, text: el }))
-const validate = () => true
-
-const OPERATIONS = ["Trade", "Withdraw", "Deposit", "Exchange", "Mining"]
-const EXCHANGES = ["Binance", "Coinbase", "GDAX"].map(el => ({ key: el, value: el, text: el }))
-
-const TRANSACTIONS = OPERATIONS.map(el => ({ key: el, value: el, text: el }))
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
+const validate = (values) => {
+    const errors = {}
+    if (!values.operation) {
+        errors.operation = "Required"
+    }
+    if (!values.operation) {
+        errors.operation = "Required"
+    }
+    if (!values.operation) {
+        errors.operation = "Required"
+    }
+    return errors
+}
 //const onSubmit = async values => {
 //    await sleep(300);
 //    window.alert(JSON.stringify(values, 0, 2));
 //};
 
 
-export const TransactionForm = ({ subscription, onSubmit }) => (
+const TransactionForm = ({ formValues, subscription, onSubmit }) => {
+    const { 
+        INITIAL_VALUES,
+        TRANSACTIONS,
+        EXCHANGES,
+        SYMBOLS
+    } = formValues
+    
+    return (
     <Grid centered padded>
         <Form
             onSubmit={onSubmit}
@@ -61,7 +63,6 @@ export const TransactionForm = ({ subscription, onSubmit }) => (
                                 options={TRANSACTIONS}
                                 primary
                             />
-                            <ResetButton disabled={submitting || pristine} />
                             <CancelButton />
                         </Button.Group>
                         <Segment />
@@ -77,18 +78,17 @@ export const TransactionForm = ({ subscription, onSubmit }) => (
                             </FieldsGroup>
                         </Segment>
                         <InnerRow label="Bought" operation="in">
-                            <ExchangeInput operation="in" />
-                            <CurrencyInput operation="in" />
+                            <ExchangeInput operation="in" exchanges={EXCHANGES}/>
+                            <CurrencyInput operation="in" symbols={SYMBOLS}/>
                             <ValueInput operation="in" />
                         </InnerRow>
                         <InnerRow label="Sold" operation="out">
-                            <ExchangeInput operation="out" />
-                            <CurrencyInput operation="out" />
+                            <ExchangeInput operation="out" exchanges={EXCHANGES}/>
+                            <CurrencyInput operation="out" symbols={SYMBOLS}/>
                             <ValueInput operation="out" />
                         </InnerRow>
                         <InnerRow label="Fee" operation="fee">
-                            <ExchangeInput operation="fee" />
-                            <CurrencyInput operation="fee" />
+                            <CurrencyInput operation="fee" symbols={SYMBOLS}/>
                             <ValueInput operation="fee" />
                         </InnerRow>
                         <Segment>
@@ -111,20 +111,8 @@ export const TransactionForm = ({ subscription, onSubmit }) => (
             )}
         />
     </Grid>
-)
+)}
 
-const SUBMIT_TRANSACTION = 'SUBMIT_TRANSACTION'
-
-const submitTransaction = (transaction) => ({
-    type: SUBMIT_TRANSACTION,
-    transaction: transaction
-})
-
-const mapDispatchToProps = dispatch => ({
-    onSubmit: (transaction) => dispatch(submitTransaction(transaction))
-})
-
-const dispatchLink = connect(() => ({}), mapDispatchToProps)(TransactionForm)
 
 const DropdownAdapter = ({ input, meta, ...rest }) => (
     <Dropdown
@@ -139,7 +127,7 @@ const ResetButton = (props) => (
     <Button
         icon
         labelPosition="right"
-        onClick={() => props.reset(INITIAL_VALUES)}
+        onClick={() => props.reset(props.initial)}
         {...props}
     >
         <Icon name="redo"></Icon>
@@ -199,19 +187,19 @@ const ValueInput = ({ operation }) => (
     />
 )
 
-const CurrencyInput = ({ operation }) => (
+const CurrencyInput = ({ operation, symbols }) => (
     <InnerRowDropdown
         name={`${operation}.currency`}
         placeholder='Select currency'
-        options={SYMBOLS_}
+        options={symbols}
     />
 )
 
-const ExchangeInput = ({ operation }) => (
+const ExchangeInput = ({ operation, exchanges }) => (
     <InnerRowDropdown
         name={`${operation}.exchange`}
         placeholder='Select exchange'
-        options={EXCHANGES}
+        options={exchanges}
     />
 )
 
@@ -289,4 +277,4 @@ const metaExample = () => (
     </Field>
 )
 
-export default dispatchLink
+export default TransactionForm
