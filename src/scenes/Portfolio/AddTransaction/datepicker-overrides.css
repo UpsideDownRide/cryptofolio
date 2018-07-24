@@ -1,0 +1,11 @@
+.react-datepicker__current-month {
+    display: none;
+}
+
+.react-datepicker__month-select, .react-datepicker__year-select {
+    padding: 0.2em 0.5em !important;
+}
+
+.react-datepicker__navigation {
+    top: 1.15em;
+}
