@@ -8,9 +8,8 @@ const formValues = {
     INITIAL_VALUES: { "date": moment().format('LLL') },
     SYMBOLS: _SYMBOLS.map(el => ({ key: el, value: el, text: el })),
     EXCHANGES: ["Binance", "Coinbase", "GDAX"].map(el => ({ key: el, value: el, text: el })),
-    TRANSACTIONS: ["Trade", "Withdraw", "Deposit", "Exchange", "Mining"].map(el => ({ key: el, value: el, text: el }))
+    TRANSACTIONS: ["Buy", "Sell", "Trade", "Deposit", "Withdraw", "Mining"].map(el => ({ key: el, value: el, text: el }))
 }
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class AddTransaction extends Component {
     render() {

@@ -26,6 +26,7 @@
     "react-datepicker": "^1.5.0",
     "react-dom": "^16.4.1",
     "react-final-form": "^3.6.5",
+    "react-final-form-html5-validation": "^1.0.1",
     "react-flatpickr": "^3.6.4",
     "react-maskedinput": "^4.0.1",
     "react-redux": "^5.0.7",
