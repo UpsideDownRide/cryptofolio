@@ -4,12 +4,17 @@ import CurrencyIcon from 'common/utils/CurrencyIcon';
 import { padDecimal } from 'common/utils/padNumber';
 import moment from 'moment'
 
-const currencyCell = props => (
-    <span>
-        <p>{padDecimal(props.value.value, 2)}</p>
-        <div style={{ margin: "2.5px 0 0 0.5em" }}><CurrencyIcon name={props.value.currency} /></div>
-    </span>
-)
+const currencyCell = props => {
+    if (!props.value) return null
+    else return (
+        <span>
+            <p>{padDecimal(props.value.value, 2)}</p>
+            <div style={{ margin: "2.5px 0 0 0.5em" }}>
+                <CurrencyIcon name={props.value.currency} />
+            </div>
+        </span>
+    )
+}
 
 const timeCell = props => (
     <span>
@@ -19,28 +24,43 @@ const timeCell = props => (
 
 const columnsSettings = [{
     Header: 'Date',
-    accessor: 'date',
-    Cell: timeCell,
+    columns: [{
+        accessor: 'date',
+        Cell: timeCell,
+    }]
 }, {
     Header: 'Operation',
-    accessor: 'operation',
-}, {
-    Header: 'Exchange',
-    accessor: 'in.exchange',
+    columns: [{
+        accessor: 'operation',
+    }]
 }, {
     Header: 'In',
-    accessor: 'in',
-    className: style.tableCellNumbers,
-    Cell: currencyCell,
+    columns: [{
+        Header: 'Exchange',
+        accessor: 'in.exchange',
+    }, {
+        Header: 'Amount',
+        accessor: 'in',
+        className: style.tableCellNumbers,
+        Cell: currencyCell,
+    }]
 }, {
     Header: 'Out',
-    accessor: 'out',
-    className: style.tableCellNumbers,
-    Cell: currencyCell,
+    columns: [{
+        Header: 'Exchange',
+        accessor: 'in.exchange',
+    }, {
+        Header: 'Amount',
+        accessor: 'out',
+        className: style.tableCellNumbers,
+        Cell: currencyCell,
+    }]
 }, {
     Header: 'Fee',
-    accessor: 'fee.value',
-    className: style.tableCellNumbers
+    columns: [{
+        accessor: 'fee.value',
+        className: style.tableCellNumbers,
+    }]
 },]
 
 export default columnsSettings

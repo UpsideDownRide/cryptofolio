@@ -17,7 +17,7 @@ class AddTransactionModal extends React.Component {
     render() {
         return (
     <Modal 
-        size="tiny"
+        size="small"
         trigger={React.cloneElement(this.props.trigger, {onClick: this.handleOpen})}
         open={this.state.modalOpen}
         onClose={this.handleClose}

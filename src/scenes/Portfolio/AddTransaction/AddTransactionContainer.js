@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import TransactionForm from './finalform'
+import AddTransactionForm from './AddTransactionForm'
 import { SYMBOLS as _SYMBOLS } from 'common/mockData/currencies'
 import moment from 'moment'
 
@@ -15,7 +15,7 @@ class AddTransaction extends Component {
     render() {
         return (
             <React.Fragment>
-                <TransactionForm
+                <AddTransactionForm
                     formValues={formValues}
                     subscription={{ submitting: true, pristine: true }}
                     {...this.props}/>

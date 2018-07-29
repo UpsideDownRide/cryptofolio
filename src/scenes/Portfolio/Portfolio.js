@@ -17,7 +17,7 @@ export default () => (
                         </Modal>
                         <Button primary><Icon name='edit' />Edit Transactions</Button>
                     </Button.Group>
-                    <Segment attached>
+                    <Segment attached style={{padding: 0}}>
                         <TransactionTableContainer />
                     </Segment>
                 </Grid.Column>

@@ -10,12 +10,13 @@ import style from './AddTransactionForm.module.css'
 import moment from 'moment'
 import _ from 'lodash/fp'
 
-// TODO: Top button group breaks when viewport is narrow
+// TODO: Top and buttom button groups overflow when viewport is narrow
 // TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
 // TODO: Reset button - currently bad implementation is commented out in the code
 
 const required = value => (value ? undefined : "Required")
-const mustBeNumber = value => (isNaN(value) ? "Enter a valid number" : undefined)
+const mustBeNumber = value => (!isNaN(value) ? undefined : "Enter a valid number")
+const properTime = value => (/^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/.test(value) ? undefined : "Enter valid time")
 const composeValidators = (...validators) => value =>
     validators.reduce((error, validator) => error || validator(value), undefined);
 
@@ -204,7 +205,7 @@ const DisplayConditionalContent = ({ operationValue, ...props }) => {
 const DateTimeSegment = () => (
     <InnerRow label={`Date & time`}>
         <Field name="date" component={DateSelectAdapter} />
-        <Field name="time" component={MaskedInputAdapter} />
+        <Field name="time" component={TimeInputAdapter} validate={properTime} />
     </InnerRow>
 )
 
@@ -348,6 +349,19 @@ const DateSelectAdapter = ({ input, meta, label, ...props }) => {
     )
 }
 
+const TimeInputAdapter = ({ input, meta, label, ...props}) => (
+    <div className={`field ${style.innerinput}`}>
+        <label>{label}</label>
+        {meta.touched && meta.error && <ErrorLabel>{meta.error}</ErrorLabel>}
+        <MaskedInput
+            mask={[/\d/, /\d/, ':', /\d/, /\d/, ':', /\d/, /\d/]}
+            placeholder="HH:MM:SS"
+            keepCharPositions
+            {...input}
+            {...props} />
+    </div>
+)
+
 const TextAreaAdapter = ({ input, meta, ...props }) => {
     const style = {
         minHeight: "3em",
@@ -360,18 +374,6 @@ const TextAreaAdapter = ({ input, meta, ...props }) => {
         <textarea style={style} {...input} {...props} />
     )
 }
-
-const MaskedInputAdapter = ({ input, meta, label, ...props}) => (
-    <div className={`field ${style.innerinput}`}>
-        <label>{label}</label>
-        <MaskedInput
-            mask={[/\d/, /\d/, ':', /\d/, /\d/, ':', /\d/, /\d/]}
-            placeholder="HH:MM:SS"
-            keepCharPositions
-            {...input}
-            {...props} />
-    </div>
-)
 
 const FieldsGroup = ({ children, ...props }) => (
     <div className="fields fluid" {...props}>

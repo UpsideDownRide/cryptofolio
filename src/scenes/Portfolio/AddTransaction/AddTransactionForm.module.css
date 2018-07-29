@@ -17,18 +17,19 @@
     z-index: 0 !important; 
 }
 
-.dropdown > input {
-    z-index: 1 !important;
-}
-
 .innerinput {
-    flex: 1 30% !important;
+    flex: 0 auto !important;
+    min-width: 33%;
     margin: 0.5em 0em !important;
-    max-width: 33%;
 }
 
 .innerinput input {
     text-align: center;
+}
+
+
+.dropdown > input {
+    z-index: 1 !important;
 }
 
 .datepicker > div {
