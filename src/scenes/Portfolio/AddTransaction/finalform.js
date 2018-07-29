@@ -20,7 +20,7 @@ import _ from 'lodash/fp'
 
 const required = value => (value ? undefined : "Required")
 
-const TransactionForm = ({ formValues, subscription, onSubmit }) => {
+const TransactionForm = ({ formValues, subscription, onSubmit, ...props }) => {
     const {
         INITIAL_VALUES,
         TRANSACTIONS,
@@ -46,7 +46,7 @@ const TransactionForm = ({ formValues, subscription, onSubmit }) => {
                                     options={TRANSACTIONS}
                                     validate={required}
                                 />
-                                <CancelButton />
+                                <CancelButton onClick={props.closeModal}/>
                             </Button.Group>
                             <Segment />
                             <FormSpy subscription={{ values: true }}>
@@ -133,7 +133,7 @@ const WithdrawContent = ({ exchanges, ...rest }) => (
 
 const MiningContent = ({ exchanges, ...rest }) => (
     <React.Fragment>
-        <InRow label="Mined" operation="in" exchanges={exchanges} {...rest} />
+        <InRow label="Mined" exchanges={exchanges} {...rest} />
         <FeeRow {...rest} />
     </React.Fragment>
 )
@@ -223,11 +223,12 @@ const DropdownAdapter = ({ input, meta, ...rest }) => {
 //     </Button>
 // )
 
-const CancelButton = () => (
+const CancelButton = (props) => (
     <Button
         icon
         labelPosition="right"
         negative
+        {...props}
     >
         <Icon name="window close outline"></Icon>
         Cancel
