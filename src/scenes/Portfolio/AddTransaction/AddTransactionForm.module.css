@@ -1,6 +1,6 @@
 .formRow > div {
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     flex: 1;
 }
 

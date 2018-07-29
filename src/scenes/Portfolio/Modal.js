@@ -7,7 +7,6 @@ class AddTransactionModal extends React.Component {
     state = { modalOpen: false }
 
     handleClose = () => {
-        console.log(this.state.modalOpen)
         this.setState({ modalOpen: false })
     }
 
@@ -17,10 +16,12 @@ class AddTransactionModal extends React.Component {
 
     render() {
         return (
-    <Modal size="tiny" trigger={React.cloneElement(this.props.trigger, {onClick: this.handleOpen})}
-            open={this.state.modalOpen}
-            onClose={this.handleClose}
-            closeOnDimmerClick={false}
+    <Modal 
+        size="tiny"
+        trigger={React.cloneElement(this.props.trigger, {onClick: this.handleOpen})}
+        open={this.state.modalOpen}
+        onClose={this.handleClose}
+        closeOnDimmerClick={false}
     >
         <Modal.Header style={{ textAlign: "center", backgroundColor: "rgb(0, 0, 0, 0.05)", color: "rgb(0, 0, 0, 0.87)" }}>Add a new transaction</Modal.Header>
         <Modal.Content>

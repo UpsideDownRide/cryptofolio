@@ -15,7 +15,10 @@ class AddTransaction extends Component {
     render() {
         return (
             <React.Fragment>
-                <TransactionForm formValues={formValues} subscription={{ submitting: true, pristine: true }} {...this.props}/>
+                <TransactionForm
+                    formValues={formValues}
+                    subscription={{ submitting: true, pristine: true }}
+                    {...this.props}/>
             </React.Fragment>
         )
     }
@@ -29,7 +32,7 @@ const submitTransaction = (transaction) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    onSubmit: (transaction) => dispatch(submitTransaction(transaction))
+    submitRedux: (transaction) => dispatch(submitTransaction(transaction))
 })
 
 const dispatchLink = connect(() => ({}), mapDispatchToProps)(AddTransaction)

@@ -5,22 +5,33 @@ import './datepicker-overrides.css'
 //import PropTypes from 'prop-types';
 import { Field, Form, FormSpy } from 'react-final-form'
 import MaskedInput from 'react-text-mask'
-import { Button, Icon, Segment, Dropdown, Grid } from 'semantic-ui-react'
+import { Label, Button, Icon, Segment, Dropdown, Grid } from 'semantic-ui-react'
 import style from './AddTransactionForm.module.css'
 import moment from 'moment'
 import _ from 'lodash/fp'
 
-// TODO: Validation of form input
 // TODO: Time control to change the same field as date
-// TODO: Dropdown icon at the select action button is not rounded
 // TODO: Top button group breaks when viewport is narrow
 // TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
-// TODO: Closing the modal only with close button 
 // TODO: Reset button - currently bad implementation is commented out in the code
 
 const required = value => (value ? undefined : "Required")
+const mustBeNumber = value => (isNaN(value) ? "Enter a valid number" : undefined)
+const composeValidators = (...validators) => value =>
+    validators.reduce((error, validator) => error || validator(value), undefined);
 
-const TransactionForm = ({ formValues, subscription, onSubmit, ...props }) => {
+const normalizeValue = value => {
+    if (!value) return value
+    const onlyNums = value.replace(/,/g, '.').replace(/[^0-9.]/g, '')
+    return onlyNums
+}
+
+const onSubmit = (submitRedux, closeModal) => values => {
+    submitRedux(values);
+    closeModal()
+};
+
+const TransactionForm = ({ formValues, subscription, submitRedux, closeModal, ...props }) => {
     const {
         INITIAL_VALUES,
         TRANSACTIONS,
@@ -31,11 +42,12 @@ const TransactionForm = ({ formValues, subscription, onSubmit, ...props }) => {
     return (
         <Grid centered padded>
             <Form
-                onSubmit={onSubmit}
+                onSubmit={onSubmit(submitRedux, closeModal)}
                 subscription={subscription}
                 initialValues={INITIAL_VALUES}
                 render={({ handleSubmit, reset, submitting, pristine, invalid, form }) => (
-                    <form onSubmit={handleSubmit} className={`ui form ${style.form}`}>
+                    <form onSubmit={handleSubmit}
+                        className={`ui form ${style.form}`}>
                         <Segment.Group>
                             <Button.Group attached="top">
                                 <Field
@@ -44,9 +56,8 @@ const TransactionForm = ({ formValues, subscription, onSubmit, ...props }) => {
                                     className={`ui primary icon ${style.transaction}`}
                                     placeholder='Select action'
                                     options={TRANSACTIONS}
-                                    validate={required}
                                 />
-                                <CancelButton onClick={props.closeModal}/>
+                                <CancelButton onClick={closeModal} />
                             </Button.Group>
                             <Segment />
                             <FormSpy subscription={{ values: true }}>
@@ -64,7 +75,7 @@ const TransactionForm = ({ formValues, subscription, onSubmit, ...props }) => {
                                                         changeValue={form.change} />
                                                     <CommentSegment />
                                                     <Button.Group attached='bottom'>
-                                                        <AddTransactionButton disabled={pristine || invalid} />
+                                                        <AddTransactionButton />
                                                     </Button.Group>
                                                 </React.Fragment>
                                             }
@@ -73,141 +84,10 @@ const TransactionForm = ({ formValues, subscription, onSubmit, ...props }) => {
                                 }}
                             </FormSpy>
                         </Segment.Group>
-                        <FormSpy subscription={{ values: true }}>
-                            {({ values }) => (
-                                <pre>{JSON.stringify(values, 0, 2)}</pre>
-                            )}
-                        </FormSpy>
                     </form>
                 )}
             />
         </Grid>
-    )
-}
-
-const FormFillerSegment = () => (
-    <React.Fragment>
-        <div style={{ padding: "10em 0" }}>
-            <span style={{ color: "#aaa" }}>Choose an operation</span>
-        </div>
-    </React.Fragment>
-)
-
-const BuyContent = ({ exchanges, ...rest }) => (
-    <React.Fragment>
-        <InRow label="Bought" exchanges={exchanges} {...rest} />
-        <OutRow label="Price" {...rest} />
-        <FeeRow {...rest} />
-    </React.Fragment>
-)
-
-const SellContent = ({ exchanges, ...rest }) => (
-    <React.Fragment>
-        <OutRow label="Sold" exchanges={exchanges} {...rest} />
-        <InRow label="Price" {...rest} />
-        <FeeRow {...rest} />
-    </React.Fragment>
-)
-
-const TransferContent = ({ exchanges, ...rest }) => (
-    <React.Fragment>
-        <OutRow label="From" exchanges={exchanges} {...rest} />
-        <InRow label="To" exchanges={exchanges} {...rest} />
-        <FeeRow {...rest} />
-    </React.Fragment>
-)
-
-const DepositContent = ({ exchanges, ...rest }) => (
-    <React.Fragment>
-        <InRow label="Deposit" exchanges={exchanges} {...rest} />
-        <FeeRow {...rest} />
-    </React.Fragment>
-)
-
-const WithdrawContent = ({ exchanges, ...rest }) => (
-    <React.Fragment>
-        <OutRow label="Withdraw" exchanges={exchanges} {...rest} />
-        <FeeRow {...rest} />
-    </React.Fragment>
-)
-
-const MiningContent = ({ exchanges, ...rest }) => (
-    <React.Fragment>
-        <InRow label="Mined" exchanges={exchanges} {...rest} />
-        <FeeRow {...rest} />
-    </React.Fragment>
-)
-
-const CONTENT_COMPONENTS = {
-    'Buy': BuyContent,
-    'Sell': SellContent,
-    'Transfer': TransferContent,
-    'Deposit': DepositContent,
-    'Withdraw': WithdrawContent,
-    'Mining': MiningContent,
-}
-
-const DisplayConditionalContent = ({ operationValue, ...rest }) => {
-    const ContentComponent = CONTENT_COMPONENTS[operationValue]
-    return <ContentComponent {...rest} />
-}
-
-const DateTimeSegment = () => (
-    <InnerRow label={`Date & time`}>
-        <Field
-            className={`field ${style.innerinput}`}
-            name="date"
-            component={DateSelectAdapter}
-        />
-        <MaskedTimeField name="time" className={`field ${style.innerinput}`} />
-    </InnerRow>
-)
-
-const CommentSegment = () => (
-    <Segment>
-        <Field className="field"
-            name="comment"
-            placeholder="Enter comment (optional)"
-            component={TextAreaAdapter}
-        />
-    </Segment>
-)
-
-const FeeRow = (props) => <TransactionRow label="Fee" operation="fee" {...props} />
-const InRow = (props) => <TransactionRow operation="in" {...props} />
-const OutRow = (props) => <TransactionRow operation="out" {...props} />
-
-class TransactionRow extends React.Component {
-
-    componentWillUnmount() {
-        this.props.changeValue(this.props.operation, undefined)
-    }
-
-    render() {
-        const isNotPriceOrFee = this.props.label !== "Price" && this.props.operation !== "fee"
-        return (
-            <InnerRow label={this.props.label} operation={this.props.operation}>
-                {isNotPriceOrFee && <ExchangeInput exchanges={this.props.exchanges} />}
-                <CurrencyInput symbols={this.props.symbols} />
-                <ValueInput />
-            </InnerRow>
-        )
-    }
-}
-
-const DropdownAdapter = ({ input, meta, ...rest }) => {
-    const fieldError = meta.error && meta.touched
-    return (
-        <React.Fragment>
-            <Dropdown
-                {...input}
-                {...rest}
-                error={fieldError}
-                labeled
-                button
-                onChange={(event, data) => input.onChange(data.value)}
-            />
-        </React.Fragment>
     )
 }
 
@@ -247,6 +127,127 @@ const AddTransactionButton = (props) => (
     </Button>
 )
 
+
+const FormFillerSegment = () => (
+    <React.Fragment>
+        <div style={{ padding: "10em 0" }}>
+            <span style={{ color: "#aaa" }}>Choose an operation</span>
+        </div>
+    </React.Fragment>
+)
+
+const BuyContent = ({ exchanges, ...props }) => (
+    <React.Fragment>
+        <InRow label="Bought" exchanges={exchanges} {...props} />
+        <OutRow label="Price" {...props} />
+        <FeeRow {...props} />
+    </React.Fragment>
+)
+
+const SellContent = ({ exchanges, ...props }) => (
+    <React.Fragment>
+        <OutRow label="Sold" exchanges={exchanges} {...props} />
+        <InRow label="Price" {...props} />
+        <FeeRow {...props} />
+    </React.Fragment>
+)
+
+const TransferContent = ({ exchanges, ...props }) => (
+    <React.Fragment>
+        <OutRow label="From" exchanges={exchanges} {...props} />
+        <InRow label="To" exchanges={exchanges} {...props} />
+        <FeeRow {...props} />
+    </React.Fragment>
+)
+
+const DepositContent = ({ exchanges, ...props }) => (
+    <React.Fragment>
+        <InRow label="Deposit" exchanges={exchanges} {...props} />
+        <FeeRow {...props} />
+    </React.Fragment>
+)
+
+const WithdrawContent = ({ exchanges, ...props }) => (
+    <React.Fragment>
+        <OutRow label="Withdraw" exchanges={exchanges} {...props} />
+        <FeeRow {...props} />
+    </React.Fragment>
+)
+
+const MiningContent = ({ exchanges, ...props }) => (
+    <React.Fragment>
+        <InRow label="Mined" exchanges={exchanges} {...props} />
+        <FeeRow {...props} />
+    </React.Fragment>
+)
+
+const CONTENT_COMPONENTS = {
+    'Buy': BuyContent,
+    'Sell': SellContent,
+    'Transfer': TransferContent,
+    'Deposit': DepositContent,
+    'Withdraw': WithdrawContent,
+    'Mining': MiningContent,
+}
+
+const DisplayConditionalContent = ({ operationValue, ...props }) => {
+    const ContentComponent = CONTENT_COMPONENTS[operationValue]
+    return <ContentComponent {...props} />
+}
+
+const DateTimeSegment = () => (
+    <InnerRow label={`Date & time`}>
+        <Field
+            name="date"
+            component={DateSelectAdapter}
+        />
+        <MaskedTimeField name="time" className={`field ${style.innerinput}`} />
+    </InnerRow>
+)
+
+const CommentSegment = () => (
+    <Segment>
+        <Field className="field"
+            name="comment"
+            placeholder="Enter comment (optional)"
+            component={TextAreaAdapter}
+        />
+    </Segment>
+)
+
+const FeeRow = (props) => <TransactionRow optional label="Fee" operation="fee" {...props} />
+const InRow = (props) => <TransactionRow operation="in" {...props} />
+const OutRow = (props) => <TransactionRow operation="out" {...props} />
+
+class TransactionRow extends React.Component {
+
+    componentWillUnmount() {
+        this.props.changeValue(this.props.operation, undefined)
+    }
+
+    render() {
+        const isNotPriceOrFee = this.props.label !== "Price" && this.props.operation !== "fee"
+        return (
+            <InnerRow label={this.props.label} operation={this.props.operation}>
+                {isNotPriceOrFee && <ExchangeInput exchanges={this.props.exchanges} />}
+                <CurrencyInput optional={this.props.optional} symbols={this.props.symbols} />
+                <ValueInput optional={this.props.optional} />
+            </InnerRow>
+        )
+    }
+}
+
+const InnerRow = ({ label, children, ...props }) => (
+    <Segment className={style.formRow}>
+        <InnerRowTitle label={label} />
+        <FieldsGroup width="equal" style={{ marginBottom: "0.25em" }}>
+            {React.Children.map(children, (child) => {
+                return !!child && React.cloneElement(child, { ...props })
+            })}
+        </FieldsGroup>
+    </Segment >
+)
+
 const InnerRowTitle = (props) => (
     <div style={{ margin: "-1.8em 0 0.2em 0", background: "none" }}>
         <span style={{ background: "white", padding: "0 4em", fontWeight: "bold" }}>
@@ -255,35 +256,65 @@ const InnerRowTitle = (props) => (
     </div>
 )
 
-const InnerRowDropdown = ({ input, meta, ...rest }) => (
-    <div className={`field fluid ${style.innerinput}`}>
-        <label style={{ visibility: "hidden" }}>None</label>
-        <Field
-            component={DropdownAdapter}
-            className={`fluid icon basic ${style.dropdown}`}
-            search
-            {...rest}
-            {...input}
-            validate={required}
-        />
+const InnerRowDropdown = ({ input, meta, optional, ...props }) => {
+    const validate = optional ? null : required
+    return (
+        <div className={`field fluid ${style.innerinput}`}>
+            <Field
+                component={DropdownAdapter}
+                className={`fluid icon basic ${style.dropdown}`}
+                search
+                {...props}
+                {...input}
+                validate={validate}
+            />
+        </div>
+    )
+}
+
+const DropdownAdapter = ({ input, meta, ...props }) => {
+    const fieldError = meta.error && meta.touched
+    return (
+        <React.Fragment>
+            {fieldError && <ErrorLabel>{meta.error}</ErrorLabel>}
+            <Dropdown
+                {...input}
+                {...props}
+                labeled
+                button
+                onChange={(e, data) => input.onChange(data.value)}
+            />
+        </React.Fragment>
+    )
+}
+
+const ValueInput = ({ operation, optional, ...props }) => (
+    <Field
+        name={`${operation}.value`}
+        placeholder="Enter amount"
+        parse={normalizeValue}
+        validate={!optional && composeValidators(required, mustBeNumber)}
+        {...props}
+        component={ValueInputAdapter} />
+)
+
+const ValueInputAdapter = ({ input, meta, ...props }) => (
+    <div className={`field ${style.innerinput}`}>
+        {meta.touched && meta.error && <ErrorLabel>{meta.error}</ErrorLabel>}
+        <input {...input} {...props} />
     </div>
 )
 
-const ValueInput = ({ operation }) => (
-    <LabeledField
-        label="Value"
-        name={`${operation}.value`}
-        component="input"
-        placeholder="Enter amount"
-        className={style.innerinput}
-    />
+const ErrorLabel = (props) => (
+    <Label color='red' pointing='below'>{props.children}</Label>
 )
 
-const CurrencyInput = ({ operation, symbols }) => (
+const CurrencyInput = ({ operation, symbols, ...props }) => (
     <InnerRowDropdown
         name={`${operation}.currency`}
         placeholder='Currency'
         options={symbols}
+        {...props}
     />
 )
 
@@ -295,34 +326,25 @@ const ExchangeInput = ({ operation, exchanges }) => (
     />
 )
 
-const InnerRow = ({ operation, label, children, rest }) => (
-    <Segment className={style.formRow}>
-        <InnerRowTitle label={label} />
-        <FieldsGroup width="equal" style={{ marginBottom: "0.25em" }}>
-            {React.Children.map(children, (child) => {
-                return !!child && React.cloneElement(child, { operation, ...rest })
-            })}
-        </FieldsGroup>
-    </Segment >
-)
-
-const DateSelectAdapter = ({ input, meta, ...rest }) => {
+const DateSelectAdapter = ({ input, meta, label, ...rest }) => {
     const { value, ...props } = input
     return (
         <div className={`field ${style.innerinput} ${style.datepicker}`}>
-            <label>{rest.label}</label>
+            <label>{label}</label>
             <DatePicker
-                className={style.datepicker}
                 fixedHeight
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                selected={moment(value)} {...props} />
+                selected={moment(value)}
+                {...props}
+                {...rest}
+            />
         </div>
     )
 }
 
-const TextAreaAdapter = ({ input, meta, ...rest }) => {
+const TextAreaAdapter = ({ input, meta, ...props }) => {
     const style = {
         minHeight: "3em",
         maxHeight: "3em",
@@ -331,31 +353,24 @@ const TextAreaAdapter = ({ input, meta, ...rest }) => {
         border: "none"
     }
     return (
-        <textarea style={style} {...input} {...rest} />
+        <textarea style={style} {...input} {...props} />
     )
 }
 
-const MaskedTimeField = ({ label, className, ...rest }) => (
+const MaskedTimeField = ({ label, className, ...props }) => (
     <div className={`field ${className}`}>
         <label>{label}</label>
         <MaskedInput
             mask={[/\d/, /\d/, ':', /\d/, /\d/, ':', /\d/, /\d/]}
             placeholder="HH:MM:SS"
             keepCharPositions
-            {...rest} />
+            {...props} />
     </div>
 )
 
-const FieldsGroup = ({ children, ...rest }) => (
-    <div className="fields fluid" {...rest}>
+const FieldsGroup = ({ children, ...props }) => (
+    <div className="fields fluid" {...props}>
         {children}
-    </div>
-)
-
-const LabeledField = ({ label, className, ...rest }) => (
-    <div className={`field ${className}`}>
-        <label>{label}</label>
-        <Field {...rest} />
     </div>
 )
 
