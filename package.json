@@ -8,6 +8,7 @@
     "@vx/mock-data": "0.0.165",
     "@vx/scale": "0.0.165",
     "@vx/shape": "0.0.168",
+    "ccxt": "^1.17.47",
     "cryptocurrency-icons": "^0.2.0",
     "custom-react-scripts": "0.2.2",
     "d3-hierarchy": "^1.1.6",
