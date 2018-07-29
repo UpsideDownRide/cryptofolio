@@ -12,8 +12,13 @@
     flex: 1000 0 !important;
 }
 
+/* correction of z-index for text in the dropdown menu - should be moved to SUI css */
 .dropdown > div:first-of-type {
     z-index: 0 !important; 
+}
+
+.dropdown > input {
+    z-index: 1 !important;
 }
 
 .innerinput {
