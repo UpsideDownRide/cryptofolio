@@ -10,14 +10,11 @@ import style from './AddTransactionForm.module.css'
 import moment from 'moment'
 import _ from 'lodash/fp'
 
-// TODO: Refactor repating code for conditional content
 // TODO: Validation of form input
 // TODO: Time control to change the same field as date
 // TODO: Dropdown icon at the select action button is not rounded
 // TODO: Top button group breaks when viewport is narrow
 // TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
-// TODO: Send issue about Z-Index of dropdown menu being lower than text in other dropdowns
-// TODO: Reset should reset transaction type displayed to select?
 // TODO: Closing the modal only with close button 
 // TODO: Reset button - currently bad implementation is commented out in the code
 
@@ -37,7 +34,7 @@ const TransactionForm = ({ formValues, subscription, onSubmit }) => {
                 onSubmit={onSubmit}
                 subscription={subscription}
                 initialValues={INITIAL_VALUES}
-                render={({ handleSubmit, reset, submitting, pristine, invalid, change }) => (
+                render={({ handleSubmit, reset, submitting, pristine, invalid, form }) => (
                     <form onSubmit={handleSubmit} className={`ui form ${style.form}`}>
                         <Segment.Group>
                             <Button.Group attached="top">
@@ -48,7 +45,6 @@ const TransactionForm = ({ formValues, subscription, onSubmit }) => {
                                     placeholder='Select action'
                                     options={TRANSACTIONS}
                                     validate={required}
-                                    primary
                                 />
                                 <CancelButton />
                             </Button.Group>
@@ -59,25 +55,23 @@ const TransactionForm = ({ formValues, subscription, onSubmit }) => {
                                     return (
                                         <React.Fragment>
                                             {!operationValue && <FormFillerSegment />}
-                                            {operationValue && <DateTimeSegment />}
-                                            {operationValue === 'Buy' && <BuyContent exchanges={EXCHANGES} symbols={SYMBOLS} changeValue={change} />}
-                                            {operationValue === 'Sell' && <SellContent exchanges={EXCHANGES} symbols={SYMBOLS} changeValue={change} />}
-                                            {operationValue === 'Trade' && <ExchangeContent exchanges={EXCHANGES} symbols={SYMBOLS} changeValue={change} />}
-                                            {operationValue === 'Deposit' && <DepositContent exchanges={EXCHANGES} symbols={SYMBOLS} changeValue={change} />}
-                                            {operationValue === 'Withdraw' && <WithdrawContent exchanges={EXCHANGES} symbols={SYMBOLS} changeValue={change} />}
-                                            {operationValue === 'Mining' && <MiningContent exchanges={EXCHANGES} symbols={SYMBOLS} changeValue={change} />}
                                             {operationValue &&
-                                                (<React.Fragment>
+                                                <React.Fragment>
+                                                    <DateTimeSegment />
+                                                    <DisplayConditionalContent operationValue={operationValue}
+                                                        exchanges={EXCHANGES}
+                                                        symbols={SYMBOLS}
+                                                        changeValue={form.change} />
                                                     <CommentSegment />
                                                     <Button.Group attached='bottom'>
                                                         <AddTransactionButton disabled={pristine || invalid} />
                                                     </Button.Group>
-                                                </React.Fragment>)}
+                                                </React.Fragment>
+                                            }
                                         </React.Fragment>
                                     )
                                 }}
                             </FormSpy>
-
                         </Segment.Group>
                         <FormSpy subscription={{ values: true }}>
                             {({ values }) => (
@@ -93,59 +87,70 @@ const TransactionForm = ({ formValues, subscription, onSubmit }) => {
 
 const FormFillerSegment = () => (
     <React.Fragment>
-        <div style={{padding: "10em 0"}}>
+        <div style={{ padding: "10em 0" }}>
             <span style={{ color: "#aaa" }}>Choose an operation</span>
         </div>
     </React.Fragment>
 )
 
-const BuyContent = ({ exchanges, symbols, changeValue }) => (
+const BuyContent = ({ exchanges, ...rest }) => (
     <React.Fragment>
-        <BuyRow exchanges={exchanges} symbols={symbols} changeValue={changeValue} />
-        <PriceRow symbols={symbols} changeValue={changeValue} />
-        <FeeRow symbols={symbols} changeValue={changeValue} />
+        <InRow label="Bought" exchanges={exchanges} {...rest} />
+        <OutRow label="Price" {...rest} />
+        <FeeRow {...rest} />
     </React.Fragment>
 )
 
-const SellContent = ({ exchanges, symbols, changeValue }) => (
+const SellContent = ({ exchanges, ...rest }) => (
     <React.Fragment>
-        <SellRow exchanges={exchanges} symbols={symbols} changeValue={changeValue} />
-        <PriceRow symbols={symbols} changeValue={changeValue} />
-        <FeeRow symbols={symbols} changeValue={changeValue} />
+        <OutRow label="Sold" exchanges={exchanges} {...rest} />
+        <InRow label="Price" {...rest} />
+        <FeeRow {...rest} />
     </React.Fragment>
 )
 
-const ExchangeContent = ({ exchanges, symbols, changeValue }) => (
+const TransferContent = ({ exchanges, ...rest }) => (
     <React.Fragment>
-        <BuyRow exchanges={exchanges} symbols={symbols} changeValue={changeValue} />
-        <SellRow exchanges={exchanges} symbols={symbols} changeValue={changeValue} />
-        <FeeRow symbols={symbols} changeValue={changeValue} />
+        <OutRow label="From" exchanges={exchanges} {...rest} />
+        <InRow label="To" exchanges={exchanges} {...rest} />
+        <FeeRow {...rest} />
     </React.Fragment>
 )
 
-const DepositContent = ({ exchanges, symbols, changeValue }) => (
+const DepositContent = ({ exchanges, ...rest }) => (
     <React.Fragment>
-        <DepositRow exchanges={exchanges} symbols={symbols} changeValue={changeValue} />
-        <PriceRow symbols={symbols} changeValue={changeValue} />
-        <FeeRow symbols={symbols} changeValue={changeValue} />
+        <InRow label="Deposit" exchanges={exchanges} {...rest} />
+        <FeeRow {...rest} />
     </React.Fragment>
 )
 
-const WithdrawContent = ({ exchanges, symbols, changeValue }) => (
+const WithdrawContent = ({ exchanges, ...rest }) => (
     <React.Fragment>
-        <WithdrawRow exchanges={exchanges} symbols={symbols} changeValue={changeValue} />
-        <PriceRow symbols={symbols} changeValue={changeValue} />
-        <FeeRow symbols={symbols} changeValue={changeValue} />
+        <OutRow label="Withdraw" exchanges={exchanges} {...rest} />
+        <FeeRow {...rest} />
     </React.Fragment>
 )
 
-const MiningContent = ({ exchanges, symbols, changeValue }) => (
+const MiningContent = ({ exchanges, ...rest }) => (
     <React.Fragment>
-        <MiningRow exchanges={exchanges} symbols={symbols} changeValue={changeValue} />
-        <PriceRow symbols={symbols} changeValue={changeValue} />
-        <FeeRow symbols={symbols} changeValue={changeValue} />
+        <InRow label="Mined" operation="in" exchanges={exchanges} {...rest} />
+        <FeeRow {...rest} />
     </React.Fragment>
 )
+
+const CONTENT_COMPONENTS = {
+    'Buy': BuyContent,
+    'Sell': SellContent,
+    'Transfer': TransferContent,
+    'Deposit': DepositContent,
+    'Withdraw': WithdrawContent,
+    'Mining': MiningContent,
+}
+
+const DisplayConditionalContent = ({ operationValue, ...rest }) => {
+    const ContentComponent = CONTENT_COMPONENTS[operationValue]
+    return <ContentComponent {...rest} />
+}
 
 const DateTimeSegment = () => (
     <InnerRow label={`Date & time`}>
@@ -168,166 +173,43 @@ const CommentSegment = () => (
     </Segment>
 )
 
-class BuyRow extends React.Component {
-    constructor(props) {
-        super(props)
-        this.operation = 'in'
-    }
+const FeeRow = (props) => <TransactionRow label="Fee" operation="fee" {...props} />
+const InRow = (props) => <TransactionRow operation="in" {...props} />
+const OutRow = (props) => <TransactionRow operation="out" {...props} />
+
+class TransactionRow extends React.Component {
 
     componentWillUnmount() {
-        this.props.changeValue(this.operation, undefined)
+        this.props.changeValue(this.props.operation, undefined)
     }
 
     render() {
+        const isNotPriceOrFee = this.props.label !== "Price" && this.props.operation !== "fee"
         return (
-            <InnerRow label="Bought" operation={this.operation}>
-                <ExchangeInput exchanges={this.props.exchanges} />
+            <InnerRow label={this.props.label} operation={this.props.operation}>
+                {isNotPriceOrFee && <ExchangeInput exchanges={this.props.exchanges} />}
                 <CurrencyInput symbols={this.props.symbols} />
                 <ValueInput />
             </InnerRow>
         )
     }
 }
-
-class SellRow extends React.Component {
-    constructor(props) {
-        super(props)
-        this.operation = 'out'
-    }
-
-    componentWillUnmount() {
-        this.props.changeValue(this.operation, undefined)
-    }
-
-    render() {
-        return (
-            <InnerRow label="Sold" operation={this.operation}>
-                <ExchangeInput exchanges={this.props.exchanges} />
-                <CurrencyInput symbols={this.props.symbols} />
-                <ValueInput />
-            </InnerRow>
-        )
-    }
-}
-
-class DepositRow extends React.Component {
-    constructor(props) {
-        super(props)
-        this.operation = 'in'
-    }
-
-    componentWillUnmount() {
-        this.props.changeValue(this.operation, undefined)
-    }
-
-    render() {
-        return (
-            <InnerRow label="Deposit" operation={this.operation}>
-                <ExchangeInput exchanges={this.props.exchanges} />
-                <CurrencyInput symbols={this.props.symbols} />
-                <ValueInput />
-            </InnerRow>
-        )
-    }
-}
-
-class WithdrawRow extends React.Component {
-    constructor(props) {
-        super(props)
-        this.operation = 'out'
-    }
-
-    componentWillUnmount() {
-        this.props.changeValue(this.operation, undefined)
-    }
-
-    render() {
-        return (
-            <InnerRow label="Withdraw" operation={this.operation}>
-                <ExchangeInput exchanges={this.props.exchanges} />
-                <CurrencyInput symbols={this.props.symbols} />
-                <ValueInput />
-            </InnerRow>
-        )
-    }
-}
-
-class MiningRow extends React.Component {
-    constructor(props) {
-        super(props)
-        this.operation = 'in'
-    }
-
-    componentWillUnmount() {
-        this.props.changeValue(this.operation, undefined)
-    }
-
-    render() {
-        return (
-            <InnerRow label="Mined" operation={this.operation}>
-                <ExchangeInput exchanges={this.props.exchanges} />
-                <CurrencyInput symbols={this.props.symbols} />
-                <ValueInput />
-            </InnerRow>
-        )
-    }
-}
-
-class PriceRow extends React.Component {
-    constructor(props) {
-        super(props)
-        this.operation = 'out'
-    }
-
-    componentWillUnmount() {
-        this.props.changeValue(this.operation, undefined)
-    }
-
-    render() {
-        return (
-            <InnerRow label="Price" operation={this.operation}>
-                <CurrencyInput symbols={this.props.symbols} />
-                <ValueInput />
-            </InnerRow>
-        )
-    }
-}
-
-class FeeRow extends React.Component {
-    constructor(props) {
-        super(props)
-        this.operation = 'fee'
-    }
-
-    componentWillUnmount() {
-        this.props.changeValue(this.operation, undefined)
-    }
-
-    render() {
-        return (
-            <InnerRow label="Fee" operation={this.operation}>
-                <CurrencyInput symbols={this.props.symbols} />
-                <ValueInput />
-            </InnerRow>
-        )
-    }
-}
-
 
 const DropdownAdapter = ({ input, meta, ...rest }) => {
     const fieldError = meta.error && meta.touched
     return (
-    <React.Fragment>
-        <Dropdown
-            {...input}
-            {...rest}
-            error={fieldError}
-            labeled
-            button
-            onChange={(event, data) => input.onChange(data.value)}
-        />
-    </React.Fragment>
-)}
+        <React.Fragment>
+            <Dropdown
+                {...input}
+                {...rest}
+                error={fieldError}
+                labeled
+                button
+                onChange={(event, data) => input.onChange(data.value)}
+            />
+        </React.Fragment>
+    )
+}
 
 // const ResetButton = (props) => (
 //     <Button
@@ -345,7 +227,8 @@ const CancelButton = () => (
     <Button
         icon
         labelPosition="right"
-        negative>
+        negative
+    >
         <Icon name="window close outline"></Icon>
         Cancel
     </Button>
@@ -416,7 +299,7 @@ const InnerRow = ({ operation, label, children, rest }) => (
         <InnerRowTitle label={label} />
         <FieldsGroup width="equal" style={{ marginBottom: "0.25em" }}>
             {React.Children.map(children, (child) => {
-                return React.cloneElement(child, { operation, ...rest })
+                return !!child && React.cloneElement(child, { operation, ...rest })
             })}
         </FieldsGroup>
     </Segment >

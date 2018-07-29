@@ -8,7 +8,7 @@ const formValues = {
     INITIAL_VALUES: { "date": moment().format('LLL') },
     SYMBOLS: _SYMBOLS.map(el => ({ key: el, value: el, text: el })),
     EXCHANGES: ["Binance", "Coinbase", "GDAX"].map(el => ({ key: el, value: el, text: el })),
-    TRANSACTIONS: ["Buy", "Sell", "Trade", "Deposit", "Withdraw", "Mining"].map(el => ({ key: el, value: el, text: el }))
+    TRANSACTIONS: ["Buy", "Sell", "Transfer", "Deposit", "Withdraw", "Mining"].map(el => ({ key: el, value: el, text: el }))
 }
 
 class AddTransaction extends Component {
