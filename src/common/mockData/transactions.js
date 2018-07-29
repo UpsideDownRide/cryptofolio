@@ -12,7 +12,7 @@ const data = Array(10).fill().map(el => {
         operation: randomElement(OPERATIONS),
         in: { value: random(0, 100, 2), currency: randomSymbol(), exchange: randomElement(EXCHANGES) },
         out: { value: random(0, 100, 2), currency: randomSymbol(), exchange: randomElement(EXCHANGES) },
-        fee: { currency: randomSymbol(), value: random(0, 1, 2) },
+        fee: { value: random(0, 1, 2), currency: randomSymbol() },
     }
 })
 

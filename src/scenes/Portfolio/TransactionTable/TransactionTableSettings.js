@@ -7,19 +7,24 @@ import moment from 'moment'
 const currencyCell = props => {
     if (!props.value) return null
     else return (
-        <span>
-            <p>{padDecimal(props.value.value, 2)}</p>
-            <div style={{ margin: "2.5px 0 0 0.5em" }}>
-                <CurrencyIcon name={props.value.currency} />
-            </div>
-        </span>
+        <div>
+            <span>{padDecimal(props.value.value, 2)}
+                <CurrencyIcon style={{margin: "0.15em 0 0 0.8em"}} name={props.value.currency} />
+            </span>
+            <span style={{ color: "#aaa", fontSize: "0.7em", width: "100%", textAlign: "center" }}>{props.value.currency}</span>
+        </div >
     )
 }
 
 const timeCell = props => (
-    <span>
-        {moment(props.value).format('LLL')}
-    </span>
+    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+        <span style={{ fontSize: "0.8em" }}>
+            <strong>{moment(props.value).format('LL')}</strong>
+        </span>
+        <span style={{ color: "#aaa", fontSize: "0.7em", width: "100%", textAlign: "center" }}>
+            {moment(props.value).format('HH:mm:ss')}
+        </span>
+    </div>
 )
 
 const columnsSettings = [{
@@ -36,30 +41,32 @@ const columnsSettings = [{
 }, {
     Header: 'In',
     columns: [{
-        Header: 'Exchange',
-        accessor: 'in.exchange',
-    }, {
         Header: 'Amount',
         accessor: 'in',
         className: style.tableCellNumbers,
         Cell: currencyCell,
+    }, {
+        Header: 'Exchange',
+        accessor: 'in.exchange',
     }]
 }, {
     Header: 'Out',
     columns: [{
-        Header: 'Exchange',
-        accessor: 'in.exchange',
-    }, {
         Header: 'Amount',
         accessor: 'out',
         className: style.tableCellNumbers,
         Cell: currencyCell,
+    }, {
+        Header: 'Exchange',
+        accessor: 'in.exchange',
     }]
 }, {
     Header: 'Fee',
     columns: [{
-        accessor: 'fee.value',
+        accessor: 'fee',
+        width: 85,
         className: style.tableCellNumbers,
+        Cell: currencyCell
     }]
 },]
 

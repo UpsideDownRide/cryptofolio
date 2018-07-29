@@ -5,7 +5,7 @@ import { Segment } from 'semantic-ui-react'
 
 
 const BalanceTablePane = (props) => (
-    <Segment>
+    <Segment style={{ padding:0 }}>
         <Table data={props.data} columns={props.columnSettings} />
     </Segment>
 )

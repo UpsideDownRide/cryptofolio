@@ -11,16 +11,8 @@ const Dashboard = () => {
         <Container fluid as="section">
             <Grid doubling columns={4} padded='horizontally' style={{ paddingTop: "0.5em" }}>
                 <Grid.Row style={{ paddingBottom: 0 }}>
-                    <Grid.Column>
-                        <TextPane
-                            title="Total value of coins:"
-                            value={123} currency="GBP"
-                            percentChange={0.021}
-                            cryptoValue={0.28}
-                            cryptoCurrency="ETH"
-                        />
-                    </Grid.Column>
                     <Grid.Column><TotalValueContainer/></Grid.Column>
+                    <Grid.Column><TextPane /></Grid.Column>
                     <Grid.Column><TextPane /></Grid.Column>
                     <Grid.Column><TextPane /></Grid.Column>
                 </Grid.Row>
