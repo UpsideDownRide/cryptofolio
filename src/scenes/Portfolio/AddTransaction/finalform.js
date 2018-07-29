@@ -10,7 +10,6 @@ import style from './AddTransactionForm.module.css'
 import moment from 'moment'
 import _ from 'lodash/fp'
 
-// TODO: Time control to change the same field as date
 // TODO: Top button group breaks when viewport is narrow
 // TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
 // TODO: Reset button - currently bad implementation is commented out in the code
@@ -26,7 +25,14 @@ const normalizeValue = value => {
     return onlyNums
 }
 
+const formatDateTime = (date, time) => {
+    const [h, m, s] = time.split(':')
+    return moment(date).hours(h).minutes(m).seconds(s).milliseconds(0).toISOString()
+}
+
 const onSubmit = (submitRedux, closeModal) => values => {
+    values.date = formatDateTime(values.date, values.time)
+    values.time = null
     submitRedux(values);
     closeModal()
 };
@@ -197,11 +203,8 @@ const DisplayConditionalContent = ({ operationValue, ...props }) => {
 
 const DateTimeSegment = () => (
     <InnerRow label={`Date & time`}>
-        <Field
-            name="date"
-            component={DateSelectAdapter}
-        />
-        <MaskedTimeField name="time" className={`field ${style.innerinput}`} />
+        <Field name="date" component={DateSelectAdapter} />
+        <Field name="time" component={MaskedInputAdapter} />
     </InnerRow>
 )
 
@@ -326,8 +329,8 @@ const ExchangeInput = ({ operation, exchanges }) => (
     />
 )
 
-const DateSelectAdapter = ({ input, meta, label, ...rest }) => {
-    const { value, ...props } = input
+const DateSelectAdapter = ({ input, meta, label, ...props }) => {
+    const { value, ...rest } = input
     return (
         <div className={`field ${style.innerinput} ${style.datepicker}`}>
             <label>{label}</label>
@@ -337,6 +340,7 @@ const DateSelectAdapter = ({ input, meta, label, ...rest }) => {
                 showYearDropdown
                 dropdownMode="select"
                 selected={moment(value)}
+                onChange={date => (date && date.format())}
                 {...props}
                 {...rest}
             />
@@ -357,13 +361,14 @@ const TextAreaAdapter = ({ input, meta, ...props }) => {
     )
 }
 
-const MaskedTimeField = ({ label, className, ...props }) => (
-    <div className={`field ${className}`}>
+const MaskedInputAdapter = ({ input, meta, label, ...props}) => (
+    <div className={`field ${style.innerinput}`}>
         <label>{label}</label>
         <MaskedInput
             mask={[/\d/, /\d/, ':', /\d/, /\d/, ':', /\d/, /\d/]}
             placeholder="HH:MM:SS"
             keepCharPositions
+            {...input}
             {...props} />
     </div>
 )

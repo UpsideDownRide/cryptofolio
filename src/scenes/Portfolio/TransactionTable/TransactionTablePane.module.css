@@ -1,27 +1,12 @@
-.body {
-    margin: 1em;
-    padding: 10px 15px;
-    background-color: white;
-    font-size: 100%;
-    border-radius: 5px;
-    border: 1px solid lightgrey;
-}
-.title {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; 
-    margin-bottom: 5px;
-}
-.titlename {
-    font-size: 125%;
-}
-
-.content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end; 
-}
-
 .tableCellNumbers {
     text-align: right;
+}
+
+.tableCellNumbers span {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tableCellNumbers > span > div {
+    margin: 0.05em 0 0 0.5em;
 }

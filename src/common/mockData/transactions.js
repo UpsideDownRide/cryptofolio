@@ -8,7 +8,7 @@ const EXCHANGES = ["Binance", "Coinbase", "GDAX"]
 
 const data = Array(10).fill().map(el => {
     return {
-        date: moment().format('LLL'),
+        date: moment().toISOString(),
         operation: randomElement(OPERATIONS),
         in: { value: random(0, 100, 2), currency: randomSymbol(), exchange: randomElement(EXCHANGES) },
         out: { value: random(0, 100, 2), currency: randomSymbol(), exchange: randomElement(EXCHANGES) },

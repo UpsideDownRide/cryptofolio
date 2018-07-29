@@ -2,21 +2,25 @@ import React from 'react'
 import style from './TransactionTablePane.module.css'
 import CurrencyIcon from 'common/utils/CurrencyIcon';
 import { padDecimal } from 'common/utils/padNumber';
+import moment from 'moment'
 
-const currencyCell = props => {
-    return (
-        <React.Fragment>
-            <span style={{ display: "flex", justifyContent: "flex-end" }}>
-                <p>{padDecimal(props.value.value, 2)}</p>
-                <div style={{ margin: "2.5px 0 0 0.5em" }}><CurrencyIcon name={props.value.currency} /></div>
-            </span>
-        </React.Fragment>
-    )
-}
+const currencyCell = props => (
+    <span>
+        <p>{padDecimal(props.value.value, 2)}</p>
+        <div style={{ margin: "2.5px 0 0 0.5em" }}><CurrencyIcon name={props.value.currency} /></div>
+    </span>
+)
+
+const timeCell = props => (
+    <span>
+        {moment(props.value).format('LLL')}
+    </span>
+)
 
 const columnsSettings = [{
     Header: 'Date',
     accessor: 'date',
+    Cell: timeCell,
 }, {
     Header: 'Operation',
     accessor: 'operation',
@@ -37,6 +41,6 @@ const columnsSettings = [{
     Header: 'Fee',
     accessor: 'fee.value',
     className: style.tableCellNumbers
-}, ]
+},]
 
 export default columnsSettings
