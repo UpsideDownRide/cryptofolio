@@ -6,6 +6,7 @@ import { Container, Grid } from 'semantic-ui-react'
 import TotalValueContainer from './TextPane/TotalValueContainer';
 import ValueTreeMap from './GraphPane/ValueTreeMap'
 import CurrentBitcoinPrice from './TextPane/CurrentBitcoinPrice';
+import BitcoinPrice from './GraphPane/BitcoinPrice';
 
 const Dashboard = () => {
     return (
@@ -26,7 +27,7 @@ const Dashboard = () => {
                 <Grid.Row style={{ paddingTop: "0.5em" }} columns={3}>
                     <Grid.Column><GraphPane chart='treeMap' /></Grid.Column>
                     <Grid.Column><ValueTreeMap /></Grid.Column>
-                    <Grid.Column><GraphPane chart='area' /></Grid.Column>
+                    <Grid.Column><BitcoinPrice /></Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column></Grid.Column>

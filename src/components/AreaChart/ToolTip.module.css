@@ -1,0 +1,33 @@
+.tooltip {
+    background-color: rgba(0, 0, 0, 0.87);
+    color: white;
+    padding: 0 0 0.2em 0;
+    margin: 0;
+    border-radius: 5px;
+}
+
+.tooltipLabel {
+    font-size: 0.9em;
+    font-weight: 900;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.87);
+    color: black;
+}
+
+.tooltipName {
+    padding-right: 1em;
+    font-variant: small-caps;
+}
+
+.tooltipData {
+    display: flex;
+    font-size: 1em;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 0 0.4em 0.2em 0.4em;
+}
+
+.tooltipNumbers {
+    font-size: 0.9em;
+    font-weight: 700;
+}
