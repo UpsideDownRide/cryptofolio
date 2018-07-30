@@ -29,7 +29,6 @@ const BitcoinChart = (props) => {
                 <Tooltip
                     content={<CustomTooltip />}
                     cursor={{ strokeWidth: 0.75 }}
-                    animationEasing="ease-in-out"
                     isAnimationActive={false}
                 />
                 <Area type="linear" dataKey="close"

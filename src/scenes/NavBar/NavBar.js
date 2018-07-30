@@ -29,18 +29,18 @@ export default class MenuExampleInverted extends Component {
                         as={NavLink}
                         exact
                         to={LINKS.dashboard}
-                        active={activeItem === 'home'}
+                        active={activeItem === 'dashboard'}
                         onClick={this.handleItemClick} />
                     <Menu.Item
                         name='transactions'
-                        active={activeItem === 'Transactions'}
+                        active={activeItem === 'transactions'}
                         onClick={this.handleItemClick}
                         as={NavLink}
                         to={LINKS.transactions}
                     />
                     <Menu.Item
                         name='login'
-                        active={activeItem === 'Login'}
+                        active={activeItem === 'login'}
                         onClick={this.handleItemClick}
                         position='right'
                     />

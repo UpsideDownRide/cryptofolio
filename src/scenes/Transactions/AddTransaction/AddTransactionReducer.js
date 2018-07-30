@@ -12,6 +12,8 @@ const addTransaction = (state, action) => (
     set('data', concat(state.data, action.transaction), state)
 )
 
+export const SUBMIT_TRANSACTION = 'SUBMIT_TRANSACTION'
+
 const actions = {
     SUBMIT_TRANSACTION: addTransaction
 }

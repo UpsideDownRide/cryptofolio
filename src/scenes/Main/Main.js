@@ -5,7 +5,7 @@ import Transactions from '../Transactions/Transactions'
 import Login from '../Login/Login'
 import { Container } from 'semantic-ui-react'
 
-const main = () => (
+const Main = () => (
     <Container fluid style={{paddingTop: "40px", flex: 1}}>
         <Switch>
             <Route path="/dashboard" component={Dashboard} />
@@ -15,4 +15,4 @@ const main = () => (
     </Container>
 )
 
-export default main
+export default Main
