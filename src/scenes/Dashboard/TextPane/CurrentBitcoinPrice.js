@@ -55,7 +55,7 @@ export class CurrentBitcoinPrice extends Component {
             <TextPane
                 title="Current Bitcoin price:"
                 botLeft={`${currentPrice} USD`}
-                topRight={<span>1d: <StylePercent value={dayChange || 0} /></span>}
+                topRight={<span>1d: <StylePercent value={dayChange || 0.001} /></span>}
                 botRight={this.state.priceTime || "HH:MM:SS"}
                 loading={this.state.loading}
                 loadingMessage="Loading current Bitcoin price"

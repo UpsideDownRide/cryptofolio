@@ -1,30 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
 
-export class ValueTreeMap extends Component {
-    static propTypes = {
-        //        prop: PropTypes
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <GraphPane chart="treeMap" {...this.props}/>
-            </React.Fragment>
-        )
-    }
-}
+const ValueTreeMap = (props) => (
+    <GraphPane chart="treeMap" {...this.props} />
+)
 
 const mapStateToProps = (state) => ({
-    treeMapData: state.balance.data
-        .map(el => ({name: el.currency, size: el.value}))
+    data: state.balance.data
+        .map(el => ({ name: el.currency, size: el.value }))
         .sort((a, b) => b.size - a.size)
 })
 
-const mapDispatchToProps = {
-
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ValueTreeMap)

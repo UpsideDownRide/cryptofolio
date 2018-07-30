@@ -25,7 +25,7 @@ const Dashboard = () => {
                 </Grid.Row>
                 <Grid.Row style={{ paddingTop: "0.5em" }} columns={3}>
                     <Grid.Column><GraphPane chart='treeMap' /></Grid.Column>
-                    <Grid.Column><ValueTreeMap/></Grid.Column>
+                    <Grid.Column><ValueTreeMap /></Grid.Column>
                     <Grid.Column><GraphPane chart='area' /></Grid.Column>
                 </Grid.Row>
                 <Grid.Row>

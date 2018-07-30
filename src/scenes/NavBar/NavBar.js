@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom'
 import { Menu, Container } from 'semantic-ui-react'
 
 const LINKS = {
-    dashboard: '/',
-    portfolio: '/portfolio',
+    dashboard: '/dashboard',
+    transactions: '/transactions',
     login: '/login',
 }
 
@@ -36,7 +36,7 @@ export default class MenuExampleInverted extends Component {
                         active={activeItem === 'Transactions'}
                         onClick={this.handleItemClick}
                         as={NavLink}
-                        to={LINKS.portfolio}
+                        to={LINKS.transactions}
                     />
                     <Menu.Item
                         name='login'

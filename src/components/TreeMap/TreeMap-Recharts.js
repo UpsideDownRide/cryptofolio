@@ -42,7 +42,7 @@ const SimpleTreemap = (props) => (
         <Treemap
             width={300}
             height={200}
-            data={props.treeMapData}
+            data={props.data}
             dataKey="size"
             ratio={(1 + Math.sqrt(5)) / 2}
             stroke="#fff"

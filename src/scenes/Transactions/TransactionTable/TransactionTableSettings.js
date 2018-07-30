@@ -58,7 +58,7 @@ const columnsSettings = [{
         Cell: currencyCell,
     }, {
         Header: 'Exchange',
-        accessor: 'in.exchange',
+        accessor: 'out.exchange',
     }]
 }, {
     Header: 'Fee',
