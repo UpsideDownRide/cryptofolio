@@ -1,10 +1,10 @@
 import React from 'react'
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import style from './ToolTip.module.css'
+import _ from 'lodash'
 
-const formatNumbers = (tick) => tick !== 0 ? tick / 1000 + "k" : ""
-
-const areaChart = (props) => {
+const BitcoinChart = (props) => {
+    const {ticks, domain} = calculateTicks(props.data)
     return (
         <ResponsiveContainer height={200}>
             <AreaChart data={props.data}
@@ -21,6 +21,8 @@ const areaChart = (props) => {
                     tickMargin={5}
                     tickLine={false}
                     tickSize={3}
+                    ticks={ticks}
+                    domain={domain}
                     tickFormatter={formatNumbers} 
                 />
                 <CartesianGrid strokeWidth={0.75} vertical={false} stroke="#eee" />
@@ -30,7 +32,7 @@ const areaChart = (props) => {
                     animationEasing="ease-in-out"
                     isAnimationActive={false}
                 />
-                <Area type="monotone" dataKey="close"
+                <Area type="linear" dataKey="close"
                     stroke="#8884d8"
                     fillOpacity={0.5}
                     fill="#8884d8"
@@ -38,6 +40,13 @@ const areaChart = (props) => {
             </AreaChart>
         </ResponsiveContainer>
     )
+}
+
+const formatNumbers = (tick) => tick !== 0 ? tick / 1000 + "k" : ""
+const getThousands = (num) => Math.floor(num/1000)*1000
+const calculateTicks = (data) => {
+    const [min, max] = [getThousands(_.minBy(data, 'close').close), getThousands(_.maxBy(data, 'close').close)]
+    return {ticks: _.range(min, max + 501, 500), domain: [min, max+500]}
 }
 
 const CustomTooltip = (props) => {
@@ -67,4 +76,4 @@ const CustomTooltipData = (props) => (
         <span className={style.tooltipNumbers}>{props.data}</span>
     </div>
 )
-export default areaChart
+export default BitcoinChart
