@@ -6,16 +6,19 @@
     border-radius: 5px;
     border: 1px solid lightgrey;
 }
+
 .title {
     display: flex;
     justify-content: space-between;
     align-items: baseline; 
     margin-bottom: 15px;
 }
+
 .titlename {
     font-size: 100%;
     color: darkgray;
 }
+
 .titlenumber {
     font-size: 90%;
     font-weight: bold;
@@ -27,9 +30,11 @@
     align-items: baseline; 
     font-weight: 800;
 }
+
 .contentprimary {
     font-size: 150%;
 }
+
 .contentsecondary {
     color: darkgrey;
 }

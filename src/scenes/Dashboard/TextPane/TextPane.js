@@ -1,41 +1,28 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 import style from './TextPane.module.css'
 import StylePercent from 'common/utils/StylePercent'
-import round from 'common/utils/round'
-import { Segment } from 'semantic-ui-react'
-
-export const TotalValue = (props) => TextPane({title: "Total value of coins:", ...props})
+import { Segment, Dimmer, Loader } from 'semantic-ui-react'
 
 export const TextPane = (props) => {
-    const value = round(props.value)
     const name = props.title || "Placeholder"
-    const number = <StylePercent value={(props.percentChange || 0.05329)}/>
-    const primary = `${value || 4768} ${props.currency || "PLN"}`
-    const secondary = `${props.cryptoValue || 0.79} ${props.cryptoCurrency || "BTC"}`
+    const topRight = props.topRight || <StylePercent value={0.05329}/>
+    const botLeft = props.botLeft || "4768 PLN"
+    const botRight = props.botRight || "0.79 BTC"
     
     return (
-        <Segment>
-        
+        <Dimmer.Dimmable as={Segment} blurring dimmed={!!props.loading}>
+            <Dimmer active={!!props.loading} inverted><Loader indeterminate size="mini">{props.loading && props.loadingMessage}</Loader></Dimmer>
             <div className={style.title}>
                 <span className={style.titlename}>{name}</span>
-                <span className={style.titlenumber}>{number}</span>
+                <span className={style.titlenumber}>{topRight}</span>
             </div>
             <div className={style.content}>
-                <span className={style.contentprimary}>{primary}</span>
-                <span className={style.contentsecondary}>{secondary}</span>
+                <span className={style.contentprimary}>{botLeft}</span>
+                <span className={style.contentsecondary}>{botRight}</span>
             </div>
-        </Segment>
+        </Dimmer.Dimmable>
     )
-}
-
-TextPane.propTypes = {
-    title: PropTypes.string,
-    percentChange: PropTypes.number,
-    value: PropTypes.number,
-    currency: PropTypes.string,
-    cryptoValue: PropTypes.number,
-    cryptoCurrency: PropTypes.string,
 }
 
 export default TextPane

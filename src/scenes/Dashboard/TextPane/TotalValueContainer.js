@@ -1,24 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { TotalValue } from './TextPane'
+import TextPane from './TextPane'
+import round from 'common/utils/round'
 
-export class TotalValueContainer extends Component {
-    static propTypes = {
-        //prop: PropTypes
-    }
+const TotalValueContainer = (props) => {
+    const totalValue = `${round(props.totalValue, 2)} USD`
+    return (
+        <TextPane title="Total value of coins:" botLeft={totalValue} />
+    )
 
-    render() {
-        return (
-            <React.Fragment>
-                <TotalValue value={this.props.totalValue}/>
-            </React.Fragment>
-        )
-    }
 }
 
 const mapStateToProps = (state) => ({
-    totalValue: state.balance.data.reduce((acc, el) => acc+el.value, 0),
+    totalValue: state.balance.data.reduce((acc, el) => acc + el.value, 0),
 })
 
 const mapDispatchToProps = {
