@@ -18,9 +18,11 @@ export const fetchTicker = () => dispatch => {
 }
 
 const getTickerAndPrevious = async () => {
-    const ticker = await exchange.fetchTicker('BTC/USD')
+    const tickers = await exchange.fetchTickers()
+    const ticker = tickers['BTC/USD']
+    //const ticker = await exchange.fetchTicker('BTC/USD')
     const previous = await exchange.fetchOHLCV('BTC/USD', '5m', stampDaysAgo(1), 1)
-    return {ticker: ticker, previous: previous}
+    return {tickers: tickers, ticker: ticker, previous: previous}
 }
 
 export const fetchTickerBegin = () => ({
