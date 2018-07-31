@@ -1,19 +1,20 @@
-import { randomNumber as random } from 'common/utils/random'
-import { randomSymbol } from './currencies'
-import { randomElement } from 'common/utils/random';
-import moment from 'moment'
-
-const OPERATIONS = ["Trade", "Withdraw", "Deposit", "Exchange", "Mining"]
-const EXCHANGES = ["Binance", "Coinbase", "GDAX"]
-
-const data = Array(10).fill().map(el => {
-    return {
-        date: moment().toISOString(),
-        operation: randomElement(OPERATIONS),
-        in: { value: random(0, 100, 2), currency: randomSymbol(), exchange: randomElement(EXCHANGES) },
-        out: { value: random(0, 100, 2), currency: randomSymbol(), exchange: randomElement(EXCHANGES) },
-        fee: { value: random(0, 1, 2), currency: randomSymbol() },
-    }
-})
+const data = [{
+    date: '2017-07-31T15:24:48.000Z',
+    operation: 'Deposit',
+    in: { exchange: 'Kraken', currency: 'USD', value: '5000' },
+}, { date: '2018-07-31T15:39:49.000Z',
+    operation: 'Buy',
+    in: { exchange: 'Kraken', currency: 'ETH', value: '10' },
+    out: { currency: 'USD', value: '2000' },
+    fee: { currency: 'USD', value: '5' },
+    comment: 'First coins wooohooo!'
+}, { date: '2018-07-31T15:41:51.000Z',
+    operation: 'Buy',
+    in: { exchange: 'Kraken', currency: 'BTC', value: '1' },
+    out: { currency: 'USD', value: '2990' },
+    fee: { currency: 'USD', value: '5' },
+    comment: 'BTC BTC BTC!!'
+},
+]
 
 export default data

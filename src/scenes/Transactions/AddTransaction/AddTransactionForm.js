@@ -8,11 +8,15 @@ import MaskedInput from 'react-text-mask'
 import { Label, Button, Icon, Segment, Dropdown, Grid } from 'semantic-ui-react'
 import style from './AddTransactionForm.module.css'
 import moment from 'moment'
-import _ from 'lodash/fp'
+import _ from 'lodash'
 
-// TODO: Top and buttom button groups overflow when viewport is narrow
+// TODO: Search not working in dropdowns currently - probably related to addition of icons. (Maybe add them using before/after CSS?)
+// TODO: Icon in dropdown is not aligned with the text.
+// TODO: cursor for search seems to be displaced.
+// TODO: Top and buttom button groups overflow when viewport is narrow.
 // TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
-// TODO: Reset button - currently bad implementation is commented out in the code
+// TODO: Reset button - currently bad implementation is commented out in the code.
+
 
 const required = value => (value ? undefined : "Required")
 const mustBeNumber = value => (!isNaN(value) ? undefined : "Enter a valid number")
@@ -33,8 +37,8 @@ const formatDateTime = (date, time) => {
 
 const onSubmit = (submitRedux, closeModal) => values => {
     values.date = formatDateTime(values.date, values.time)
-    values.time = null
-    submitRedux(values);
+    submitRedux(_.omit(values, 'time'))
+    alert(JSON.stringify(_.omit(values, 'time')))
     closeModal()
 };
 
@@ -69,7 +73,7 @@ const TransactionForm = ({ formValues, subscription, submitRedux, closeModal, ..
                             <Segment />
                             <FormSpy subscription={{ values: true }}>
                                 {({ values }) => {
-                                    const operationValue = _.getOr(false, 'operation', values)
+                                    const operationValue = _.get(values, 'operation', false)
                                     return (
                                         <React.Fragment>
                                             {!operationValue && <FormFillerSegment />}
