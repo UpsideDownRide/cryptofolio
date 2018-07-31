@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
 
 const ValueTreeMap = (props) => (
-    <GraphPane chart="treeMap" {...this.props} />
+    <GraphPane chart="treeMap" {...props} />
 )
 
 const mapStateToProps = (state) => ({

@@ -4,6 +4,7 @@ import balanceData from 'common/mockData/balances'
 import balanceSettings from 'scenes/Dashboard/BalanceTablePane/BalanceTableColumnSettings'
 import thunk from 'redux-thunk'
 import bitcoinPrices from 'common/bitcoinPrices/bitcoinPricesReducer'
+import bitcoinTicker from 'common/bitcoinPrices/bitcoinTickerReducer'
 
 const balance = (state, action) => ({
     data: balanceData,
@@ -13,7 +14,8 @@ const balance = (state, action) => ({
 const rootReducer = combineReducers({
     balance,
     transactions: addTransaction,
-    bitcoinPrices
+    bitcoinPrices,
+    bitcoinTicker
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

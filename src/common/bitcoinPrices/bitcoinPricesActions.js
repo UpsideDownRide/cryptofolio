@@ -1,6 +1,10 @@
 import ccxt from 'ccxt'
 import moment from 'moment'
-import { FETCH_PRICES_BEGIN, FETCH_PRICES_SUCCESS, FETCH_PRICES_ERROR } from './bitcoinPricesReducer'
+import {
+    FETCH_PRICES_BEGIN,
+    FETCH_PRICES_SUCCESS,
+    FETCH_PRICES_ERROR,
+} from './bitcoinPricesReducer'
 
 const exchange = new ccxt.kraken()
 exchange.proxy = 'https://cors-anywhere.herokuapp.com/'

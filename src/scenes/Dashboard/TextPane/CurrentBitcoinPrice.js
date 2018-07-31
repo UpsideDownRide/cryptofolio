@@ -2,62 +2,47 @@ import React, { Component } from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextPane from './TextPane'
-import ccxt from 'ccxt'
-import moment from 'moment'
-import _ from 'lodash/fp'
+import _ from 'lodash'
 import StylePercent from 'common/utils/StylePercent'
 import round from 'common/utils/round'
+import { padDecimal } from 'common/utils/padNumber'
+import { fetchTicker } from 'common/bitcoinPrices/bitcoinTickerActions'
 
-const exchange = new ccxt.kraken()
-exchange.proxy = 'https://cors-anywhere.herokuapp.com/'
-
-const fetchPrices = async () => {
-    const ticker = await exchange.fetchTicker('BTC/USD')
-    const current =  (ticker.ask + ticker.bid) / 2
-    return round(current, 2)
+// const fetchOldPrice = async (days, timeframe='1d', limit=1) => {
+//     const ohlcv = await exchange.fetchOHLCV('BTC/USD', timeframe, stampDaysAgo(days), limit)
+//     return (ohlcv[0][1] + ohlcv[0][4]) / 2
+// }
+const price = (arr) => {
+    const avg = _.sum(arr) / arr.length
+    const res = avg ? avg : 0
+    return padDecimal(round(res, 2), 2)
 }
-
-const fetchOldPrice = async (days, timeframe='1d', limit=1) => {
-    const ohlcv = await exchange.fetchOHLCV('BTC/USD', timeframe, stampDaysAgo(days), limit)
-    return (ohlcv[0][1] + ohlcv[0][4]) / 2
-}
-
-const stampDaysAgo = (num) => moment().seconds(0).milliseconds(0).subtract(num*24, 'hours').valueOf()
 
 export class CurrentBitcoinPrice extends Component {
-    
     static propTypes = {
         //prop: PropTypes
     }
 
-    state = { loading: true }
-    
-    setStateAsync = (state) => {
-        return new Promise((res) => this.setState(state, res))
-    }
-
-    getPrice = async () => {
-        const currentPrice = await fetchPrices()
-        const dayAgoPrice = await fetchOldPrice(1)
-        const priceTime = moment().format('HH:mm:ss')
-        await this.setStateAsync({ prices: {current: currentPrice, dayAgo: dayAgoPrice}, priceTime: priceTime, loading: false })
-    }
-
     componentDidMount() {
-        this.getPrice()
-        setInterval(this.getPrice, 60000)
+        this.props.fetchTicker()
+        setInterval(this.props.fetchTicker, 60000)
     }
 
     render() {
-        const currentPrice = _.getOr("???", "prices.current", this.state)
-        const dayChange = this.state.prices && ((this.state.prices.dayAgo - currentPrice) / this.state.prices.dayAgo)
+        let {ticker, previous} = _.pick(this.props.data, ['ticker', 'previous'])
+        previous = _.flatten(previous)
+        const currentPrice = price(_.values(_.pick(ticker, ['bid', 'ask'])))
+        const previousPrice = price([_.nth(previous, 1), _.nth(previous, 4)])
+        const bothPrices = currentPrice & previousPrice
+        const dayChange = bothPrices && ((previousPrice - currentPrice) / previousPrice)
+        
         return (
             <TextPane
                 title="Current Bitcoin price:"
                 botLeft={`${currentPrice} USD`}
                 topRight={<span>1d: <StylePercent value={dayChange || 0.001} /></span>}
-                botRight={this.state.priceTime || "HH:MM:SS"}
-                loading={this.state.loading}
+                botRight=" "
+                loading={!ticker && this.props.loading}
                 loadingMessage="Loading current Bitcoin price"
             />
         )
@@ -65,11 +50,12 @@ export class CurrentBitcoinPrice extends Component {
 }
 
 const mapStateToProps = (state) => ({
-
+    loading: state.bitcoinTicker.loading,
+    data: state.bitcoinTicker.data,
 })
 
-const mapDispatchToProps = {
-
-}
+const mapDispatchToProps = (dispatch) => ({
+    fetchTicker: () => dispatch(fetchTicker())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentBitcoinPrice)

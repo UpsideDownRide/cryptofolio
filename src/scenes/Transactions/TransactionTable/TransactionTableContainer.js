@@ -15,12 +15,10 @@ export class TransactionTableContainer extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    return {
-        data: store.transactions.data,
-        columns: store.transactions.settings
-    }
-}
+const mapStateToProps = (state) => ({
+    data: state.transactions.data,
+    columns: state.transactions.settings
+})
 
 const mapDispatchToProps = {}
 

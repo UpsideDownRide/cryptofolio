@@ -24,7 +24,7 @@ const Dashboard = () => (
                 <Grid.Column><TextPane /></Grid.Column>
             </Grid.Row>
             <Grid.Row style={{ paddingTop: "0.5em" }} columns={3}>
-                <Grid.Column><GraphPane chart='treeMap' /></Grid.Column>
+                <Grid.Column><GraphPane mock chart='treeMap' /></Grid.Column>
                 <Grid.Column><ValueTreeMap /></Grid.Column>
                 <Grid.Column><BitcoinPrice /></Grid.Column>
             </Grid.Row>
