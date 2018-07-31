@@ -16,9 +16,9 @@ const graphPane = ({ name, chart, loading, loadingMessage, data, mock, ...props 
     const Chart = GRAPHS[chart]
     const chartData = mock ? DATA[chart] : data
     return (
-        <Dimmer.Dimmable as={Segment} blurring dimmed={loading}>
-            <Dimmer active={!!loading} inverted>
-                <Loader indeterminate size="mini">
+        <Dimmer.Dimmable style={{width: "100%", height: "100%"}} as={Segment} blurring dimmed={loading}>
+            <Dimmer active={loading} inverted>
+                <Loader indeterminate size="medium">
                     {loading && loadingMessage}
                 </Loader>
             </Dimmer>
