@@ -11,10 +11,9 @@ const GRAPHS = {
     'treeMap': Treemap
 }
 
-const graphPane = ({ name, chart, loading, loadingMessage, data, mock, ...props }) => {
+const graphPane = ({ name, chart, loading, loadingMessage, data, ...props }) => {
     const title = name || 'Value of each currency in USD'
     const Chart = GRAPHS[chart]
-    const chartData = mock ? DATA[chart] : data
     return (
         <Dimmer.Dimmable style={{width: "100%", height: "100%"}} as={Segment} blurring dimmed={loading}>
             <Dimmer active={loading} inverted>
@@ -26,7 +25,7 @@ const graphPane = ({ name, chart, loading, loadingMessage, data, mock, ...props 
                 <span className={style.titlename}>{title}</span>
             </div>
             <div className={style.content}>
-                {chartData && <Chart data={chartData} {...props} />}
+                {data && <Chart data={data} {...props} />}
             </div>
         </Dimmer.Dimmable>
     )

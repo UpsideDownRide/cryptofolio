@@ -3,33 +3,22 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BalanceTablePane from './BalanceTablePane'
 import _ from 'lodash'
+import { getCoinBalances } from '../../Transactions/TransactionsSelectors'
+import { getAllTickers } from 'common/cryptoPrices/tickersSelector'
 // TODO: There is no point in having a container and pane they should be merged. 
 
-const BalanceTableContainer = ({ tickers, data, transactions, ...props }) => {
-    const coinBalances = calculateCoinBalances(transactions)
-    const updatedData = !tickers ? data : _.map(coinBalances, (val, key) => ({currency: key, amount: val, price: tickers[key], trend: 0, value: tickers[key] * val}))
+const BalanceTableContainer = ({ tickers, coinBalances, ...props }) => {
+    const data = tickers && _.map(coinBalances, (val, key) => ({ currency: key, amount: val, price: tickers[key], trend: 0, value: tickers[key] * val }))
     return (
-        <BalanceTablePane data={updatedData} {...props} />
+        <React.Fragment>
+            {data && <BalanceTablePane data={data} {...props} />}
+        </React.Fragment>
     )
 }
 
-const ifHasKeyUpdateCurrency = (el, key, operation) => acc => _.has(el, key) ? _.set(acc, el[key].currency, operation(_.get(acc, el[key].currency, 0), el[key].value)) : acc
-
-const transactionsReducer = (acc, el) => (
-    _.flow(
-        ifHasKeyUpdateCurrency(el, 'in', _.add),
-        ifHasKeyUpdateCurrency(el, 'out', _.subtract),
-        ifHasKeyUpdateCurrency(el, 'fee', _.subtract)
-    )(acc)
-)
-
-const calculateCoinBalances = (transactions) => transactions.reduce(transactionsReducer, {})
-
 const mapStateToProps = (state) => ({
-    data: state.balance.data,
-    columnSettings: state.balance.settings,
-    tickers: _.get(state.tickers, 'data'),
-    transactions: state.transactions.data
+    tickers: getAllTickers(state),
+    coinBalances: getCoinBalances(state)
 })
 
 const mapDispatchToProps = {}

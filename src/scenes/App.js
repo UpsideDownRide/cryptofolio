@@ -12,7 +12,7 @@ class App extends Component {
   state = { intervalId: null }
 
   componentDidMount() {
-    this.props.fetchPrices(this.props.currencies)
+    this.props.fetchPrices('BTC')
     this.props.fetchTicker(this.props.currencies)
     clearInterval(this.state.intervalId)
     const newIntervalId = setInterval(() => this.props.fetchTicker(this.props.currencies), 15000)

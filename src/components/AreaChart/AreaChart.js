@@ -1,19 +1,21 @@
 import React from 'react'
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import style from './ToolTip.module.css'
 import _ from 'lodash'
+import moment from 'moment'
 
 const BitcoinChart = (props) => {
     const {ticks, domain} = calculateTicks(props.data)
     return (
         <ResponsiveContainer height={200}>
-            <AreaChart data={props.data}
+            <LineChart data={props.data}
                 margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
                 fontSize="75%" fontWeight={700}>
-                <XAxis dataKey="name"
+                <XAxis dataKey="time"
                     tickMargin={8}
                     tickLine={{ strokeWidth: 0.5 }}
-                    tickSize={3} 
+                    tickSize={3}
+                    tickFormatter={formatDates}
                 />
                 <YAxis interval="preserveEnd"
                     axisLine={false}
@@ -31,16 +33,13 @@ const BitcoinChart = (props) => {
                     cursor={{ strokeWidth: 0.75 }}
                     isAnimationActive={false}
                 />
-                <Area type="linear" dataKey="close"
-                    stroke="#8884d8"
-                    fillOpacity={0.5}
-                    fill="#8884d8"
-                />
-            </AreaChart>
+                <Line type="linear" dataKey="close" stroke="#8884d8" strokeWidth={2} dot={false}/>
+            </LineChart>
         </ResponsiveContainer>
     )
 }
 
+const formatDates = (tick) => moment.unix(tick).format('DD MMM')
 const formatNumbers = (tick) => tick !== 0 ? tick / 1000 + "k" : ""
 const getThousands = (num) => Math.floor(num/1000)*1000
 const calculateTicks = (data) => {
@@ -52,6 +51,7 @@ const CustomTooltip = (props) => {
     const { active } = props
     if (active) {
         const { payload, label } = props
+        const date = moment.unix(label).format('ddd - DD MMM')
         const data = payload[0].payload
         const renderData = [
             { name: 'Open', data: data.open },
@@ -61,7 +61,7 @@ const CustomTooltip = (props) => {
         ]
         return (
             <div className={style.tooltip}>
-                <div className={style.tooltipLabel}>{label}</div>
+                <div className={style.tooltipLabel}>{date}</div>
                 {renderData.map(el => <CustomTooltipData {...el} />)}
             </div>
         )

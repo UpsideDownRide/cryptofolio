@@ -1,15 +1,21 @@
 import { createSelector } from 'reselect'
 import { get } from 'lodash'
 
-const getTickersLoading = state => state.tickers.loading
-const getBTCticker = state => get(state, 'tickers.data.BTC', 0)
+const tickersLoading = state => state.tickers.loading
+const tickersData = state => state.tickers.data
+const tickerBTC = state => get(state, 'tickers.data.BTC', 0)
 
 export const areTickersLoading = createSelector(
-    getTickersLoading,
+    tickersLoading,
     (loading) => loading
 )
 
-export const tickerBTC = createSelector(
-    getBTCticker,
+export const getAllTickers = createSelector(
+    tickersData,
+    (data) => data
+)
+
+export const getTickerBTC = createSelector(
+    tickerBTC,
     (price) => price
 )
