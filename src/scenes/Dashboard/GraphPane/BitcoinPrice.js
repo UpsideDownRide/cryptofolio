@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
 import moment from 'moment'
 
-const parsePrices = (data) => data.map(el => ({
+const parse = (prices) => prices.map(el => ({
     name: moment(el[0]).format('DD MMM'),
     open: el[1],
     high: el[2],
@@ -14,7 +14,7 @@ const parsePrices = (data) => data.map(el => ({
 }))
 
 const BitcoinPriceGraph = ({ prices, loading, ...props }) => {
-    const data = prices && parsePrices(prices)
+    const data = prices && parse(prices)
     return (
         <GraphPane chart="area"
             name="Bitcoin price last 30 days"
@@ -27,8 +27,8 @@ const BitcoinPriceGraph = ({ prices, loading, ...props }) => {
 }
 
 const mapStateToProps = (state) => ({
-    prices: state.bitcoinPrices.prices,
-    loading: state.bitcoinPrices.loading
+    prices: state.prices.data,
+    loading: state.prices.loading
 })
 
 const mapDispatchToProps = {}

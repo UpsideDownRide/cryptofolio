@@ -2,11 +2,12 @@ import React from 'react'
 import Table from 'components/Table/Table'
 import PropTypes from 'prop-types'
 import { Segment } from 'semantic-ui-react'
+import balanceSettings from 'scenes/Dashboard/BalanceTablePane/BalanceTableColumnSettings'
 
 
 const BalanceTablePane = (props) => (
     <Segment style={{ padding:0 }}>
-        <Table data={props.data} columns={props.columnSettings} />
+        <Table data={props.data} columns={balanceSettings} />
     </Segment>
 )
 

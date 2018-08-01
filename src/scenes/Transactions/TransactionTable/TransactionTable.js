@@ -1,16 +1,16 @@
 import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
+import tableSettings from '../TransactionTable/TransactionTableSettings'
 import Table from 'components/Table/Table'
+import { getTransactions } from '../TransactionsSelectors';
 
 const TransactionTable = (props) => ( 
-    <Table {...props} />
+    <Table {...props} columns={tableSettings}/>
 )
 
 const mapStateToProps = (state) => ({
-    data: state.transactions.data,
-    columns: state.transactions.settings
+    data: getTransactions(state) 
 })
 
 const mapDispatchToProps = {}

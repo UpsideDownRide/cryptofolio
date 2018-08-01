@@ -38,7 +38,6 @@ const formatDateTime = (date, time) => {
 const onSubmit = (submitRedux, closeModal) => values => {
     values.date = formatDateTime(values.date, values.time)
     submitRedux(_.omit(values, 'time'))
-    alert(JSON.stringify(_.omit(values, 'time')))
     closeModal()
 };
 
