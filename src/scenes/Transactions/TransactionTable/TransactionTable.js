@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import tableSettings from '../TransactionTable/TransactionTableSettings'
 import Table from 'components/Table/Table'
-import { getTransactions } from '../TransactionsSelectors';
+import { getTransactions } from 'common/selectors/TransactionsSelectors';
 
 const TransactionTable = (props) => ( 
     <Table {...props} columns={tableSettings}/>

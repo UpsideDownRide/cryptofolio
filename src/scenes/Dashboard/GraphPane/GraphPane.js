@@ -12,7 +12,7 @@ const GRAPHS = {
 }
 
 const graphPane = ({ name, chart, loading, loadingMessage, data, ...props }) => {
-    const title = name || 'Value of each currency in USD'
+    const title = name || ''
     const Chart = GRAPHS[chart]
     return (
         <Dimmer.Dimmable style={{width: "100%", height: "100%"}} as={Segment} blurring dimmed={loading}>
@@ -34,6 +34,8 @@ const graphPane = ({ name, chart, loading, loadingMessage, data, ...props }) => 
 graphPane.propTypes = {
     chart: PropTypes.string.isRequired,
     name: PropTypes.string,
+    loading: PropTypes.bool,
+    loadingMessage: PropTypes.string,
 }
 
 export default graphPane

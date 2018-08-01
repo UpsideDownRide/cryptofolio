@@ -6,7 +6,7 @@ import { fetchPrices } from 'common/cryptoPrices/pricesActions'
 import { fetchTicker } from 'common/cryptoPrices/tickersActions'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { getCurrencies }from './Transactions/TransactionsSelectors';
+import { getCurrencies }from 'common/selectors/TransactionsSelectors';
 
 class App extends Component {
   state = { intervalId: null }

@@ -1,5 +1,5 @@
 import { map, get } from 'lodash'
-import { getCoinBalances } from '../../Transactions/TransactionsSelectors'
+import { getCoinBalances } from './TransactionsSelectors'
 import { getAllTickers } from 'common/cryptoPrices/tickersSelector'
 import { createSelector } from 'reselect'
 

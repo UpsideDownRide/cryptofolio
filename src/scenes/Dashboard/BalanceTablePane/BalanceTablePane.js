@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import { Segment } from 'semantic-ui-react'
 import balanceSettings from 'scenes/Dashboard/BalanceTablePane/BalanceTableColumnSettings'
 import { connect } from 'react-redux'
-import { balanceTableData } from './BalanceTableSelector'
+import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
 
 const BalanceTablePane = ({data, ...props}) => (
     <Segment style={{ padding:0 }}>
-        <Table data={data} columns={balanceSettings} />
+        <Table data={data} columns={balanceSettings} {...props} />
     </Segment>
 )
 

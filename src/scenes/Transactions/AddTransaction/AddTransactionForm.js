@@ -16,6 +16,7 @@ import _ from 'lodash'
 // TODO: Top and buttom button groups overflow when viewport is narrow.
 // TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
 // TODO: Reset button - currently bad implementation is commented out in the code.
+// TODO: Refactor missing exchanges and values casting code in onSubmit
 
 
 const required = value => (value ? undefined : "Required")
@@ -37,7 +38,12 @@ const formatDateTime = (date, time) => {
 
 const onSubmit = (submitRedux, closeModal) => values => {
     values.date = formatDateTime(values.date, values.time)
-    submitRedux(_.omit(values, 'time'))
+    values.in && !values.in.exchange && _.set(values, 'in.exchange', values.out.exchange)
+    values.out && !values.out.exchange && _.set(values, 'out.exchange', values.in.exchange)
+    values.fee && _.set(values, 'fee.exchange', _.get(values, 'out.exchange') || _.get(values, 'in.exchange'))
+    const valuesAsNumbers = _(values).pick(['in.value', 'out.value', 'fee.value']).mapValues(key => ({value: Number(key.value)})).value()
+    const finalForm = _(values).omit('time').merge(valuesAsNumbers).value()
+    submitRedux(finalForm)
     closeModal()
 };
 
@@ -216,7 +222,7 @@ const CommentSegment = () => (
     <Segment>
         <Field className="field"
             name="comment"
-            placeholder="Enter comment (optional)"
+            placeholder="If you want, enter a comment here"
             component={TextAreaAdapter}
         />
     </Segment>
