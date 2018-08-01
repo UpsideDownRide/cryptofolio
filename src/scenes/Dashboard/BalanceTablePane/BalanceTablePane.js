@@ -3,13 +3,22 @@ import Table from 'components/Table/Table'
 import PropTypes from 'prop-types'
 import { Segment } from 'semantic-ui-react'
 import balanceSettings from 'scenes/Dashboard/BalanceTablePane/BalanceTableColumnSettings'
+import { connect } from 'react-redux'
+import { balanceTableData } from './BalanceTableSelector'
 
-
-const BalanceTablePane = (props) => (
+const BalanceTablePane = ({data, ...props}) => (
     <Segment style={{ padding:0 }}>
-        <Table data={props.data} columns={balanceSettings} />
+        <Table data={data} columns={balanceSettings} />
     </Segment>
 )
+
+const mapStateToProps = (state) => ({
+    data: balanceTableData(state)
+})
+
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BalanceTablePane)
 
 BalanceTablePane.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({
@@ -22,4 +31,4 @@ BalanceTablePane.propTypes = {
     )
 }
 
-export default BalanceTablePane
+

@@ -1,7 +1,7 @@
 import React from 'react'
 import TextPane from './TextPane/TextPane'
 import GraphPane from './GraphPane/GraphPane'
-import BalanceTableContainer from './BalanceTablePane/BalanceTableContainer'
+import BalanceTablePane from './BalanceTablePane/BalanceTablePane'
 import { Container, Grid } from 'semantic-ui-react'
 import TotalValueContainer from './TextPane/TotalValueContainer';
 import ValueTreeMap from './GraphPane/ValueTreeMap'
@@ -31,7 +31,7 @@ const Dashboard = () => (
             <Grid.Row>
                 <Grid.Column></Grid.Column>
                 <Grid.Column style={{ flex: 1 }}>
-                    <BalanceTableContainer />
+                    <BalanceTablePane />
                 </Grid.Column>
             </Grid.Row>
         </Grid>
