@@ -1,6 +1,6 @@
 import React from 'react'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-import style from './ToolTip.module.css'
+import style from '../ToolTip.module.css'
 import _ from 'lodash'
 import moment from 'moment'
 
@@ -75,4 +75,5 @@ const CustomTooltipData = (props) => (
         <span className={style.tooltipNumbers}>{props.data}</span>
     </div>
 )
+
 export default BitcoinChart

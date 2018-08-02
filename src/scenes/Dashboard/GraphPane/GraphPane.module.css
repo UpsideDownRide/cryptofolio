@@ -1,5 +1,9 @@
 /* TODO: Graph and text panes should have single point of reference for css as they overlap */
 
+.segment {
+    width: "100%"
+}
+
 .body {
     padding: 10px 15px;
     background-color: white;

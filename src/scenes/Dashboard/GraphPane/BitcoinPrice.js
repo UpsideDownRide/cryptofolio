@@ -7,7 +7,7 @@ import { arePricesLoading, getPricesBTC } from 'common/cryptoPrices/pricesSelect
 const BitcoinPriceGraph = ({ prices, loading, ...props }) => {
     const data = prices 
     return (
-        <GraphPane chart="area"
+        <GraphPane chart="line"
             name="Bitcoin price last 30 days"
             data={data}
             loading={loading}

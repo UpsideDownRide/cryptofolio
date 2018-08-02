@@ -18,15 +18,14 @@ const Dashboard = () => (
                 <Grid.Column><LastTradePane /></Grid.Column>
                 <Grid.Column><CurrentBitcoinPrice /></Grid.Column>
             </Grid.Row>
-            <Grid.Row columns={3}>
-                <Grid.Column><ExchangesTreeMap /></Grid.Column>
-                <Grid.Column><ValueTreeMap /></Grid.Column>
-                <Grid.Column><BitcoinPrice /></Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-                <Grid.Column></Grid.Column>
-                <Grid.Column style={{ flex: 1 }}>
+            <Grid.Row columns={2}>
+                <Grid.Column>
                     <BalanceTablePane />
+                </Grid.Column>
+                <Grid.Column>
+                    <BitcoinPrice />
+                    <ExchangesTreeMap />
+                    <ValueTreeMap />
                 </Grid.Column>
             </Grid.Row>
         </Grid>

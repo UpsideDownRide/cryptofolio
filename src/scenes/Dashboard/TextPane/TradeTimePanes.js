@@ -7,7 +7,7 @@ import { minBy, maxBy, get, flow } from 'lodash'
 import moment from 'moment'
 
 export const FirstTrade = ({date, dateAgo, ...props}) => (
-    <TextPane title="Date of first transaction:"
+    <TextPane title="Date of first transaction"
         topRight=" "
         botLeft={date}
         botRight={dateAgo}
@@ -16,7 +16,7 @@ export const FirstTrade = ({date, dateAgo, ...props}) => (
 )
 
 export const LastTrade = ({date, dateAgo, ...props}) => (
-    <TextPane title="Date of last transaction:"
+    <TextPane title="Date of last transaction"
         topRight=" "
         botLeft={date}
         botRight={dateAgo}
