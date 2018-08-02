@@ -16,7 +16,7 @@ const graphData = createSelector(
     getAllTickers,
     (balances, tickers) => _(balances)
                             .mapValues((exchange) => _(exchange)
-                                .reduce((res, value, key) => res + value * _.get(tickers, key)))
+                                .reduce((res, value, key) => res + value * _.get(tickers, key), 0))
                             .map((value, exchange) => ({name: exchange, size:value}))
                             .sort((a, b) => b.size - a.size)
                             .value() 

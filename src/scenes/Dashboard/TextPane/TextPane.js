@@ -5,10 +5,10 @@ import StylePercent from 'common/utils/StylePercent'
 import { Segment, Dimmer, Loader } from 'semantic-ui-react'
 
 export const TextPane = (props) => {
-    const name = props.title || "Placeholder"
+    const name = props.title 
     const topRight = props.topRight || <StylePercent value={0.05329}/>
-    const botLeft = props.botLeft || "4768 PLN"
-    const botRight = props.botRight || "0.79 BTC"
+    const botLeft = props.botLeft 
+    const botRight = props.botRight
     
     return (
         <Dimmer.Dimmable className={style.segment} as={Segment} blurring dimmed={!!props.loading}>

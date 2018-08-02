@@ -7,8 +7,12 @@ import { connect } from 'react-redux'
 import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
 
 const BalanceTablePane = ({data, ...props}) => (
-    <Segment style={{ padding:0 }}>
-        <Table data={data} columns={balanceSettings} {...props} />
+    <Segment>
+        <div className="test"><span>Total balances by currency</span></div>
+        <Table data={data}
+            columns={balanceSettings}
+            showPagination={false}
+            {...props} />
     </Segment>
 )
 
