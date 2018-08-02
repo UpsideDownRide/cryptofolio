@@ -1,0 +1,8 @@
+.recharts-treemap-content:hover rect{
+    /*
+     * Turns out Chrome has issue with applying filter to SVGs
+     * This is a shame as using filter in SVG drops the transition
+     */
+    /*filter: saturate(3);*/
+    filter: url("#saturate-filter")
+}
