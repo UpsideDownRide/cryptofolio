@@ -5,24 +5,41 @@ import TextPane from './TextPane'
 import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
 import { createSelector } from 'reselect'
 import { flow, reduce, round } from 'lodash'
+import { getTickerBTC } from 'common/cryptoPrices/tickersSelector';
 
-const TotalValuePane = ({totalValue, ...props}) => <TextPane title="Total value of coins:" botLeft={totalValue} {...props} />
+const TotalValuePane = ({ totalValue, totalValueBTC, ...props }) => (
+    <TextPane title="Total value of coins:"
+        botLeft={totalValue}
+        botRight={totalValueBTC}
+        {...props} />
+)
 
 const getTotalValue = createSelector(
     balanceTableData,
-    (data) => flow(
-        data => reduce(data, (res, obj) => res+obj.value, 0),
+    data => reduce(data, (res, obj) => res + obj.value, 0),
+)
+
+const getFormattedTotalValue = createSelector(
+    getTotalValue,
+    num => flow(
         num => round(num, 2),
         num => `${num} USD`
-    )(data)
+    )(num)
+)
+
+const getFormattedTotalBTC = createSelector(
+    getTotalValue,
+    getTickerBTC,
+    (num, ticker) => flow(
+        (num, ticker) => num / ticker,
+        num => round(num, 2),
+        num => `${num} BTC`
+    )(num, ticker) 
 )
 
 const mapStateToProps = (state) => ({
-    totalValue: getTotalValue(state)
+    totalValue: getFormattedTotalValue(state),
+    totalValueBTC: getFormattedTotalBTC(state)
 })
 
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TotalValuePane)
+export default connect(mapStateToProps)(TotalValuePane)

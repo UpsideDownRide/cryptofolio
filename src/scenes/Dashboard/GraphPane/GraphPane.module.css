@@ -1,22 +1,25 @@
+/* TODO: Graph and text panes should have single point of reference for css as they overlap */
+
 .body {
     padding: 10px 15px;
     background-color: white;
-    font-size: 100%;
     border-radius: 5px;
     border: 1px solid lightgrey;
 }
+
 .title {
     display: flex;
     justify-content: space-between;
     align-items: flex-start; 
     margin-bottom: 15px;
 }
+
 .titlename {
-    font-size: 100%;
-    color: darkgray;
+    font-size: 1.25em;
 }
+
 .titlenumber {
-    font-size: 85%;
+    font-size: 0.85em;
     font-weight: bold;
 }
 
@@ -27,15 +30,18 @@
 .green {
     color: green;
 }
+
 .content {
     display: flex;
     justify-content: space-between;
     align-items: flex-end; 
 }
+
 .contentprimary {
-    font-size: 175%;
+    font-size: 1.75em;
 }
+
 .contentsecondary {
-    font-size: 150%;
+    font-size: 1.5em;
     color: darkgrey;
 }

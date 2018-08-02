@@ -4,9 +4,11 @@ import Dashboard from '../Dashboard/Dashboard'
 import Transactions from '../Transactions/Transactions'
 import Login from '../Login/Login'
 import { Container } from 'semantic-ui-react'
+import style from './Main.module.css'
+import './Main.css'
 
 const Main = () => (
-    <Container fluid style={{paddingTop: "40px", flex: 1}}>
+    <Container fluid className={style.main}>
         <Switch>
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/transactions" component={Transactions} />

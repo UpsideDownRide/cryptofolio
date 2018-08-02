@@ -7,6 +7,7 @@ import ValueTreeMap from './GraphPane/ValueTreeMap'
 import CurrentBitcoinPrice from './TextPane/CurrentBitcoinPrice';
 import BitcoinPrice from './GraphPane/BitcoinPrice';
 import ExchangesTreeMap from './GraphPane/ExchangesTreeMap';
+import { FirstTrade } from './TextPane/TradeTimePanes';
 
 const Dashboard = () => (
     <Container fluid as="section">
@@ -18,7 +19,7 @@ const Dashboard = () => (
                 <Grid.Column><TextPane /></Grid.Column>
             </Grid.Row>
             <Grid.Row style={{ paddingTop: "0.25em", paddingBottom: "0.5em" }}>
-                <Grid.Column><TextPane /></Grid.Column>
+                <Grid.Column><FirstTrade /></Grid.Column>
                 <Grid.Column><TextPane /></Grid.Column>
                 <Grid.Column><TextPane /></Grid.Column>
                 <Grid.Column><TextPane /></Grid.Column>

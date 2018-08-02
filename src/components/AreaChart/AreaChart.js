@@ -10,7 +10,7 @@ const BitcoinChart = (props) => {
         <ResponsiveContainer height={200}>
             <LineChart data={props.data}
                 margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
-                fontSize="75%" fontWeight={700}>
+            >
                 <XAxis dataKey="time"
                     tickMargin={8}
                     tickLine={{ strokeWidth: 0.5 }}

@@ -1,7 +1,6 @@
 .body {
     padding: 1em 1.5em;
     background-color: white;
-    font-size: 100%;
     flex: 1 1;
     border-radius: 5px;
     border: 1px solid lightgrey;
@@ -15,12 +14,10 @@
 }
 
 .titlename {
-    font-size: 100%;
-    color: darkgray;
+    font-size: 1.25em;
 }
 
 .titlenumber {
-    font-size: 90%;
     font-weight: bold;
 }
 
@@ -28,11 +25,11 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline; 
-    font-weight: 800;
 }
 
 .contentprimary {
-    font-size: 150%;
+    font-size: 1.5em;
+    font-weight: 600;
 }
 
 .contentsecondary {
