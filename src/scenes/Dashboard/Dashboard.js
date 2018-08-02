@@ -7,24 +7,18 @@ import ValueTreeMap from './GraphPane/ValueTreeMap'
 import CurrentBitcoinPrice from './TextPane/CurrentBitcoinPrice';
 import BitcoinPrice from './GraphPane/BitcoinPrice';
 import ExchangesTreeMap from './GraphPane/ExchangesTreeMap';
-import { FirstTrade } from './TextPane/TradeTimePanes';
+import { FirstTradePane, LastTradePane } from './TextPane/TradeTimePanes';
 
 const Dashboard = () => (
     <Container fluid as="section">
-        <Grid doubling columns={4} padded='horizontally' style={{ paddingTop: "0.5em" }}>
-            <Grid.Row style={{ paddingBottom: 0 }}>
+        <Grid doubling columns={4} padded='horizontally'>
+            <Grid.Row doubling>
                 <Grid.Column><TotalValuePane /></Grid.Column>
+                <Grid.Column><FirstTradePane /></Grid.Column>
+                <Grid.Column><LastTradePane /></Grid.Column>
                 <Grid.Column><CurrentBitcoinPrice /></Grid.Column>
-                <Grid.Column><TextPane /></Grid.Column>
-                <Grid.Column><TextPane /></Grid.Column>
             </Grid.Row>
-            <Grid.Row style={{ paddingTop: "0.25em", paddingBottom: "0.5em" }}>
-                <Grid.Column><FirstTrade /></Grid.Column>
-                <Grid.Column><TextPane /></Grid.Column>
-                <Grid.Column><TextPane /></Grid.Column>
-                <Grid.Column><TextPane /></Grid.Column>
-            </Grid.Row>
-            <Grid.Row style={{ paddingTop: "0.5em" }} columns={3}>
+            <Grid.Row columns={3}>
                 <Grid.Column><ExchangesTreeMap /></Grid.Column>
                 <Grid.Column><ValueTreeMap /></Grid.Column>
                 <Grid.Column><BitcoinPrice /></Grid.Column>

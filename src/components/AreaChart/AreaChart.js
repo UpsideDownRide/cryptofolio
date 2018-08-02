@@ -44,7 +44,7 @@ const formatNumbers = (tick) => tick !== 0 ? tick / 1000 + "k" : ""
 const getThousands = (num) => Math.floor(num/1000)*1000
 const calculateTicks = (data) => {
     const [min, max] = [getThousands(_.minBy(data, 'close').close), getThousands(_.maxBy(data, 'close').close)]
-    return {ticks: _.range(min, max + 501, 500), domain: [min, max+500]}
+    return {ticks: _.range(min + 500, max + 501, 500), domain: [min, max+500]}
 }
 
 const CustomTooltip = (props) => {

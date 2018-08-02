@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 //import PropTypes from 'prop-types'
-//import style from './NavBar.module.css'
+import style from './NavBar.module.css'
 import { NavLink } from 'react-router-dom'
 import { Menu, Container } from 'semantic-ui-react'
 
@@ -11,7 +11,7 @@ const LINKS = {
 }
 
 export default class MenuExampleInverted extends Component {
-    state = { activeItem: 'dashboard' }
+    state = { activeItem: '' }
 
     handleItemClick = (e, { name }) => {
         this.setState({ activeItem: name })
@@ -22,7 +22,7 @@ export default class MenuExampleInverted extends Component {
 
         return (
             <Container fluid>
-                <Menu fixed='top' inverted>
+                <Menu className={style.navbar} fixed='top' inverted>
                     <Menu.Item header as='a' position='left'>Cryptofolio</Menu.Item>
                     <Menu.Item 
                         name='dashboard'

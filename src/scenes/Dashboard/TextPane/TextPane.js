@@ -11,7 +11,7 @@ export const TextPane = (props) => {
     const botRight = props.botRight || "0.79 BTC"
     
     return (
-        <Dimmer.Dimmable style={{width: "100%", height: "100%"}} as={Segment} blurring dimmed={!!props.loading}>
+        <Dimmer.Dimmable className={style.segment} as={Segment} blurring dimmed={!!props.loading}>
             <Dimmer active={!!props.loading} inverted><Loader indeterminate size="tiny">{props.loading && props.loadingMessage}</Loader></Dimmer>
             <div className={style.title}>
                 <span className={style.titlename}>{name}</span>

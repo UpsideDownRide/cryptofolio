@@ -6,7 +6,7 @@ import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
 import { createSelector } from 'reselect';
 
 const ValueTreeMap = ({ data, ...props }) => (
-    data.length > 0 ? <GraphPane name="Currencies share in portfolio" chart="treeMap" data={data} {...props} /> : null
+    data.length > 0 ? <GraphPane name="Portfolio by currencies" chart="treeMap" data={data} {...props} /> : null
 )
 
 const graphData = createSelector(
