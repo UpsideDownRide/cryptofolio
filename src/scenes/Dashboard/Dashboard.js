@@ -33,7 +33,7 @@ const Dashboard = () => (
                 <Grid.Column><BalanceTablePane /></Grid.Column>
             </Grid.Row>
         </Grid>
-    </Container >
+    </Container>
 )
 
 export default Dashboard

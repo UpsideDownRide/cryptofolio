@@ -5,12 +5,13 @@ import { NavLink } from 'react-router-dom'
 import { Menu, Container } from 'semantic-ui-react'
 
 const LINKS = {
+    landing: '/',
     dashboard: '/dashboard',
     transactions: '/transactions',
     login: '/login',
 }
 
-export default class MenuExampleInverted extends Component {
+export default class NavigationBar extends Component {
     state = { activeItem: '' }
 
     handleItemClick = (e, { name }) => {
@@ -18,29 +19,40 @@ export default class MenuExampleInverted extends Component {
     }
 
     render() {
-        const { activeItem } = this.state
-
+        const isActiveItem = (string) => string === this.state.activeItem
         return (
             <Container fluid>
                 <Menu className={style.navbar} fixed='top' inverted>
-                    <Menu.Item header as='a' position='left'>Cryptofolio</Menu.Item>
                     <Menu.Item 
+                        header
+                        exact
+                        as={NavLink}
+                        to={LINKS.landing}
+                        active={isActiveItem('landing')}
+                        onClick={this.handleItemClick} 
+                        position='left'
+                    >
+                        Cryptofolio
+                    </Menu.Item>
+                    <Menu.Item 
+                        exact
                         name='dashboard'
                         as={NavLink}
-                        exact
                         to={LINKS.dashboard}
-                        active={activeItem === 'dashboard'}
+                        active={isActiveItem('dashboard')}
                         onClick={this.handleItemClick} />
                     <Menu.Item
+                        exact
                         name='transactions'
-                        active={activeItem === 'transactions'}
+                        active={isActiveItem('transactions')}
                         onClick={this.handleItemClick}
                         as={NavLink}
                         to={LINKS.transactions}
                     />
                     <Menu.Item
+                        exact
                         name='login'
-                        active={activeItem === 'login'}
+                        active={isActiveItem('login')}
                         onClick={this.handleItemClick}
                         position='right'
                     />
@@ -49,6 +61,3 @@ export default class MenuExampleInverted extends Component {
         )
     }
 }
-
-
-//export default navBar
