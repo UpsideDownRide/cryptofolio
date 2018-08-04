@@ -6,7 +6,7 @@ import { fetchPrices } from 'common/cryptoPrices/pricesActions'
 import { fetchTicker } from 'common/cryptoPrices/tickersActions'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { getCurrencies }from 'common/selectors/TransactionsSelectors';
+import { getCurrencies } from 'common/selectors/TransactionsSelectors';
 
 class App extends Component {
   state = { intervalId: null }
@@ -21,11 +21,11 @@ class App extends Component {
 
   render() {
     return (
-      <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <React.Fragment>
         <NavBar />
         <Main />
         <Footer />
-      </div>
+      </React.Fragment>
     )
   }
 }

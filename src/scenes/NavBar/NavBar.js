@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 //import PropTypes from 'prop-types'
 import style from './NavBar.module.css'
 import { NavLink } from 'react-router-dom'
-import { Menu, Container } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
 const LINKS = {
     landing: '/',
@@ -21,8 +21,7 @@ export default class NavigationBar extends Component {
     render() {
         const isActiveItem = (string) => string === this.state.activeItem
         return (
-            <Container fluid>
-                <Menu className={style.navbar} fixed='top' inverted>
+                <Menu as='nav' className={style.navbar} fixed='top' inverted>
                     <Menu.Item 
                         header
                         exact
@@ -57,7 +56,6 @@ export default class NavigationBar extends Component {
                         position='right'
                     />
                 </Menu>
-            </Container>
         )
     }
 }
