@@ -6,6 +6,7 @@ import App from './scenes/App';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './reduxStore'
+import registerServiceWorker from './registerServiceWorker'
 
 ReactDOM.render(
     <Provider store={store}>
@@ -15,3 +16,4 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 )
+registerServiceWorker();
