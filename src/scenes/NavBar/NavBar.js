@@ -3,20 +3,15 @@ import React, { Component } from 'react'
 import style from './NavBar.module.css'
 import { NavLink } from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
+import ROUTES from 'common/constants/routes'
 
-const LINKS = {
-    landing: '/',
-    dashboard: '/dashboard',
-    transactions: '/transactions',
-    login: '/login',
-}
 
 const NavItem = ({ name, children, isActiveItem, handleItemClick, ...props }) => (
     <Menu.Item
         exact
         name={name}
         as={NavLink}
-        to={LINKS[name]}
+        to={ROUTES[name]}
         active={isActiveItem({ name })}
         onClick={handleItemClick}
         {...props}

@@ -6,6 +6,7 @@ import Login from '../Login/Login'
 import style from './Main.module.css'
 import './semanticSegment-override.css'
 import LandingPage from '../LandingPage/LandingPage';
+import SignUp from '../Login/SignUp/SignUp'
 
 const Main = () => (
     <main className={style.wrapper}>
@@ -14,6 +15,8 @@ const Main = () => (
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/transactions" component={Transactions} />
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={SignUp} />
+                <Route component={() => <h1>404</h1>} />
             </Switch>
     </main>
 )

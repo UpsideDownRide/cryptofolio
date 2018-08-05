@@ -2,6 +2,8 @@ import React from 'react'
 import { Segment, Header, Grid, Button } from 'semantic-ui-react';
 import style from './LandingPage.module.css'
 import ContentWrapper from 'components/ContentWrapper/ContentWrapper'
+import { Link } from 'react-router-dom'
+import ROUTES from 'common/constants/routes'
 
 const LandingPage = () => {
     return (
@@ -27,12 +29,12 @@ const LandingPage = () => {
                     <Grid.Row>
                         <Grid.Column />
                         <Grid.Column width={10}>
-                        <Button positive size='massive'>
-                            Sign Up
-                        </Button>
-                        <Button primary size='massive'>
-                            Demo
-                        </Button>
+                            <Button positive size='massive' as={Link} to={ROUTES.signup}>
+                                Sign Up
+                            </Button>
+                            <Button primary size='massive'>
+                                Demo
+                            </Button>
                         </Grid.Column>
                         <Grid.Column />
                     </Grid.Row>
