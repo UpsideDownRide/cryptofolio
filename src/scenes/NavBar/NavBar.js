@@ -11,6 +11,23 @@ const LINKS = {
     login: '/login',
 }
 
+const NavItem = ({ name, children, isActiveItem, handleItemClick, ...props }) => {
+    console.log('hey')
+    return (
+        <Menu.Item
+            exact
+            name={name}
+            as={NavLink}
+            to={LINKS[name]}
+            active={isActiveItem({ name })}
+            onClick={handleItemClick}
+            {...props}
+        >
+            {children}
+        </Menu.Item>
+    )
+}
+
 export default class NavigationBar extends Component {
     state = { activeItem: '' }
 
@@ -18,44 +35,26 @@ export default class NavigationBar extends Component {
         this.setState({ activeItem: name })
     }
 
+    isActiveItem = (string) => {
+        return (string === this.state.activeItem)
+    }
+
     render() {
-        const isActiveItem = (string) => string === this.state.activeItem
         return (
-                <Menu as='nav' className={style.navbar} fixed='top' inverted>
-                    <Menu.Item 
-                        header
-                        exact
-                        as={NavLink}
-                        to={LINKS.landing}
-                        active={isActiveItem('landing')}
-                        onClick={this.handleItemClick} 
-                        position='left'
-                    >
-                        Cryptofolio
-                    </Menu.Item>
-                    <Menu.Item 
-                        exact
-                        name='dashboard'
-                        as={NavLink}
-                        to={LINKS.dashboard}
-                        active={isActiveItem('dashboard')}
-                        onClick={this.handleItemClick} />
-                    <Menu.Item
-                        exact
-                        name='transactions'
-                        active={isActiveItem('transactions')}
-                        onClick={this.handleItemClick}
-                        as={NavLink}
-                        to={LINKS.transactions}
-                    />
-                    <Menu.Item
-                        exact
-                        name='login'
-                        active={isActiveItem('login')}
-                        onClick={this.handleItemClick}
-                        position='right'
-                    />
-                </Menu>
+            <Menu as='nav' className={style.navbar} fixed='top' inverted>
+                <NavItem name='landing'
+                    header
+                    position='left'
+                    handleItemClick={this.handleItemClick}
+                    isActiveItem={this.isActiveItem}
+                >
+                CryptoHaven
+                </NavItem>
+                <NavItem name='dashboard' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
+                <NavItem name='transactions' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
+                <NavItem name='login' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem}
+                    position='right' />
+            </Menu>
         )
     }
 }
