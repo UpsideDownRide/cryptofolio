@@ -1,0 +1,10 @@
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    margin-bottom: 2em;
+}
+
+.titlename {
+    font-size: 1.25em;
+}

@@ -5,10 +5,11 @@ import { Segment } from 'semantic-ui-react'
 import balanceSettings from 'scenes/Dashboard/BalanceTablePane/BalanceTableColumnSettings'
 import { connect } from 'react-redux'
 import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
+import TitleText from '../TitleText'
 
 const BalanceTablePane = ({data, ...props}) => (
     <Segment>
-        <div className="test"><span>Total balances by currency</span></div>
+        <TitleText text='Total balances by currency' />
         <Table data={data}
             columns={balanceSettings}
             showPagination={false}
