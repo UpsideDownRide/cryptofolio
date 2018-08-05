@@ -1,0 +1,5 @@
+.landing {
+    width: 100vw;
+    background-image: linear-gradient(rgb(27, 28, 29), rgba(27, 28, 29, 0.7)), url('./cryptocurrencies-background.jpg');
+    background-size: cover;
+}
