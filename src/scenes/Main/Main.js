@@ -9,14 +9,12 @@ import LandingPage from '../LandingPage/LandingPage';
 
 const Main = () => (
     <main className={style.wrapper}>
-        <div className={style.content}>
             <Switch>
                 <Route exact path="/" component={LandingPage} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/transactions" component={Transactions} />
                 <Route exact path="/login" component={Login} />
             </Switch>
-        </div>
     </main>
 )
 
