@@ -1,17 +1,18 @@
 import React from 'react'
 import { Treemap, ResponsiveContainer, Tooltip } from 'recharts'
-import style from '../ToolTip.module.css'
+import tooltipStyle from '../ToolTip.module.css'
 import _ from 'lodash'
-import './TreeMap.css'
+import treemapStyle from './TreeMap.module.css'
 
 const COLORS = ['cadetblue', '#bebada', '#fb8072', '#80b1d3', '#b3de69', '#fccde5', '#d9d9d9']
+const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2
 
 const TreeMap = (props) => (
     <ResponsiveContainer width={"100%"} height={200}>
         <Treemap
             data={props.data}
             dataKey="size"
-            ratio={(1 + Math.sqrt(5)) / 2}
+            ratio={GOLDEN_RATIO}
             stroke="#fff"
             fill="#8884d8"
             content={<CustomizedContent colors={COLORS} />}
@@ -29,7 +30,7 @@ const TreeMap = (props) => (
 )
 
 const CustomizedContent = ({ root, depth, x, y, width, height, index, colors, name, ...props }) => (
-    <g className="recharts-treemap-content">
+    <g className={["recharts-treemap-content", treemapStyle.content].join(' ')}>
         <defs>
             <filter id="saturate-filter">
                 <feColorMatrix type="saturate" values="3" />
@@ -75,9 +76,9 @@ const CustomTooltip = ({ active, payload, data, ...props }) => {
         const renderData = [{ name: 'Value', data: value },
         { name: 'Share', data: percentShare }]
         return (
-            <div className={style.tooltip}>
-                <div className={style.tooltipLabel}>{label}</div>
-                {renderData.map(el => <CustomTooltipData {...el} {...props} />)}
+            <div className={tooltipStyle.tooltip}>
+                <div className={tooltipStyle.tooltipLabel}>{label}</div>
+                {renderData.map((el, i) => <CustomTooltipData key={i} {...el} {...props} />)}
             </div>
         )
     }
@@ -85,9 +86,9 @@ const CustomTooltip = ({ active, payload, data, ...props }) => {
 }
 
 const CustomTooltipData = ({ name, data }) => (
-    <div className={style.tooltipData}>
-        <span className={style.tooltipName}>{name}</span>
-        <span className={style.tooltipNumbers}>{data}</span>
+    <div className={tooltipStyle.tooltipData}>
+        <span className={tooltipStyle.tooltipName}>{name}</span>
+        <span className={tooltipStyle.tooltipNumbers}>{data}</span>
     </div>
 )
 

@@ -1,4 +1,6 @@
-.recharts-treemap-content:hover rect{
+.content {}
+
+.content:hover rect{
     /*
      * Turns out Chrome has issue with applying filter to SVGs
      * This is a shame as using filter in SVG drops the transition
