@@ -6,7 +6,9 @@ import { fetchPrices } from 'common/cryptoPrices/pricesActions'
 import { fetchTicker } from 'common/cryptoPrices/tickersActions'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { getCurrencies } from 'common/selectors/TransactionsSelectors';
+import { getCurrencies } from 'common/selectors/TransactionsSelectors'
+import { compose } from 'lodash/fp'
+import { hot } from 'react-hot-loader' 
 
 class App extends Component {
   state = { intervalId: null }
@@ -39,4 +41,10 @@ const mapDispatchToProps = dispatch => ({
   fetchTicker: (currencies) => dispatch(fetchTicker(currencies))
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+const composedWrappers = compose(
+  withRouter,
+  hot(module),
+  connect(mapStateToProps, mapDispatchToProps)
+)
+
+export default composedWrappers(App)
