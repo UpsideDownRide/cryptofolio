@@ -7,6 +7,7 @@ const Table = ({ data, columns, className, ...props }) => (
     <ReactTable
         data={data}
         columns={columns}
+        minRows={0}
         className={[className, '-striped', '-highlight'].join(' ')}
         {...props}
     />
