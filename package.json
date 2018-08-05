@@ -40,8 +40,10 @@
     "babel-runtime": "^6.26.0",
     "react-app-rewire-css-modules-extensionless": "^1.1.3",
     "react-app-rewire-hot-loader": "^1.0.1",
+    "react-app-rewire-preload-plugin": "^1.0.0",
     "react-app-rewired": "^1.5.2",
     "react-scripts": "^1.1.4",
+    "semantic-ui": "^2.3.3",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-dashboard": "^2.0.0"
   }

@@ -11,22 +11,19 @@ const LINKS = {
     login: '/login',
 }
 
-const NavItem = ({ name, children, isActiveItem, handleItemClick, ...props }) => {
-    console.log('hey')
-    return (
-        <Menu.Item
-            exact
-            name={name}
-            as={NavLink}
-            to={LINKS[name]}
-            active={isActiveItem({ name })}
-            onClick={handleItemClick}
-            {...props}
-        >
-            {children}
-        </Menu.Item>
-    )
-}
+const NavItem = ({ name, children, isActiveItem, handleItemClick, ...props }) => (
+    <Menu.Item
+        exact
+        name={name}
+        as={NavLink}
+        to={LINKS[name]}
+        active={isActiveItem({ name })}
+        onClick={handleItemClick}
+        {...props}
+    >
+        {children}
+    </Menu.Item>
+)
 
 export default class NavigationBar extends Component {
     state = { activeItem: '' }
@@ -48,7 +45,7 @@ export default class NavigationBar extends Component {
                     handleItemClick={this.handleItemClick}
                     isActiveItem={this.isActiveItem}
                 >
-                CryptoHaven
+                    CryptoHaven
                 </NavItem>
                 <NavItem name='dashboard' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
                 <NavItem name='transactions' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
