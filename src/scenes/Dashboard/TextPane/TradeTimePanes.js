@@ -25,10 +25,12 @@ export const LastTrade = ({date, dateAgo, ...props}) => (
 )
 
 const daysAgo = (date) => {
-    const numDays = moment().diff(moment(date), 'days')
+    const numDays = moment().diff(moment.unix(date), 'days')
     const dayString = numDays === 1 ? 'day' : 'days'
     return `${numDays} ${dayString} ago`
 }
+
+const formatDate = date => moment.unix(date).format("DD MMM YYYY")
 
 const getFirstTransaction = createSelector(
     getTransactions,
@@ -40,7 +42,7 @@ const getFirstTransaction = createSelector(
 
 const getFormattedFirstDate = createSelector(
     getFirstTransaction,
-    date => moment(date).format("DD MMM YYYY")
+    formatDate
 )
 
 const getFormattedFirstAgo = createSelector(
@@ -58,13 +60,14 @@ const getLastTransaction = createSelector(
 
 const getFormattedLastDate = createSelector(
     getLastTransaction,
-    date => moment(date).format("DD MMM YYYY")
+    formatDate
 )
 
 const getFormattedLastAgo = createSelector(
     getLastTransaction,
     date => daysAgo(date)
 )
+
 
 const mapStateToPropsFirst = (state) => ({
     date: getFormattedFirstDate(state),

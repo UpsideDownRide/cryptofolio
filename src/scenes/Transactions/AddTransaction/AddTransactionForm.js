@@ -33,7 +33,7 @@ const normalizeValue = value => {
 
 const formatDateTime = (date, time) => {
     const [h, m, s] = time.split(':')
-    return moment(date).hours(h).minutes(m).seconds(s).milliseconds(0).toISOString()
+    return moment(date).hours(h).minutes(m).seconds(s).milliseconds(0).unix()
 }
 
 const onSubmit = (submitRedux, closeModal) => values => {

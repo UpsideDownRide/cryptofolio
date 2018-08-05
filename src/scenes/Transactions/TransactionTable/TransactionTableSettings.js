@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './TransactionTablePane.module.css'
-import CurrencyIcon from 'common/utils/CurrencyIcon';
-import { padDecimal } from 'common/utils/padNumber';
+import CurrencyIcon from 'common/utils/CurrencyIcon'
+import { padDecimal } from 'common/utils/padNumber'
 import moment from 'moment'
 
 const currencyCell = props => {
@@ -11,20 +11,28 @@ const currencyCell = props => {
             <span>{padDecimal(props.value.value, 2)}
                 <CurrencyIcon style={{margin: "0.15em 0 0 0.8em"}} name={props.value.currency} />
             </span>
-            <span style={{ color: "#aaa", fontSize: "0.7em", width: "100%", textAlign: "center" }}>{props.value.currency}</span>
+            <MinorSpan>{props.value.currency}</MinorSpan>
         </div >
     )
 }
 
-const timeCell = props => (
+const timeCell = props => {
+    const momentDate = moment.unix(props.value)
+    const date = momentDate.format('LL')
+    const time = momentDate.format('HH:mm:ss')
+    return (
     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         <span style={{ fontSize: "0.8em" }}>
-            <strong>{moment(props.value).format('LL')}</strong>
+            <strong>{date}</strong>
         </span>
-        <span style={{ color: "#aaa", fontSize: "0.7em", width: "100%", textAlign: "center" }}>
-            {moment(props.value).format('HH:mm:ss')}
-        </span>
+        <MinorSpan>{time}</MinorSpan>
     </div>
+)}
+
+const MinorSpan = props => (
+        <span style={{ color: "#aaa", fontSize: "0.7em", width: "100%", textAlign: "center" }}>
+            {props.children}
+        </span>
 )
 
 const columnsSettings = [{

@@ -1,14 +1,14 @@
 const data = [{
-    date: '2017-07-31T15:24:48.000Z',
+    date: 1501514688,
     operation: 'Deposit',
     in: { exchange: 'Kraken', currency: 'USD', value: 5000 },
-}, { date: '2018-07-31T15:39:49.000Z',
+}, { date: 1533051589,
     operation: 'Buy',
     in: { exchange: 'Kraken', currency: 'ETH', value: 10 },
     out: { exchange: 'Kraken', currency: 'USD', value: 2000 },
     fee: { exchange: 'Kraken', currency: 'USD', value: 5 },
     comment: 'First coins wooohooo!'
-}, { date: '2018-07-31T15:41:51.000Z',
+}, { date: 1533051711,
     operation: 'Buy',
     in: { exchange: 'Kraken', currency: 'BTC', value: 1 },
     out: { exchange: 'Kraken', currency: 'USD', value: 2990 },
