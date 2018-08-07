@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 //import PropTypes from 'prop-types'
 import style from './NavBar.module.css'
 import { NavLink } from 'react-router-dom'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Segment } from 'semantic-ui-react'
 import ROUTES from 'common/constants/routes'
 
 
@@ -33,20 +33,17 @@ export default class NavigationBar extends Component {
 
     render() {
         return (
-            <Menu as='nav' className={style.navbar} fixed='top' inverted>
-                <NavItem name='landing'
-                    header
-                    position='left'
-                    handleItemClick={this.handleItemClick}
-                    isActiveItem={this.isActiveItem}
-                >
-                    CryptoHaven
-                </NavItem>
-                <NavItem name='dashboard' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
-                <NavItem name='transactions' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
-                <NavItem name='login' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem}
-                    position='right' />
-            </Menu>
+            <Segment inverted>
+                <Menu as='nav' className={style.navbar} fixed='top' inverted>
+                    <NavItem name='landing' header position='left' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem}>
+                        CryptoHaven
+                    </NavItem>
+                    <NavItem name='dashboard' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
+                    <NavItem name='transactions' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
+                    <NavItem name='login' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem}
+                        position='right' />
+                </Menu>
+            </Segment>
         )
     }
 }

@@ -6,7 +6,7 @@ import Login from '../Login/Login'
 import style from './Main.module.css'
 import './semanticSegment-override.css'
 import LandingPage from '../LandingPage/LandingPage';
-import SignUp from '../Login/SignUp/SignUp'
+import SignUp from '../SignUp/SignUp'
 import NotFound404 from 'components/NotFound404'
 
 const Main = () => (

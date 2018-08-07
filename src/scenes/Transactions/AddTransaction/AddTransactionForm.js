@@ -3,9 +3,9 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
 import './datepicker-overrides.css'
 //import PropTypes from 'prop-types';
-import { Field, Form, FormSpy } from 'react-final-form'
+import { Field, Form as FinalForm, FormSpy } from 'react-final-form'
 import MaskedInput from 'react-text-mask'
-import { Label, Button, Icon, Segment, Dropdown, Grid } from 'semantic-ui-react'
+import { Label, Button, Icon, Segment, Dropdown, Grid, Form } from 'semantic-ui-react'
 import style from './AddTransactionForm.module.css'
 import moment from 'moment'
 import _ from 'lodash'
@@ -57,12 +57,12 @@ const TransactionForm = ({ formValues, subscription, submitRedux, closeModal, ..
 
     return (
         <Grid centered padded>
-            <Form
+            <FinalForm
                 onSubmit={onSubmit(submitRedux, closeModal)}
                 subscription={subscription}
                 initialValues={INITIAL_VALUES}
                 render={({ handleSubmit, reset, submitting, pristine, invalid, form }) => (
-                    <form onSubmit={handleSubmit}
+                    <Form onSubmit={handleSubmit}
                         className={`ui form ${style.form}`}>
                         <Segment.Group>
                             <Button.Group attached="top">
@@ -100,7 +100,7 @@ const TransactionForm = ({ formValues, subscription, submitRedux, closeModal, ..
                                 }}
                             </FormSpy>
                         </Segment.Group>
-                    </form>
+                    </Form>
                 )}
             />
         </Grid>
@@ -295,7 +295,7 @@ const DropdownAdapter = ({ input, meta, ...props }) => {
                 {...props}
                 labeled
                 button
-                onChange={(e, data) => input.onChange(data.value)}
+                onChange={(_, data) => input.onChange(data.value)}
             />
         </React.Fragment>
     )

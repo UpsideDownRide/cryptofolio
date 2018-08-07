@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment, Header, Card } from 'semantic-ui-react'
+import { Segment, Header } from 'semantic-ui-react'
 
 export default () => (
     <div style={{width: "100vw", backgroundColor: "rgb(27,28,29)"}}>

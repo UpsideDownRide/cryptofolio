@@ -14,7 +14,7 @@ const LandingPage = () => {
                     <Grid.Row>
                         <Grid.Column />
                         <Grid.Column width={10}>
-                            <Segment vertical massive padded='very'>
+                            <Segment vertical size='massive' padded='very'>
                                 <Header inverted>
                                     <Header.Content as='h1'>
                                         Welcome to CryptoHaven<br />
