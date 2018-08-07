@@ -8,6 +8,7 @@ import './semanticSegment-override.css'
 import LandingPage from '../LandingPage/LandingPage';
 import SignUp from '../SignUp/SignUp'
 import NotFound404 from 'components/NotFound404'
+import Logout from '../Logout/Logout'
 
 const Main = () => (
     <main className={style.wrapper}>
@@ -16,6 +17,7 @@ const Main = () => (
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/transactions" component={Transactions} />
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/logout" component={Logout} />
                 <Route exact path="/signup" component={SignUp} />
                 <Route component={NotFound404} />
             </Switch>

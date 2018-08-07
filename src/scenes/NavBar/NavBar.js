@@ -4,9 +4,46 @@ import style from './NavBar.module.css'
 import { NavLink } from 'react-router-dom'
 import { Menu, Segment } from 'semantic-ui-react'
 import ROUTES from 'common/constants/routes'
+import { connect } from 'react-redux'
+import { isUserLoggedIn } from 'common/user/userSelectors'
+import { withRouter } from 'react-router-dom'
+import { compose } from 'lodash/fp'
 
+class NavigationBar extends Component {
+    state = { activeItem: '' }
 
-const NavItem = ({ name, children, isActiveItem, handleItemClick, ...props }) => (
+    handleItemClick = (e, { name }) => {
+        this.setState({ activeItem: name })
+    }
+
+    isActiveItem = (string) => {
+        return (string === this.state.activeItem)
+    }
+
+    HandledNavItem = props => <NavItem handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} {...props} />
+
+    render() {
+        const HandledNavItem = this.HandledNavItem
+        const isLoggedIn = this.props.isLoggedIn
+        return (
+            <Segment inverted>
+                <Menu as='nav' className={style.navbar} fixed='top' inverted>
+                    <HandledNavItem name='landing' header position='left'>
+                        CryptoHaven
+                    </HandledNavItem>
+                    <div style={{display: "flex"}}>
+                        <HandledNavItem name='dashboard' />
+                        <HandledNavItem name='transactions' />
+                        {!isLoggedIn && <HandledNavItem name='login' />}
+                        {isLoggedIn && <HandledNavItem name='logout' />}
+                    </div>
+                </Menu>
+            </Segment>
+        )
+    }
+}
+
+const NavItem = ({ isActiveItem, handleItemClick, name, children, ...props }) => (
     <Menu.Item
         exact
         name={name}
@@ -20,30 +57,11 @@ const NavItem = ({ name, children, isActiveItem, handleItemClick, ...props }) =>
     </Menu.Item>
 )
 
-export default class NavigationBar extends Component {
-    state = { activeItem: '' }
+const mapStateToProps = (state) => ({
+    isLoggedIn: isUserLoggedIn(state)
+})
 
-    handleItemClick = (e, { name }) => {
-        this.setState({ activeItem: name })
-    }
-
-    isActiveItem = (string) => {
-        return (string === this.state.activeItem)
-    }
-
-    render() {
-        return (
-            <Segment inverted>
-                <Menu as='nav' className={style.navbar} fixed='top' inverted>
-                    <NavItem name='landing' header position='left' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem}>
-                        CryptoHaven
-                    </NavItem>
-                    <NavItem name='dashboard' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
-                    <NavItem name='transactions' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} />
-                    <NavItem name='login' handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem}
-                        position='right' />
-                </Menu>
-            </Segment>
-        )
-    }
-}
+export default compose(
+    withRouter,
+    connect(mapStateToProps)
+)(NavigationBar)

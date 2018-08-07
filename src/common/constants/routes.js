@@ -3,5 +3,6 @@ export default {
     dashboard: '/dashboard',
     transactions: '/transactions',
     login: '/login',
-    signup: '/signup'
+    logout: '/logout',
+    signup: '/signup',
 }

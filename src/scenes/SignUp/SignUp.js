@@ -15,7 +15,7 @@ const SignUpPage = () => (
             <Grid.Column style={{ minWidth: "22em" }}>
                 <ConnectedFormContainer />
                 <Message>
-                    <Link to={ROUTES.signup}>Login</Link>
+                    <Link to={ROUTES.login}>Login</Link>
                 </Message>
             </Grid.Column>
         </Grid>
@@ -40,7 +40,6 @@ class FormContainer extends Component {
         auth.createUser(email, password)
             .then((result) => {
                 alert('Sign up success')
-                console.log(result)
                 handleSuccess(result.user)
             })
             .catch((error) => alert(error))
