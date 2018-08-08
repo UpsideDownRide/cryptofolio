@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import ROUTES from 'common/constants/routes'
 import { set } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { createUserSuccess, createUserFailure } from 'common/user/userActions'
+import { createUserSuccess } from 'common/user/userActions'
 
 const SignUpPage = () => (
     <div className='signup-form'>
