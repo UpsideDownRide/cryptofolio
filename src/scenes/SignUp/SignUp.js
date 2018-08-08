@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { auth } from 'common/firebase/interface'
 import { Field, Form as FinalForm } from 'react-final-form'
-//import React from 'react'
 import { Loader, Label, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import ROUTES from 'common/constants/routes'

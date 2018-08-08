@@ -3,7 +3,7 @@ import {
     FETCH_PRICES_SUCCESS,
     FETCH_PRICES_ERROR,
 } from './pricesReducer'
-import { set } from 'lodash'
+import { set, get, flow } from 'lodash/fp'
 
 // For reference if needs to be used
 
@@ -21,29 +21,42 @@ import { set } from 'lodash'
 //         })
 // })
 
-export const fetchPrices = (baseCurrency) => dispatch => {
-    const quoteCurrency = 'USD'
-    const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${baseCurrency}&tsym=${quoteCurrency}&allData=true`
-    dispatch(fetchPricesBegin())
-    fetch(url)
-        .then(response => response.json())
-        .then(result => set({}, baseCurrency, result.Data))
-        .then(data => dispatch(fetchPricesSuccess(data)))
-        .catch(error => dispatch(fetchPricesError(error)))
+export const fetchPrices = (currencies) => dispatch => {
+    currencies.forEach(el => dispatch(fetchPricesOf(el)))
 }
 
-export const fetchPricesBegin = () => ({
-    type: FETCH_PRICES_BEGIN
+export const fetchPricesOf = (baseCurrency) => dispatch => {
+    const quoteCurrency = 'USD'
+    if (baseCurrency === quoteCurrency) return false
+    const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${baseCurrency}&tsym=${quoteCurrency}&allData=true`
+    dispatch(fetchPricesBegin(baseCurrency))
+    fetch(url)
+        .then(response => response.json())
+        .then(result => get('Data', result))
+        .then(data => dispatch(fetchPricesSuccess(data, baseCurrency, quoteCurrency)))
+        .catch(error => dispatch(fetchPricesError(error, baseCurrency)))
+}
+
+export const fetchPricesBegin = (baseCurrency) => ({
+    type: FETCH_PRICES_BEGIN,
+    payload: {baseCurrency: baseCurrency}
 })
 
-export const fetchPricesSuccess = data => ({
+export const fetchPricesSuccess = (data, baseCurrency, quoteCurrency) => ({
     type: FETCH_PRICES_SUCCESS,
-    payload: { data }
+    payload: flow(
+        set(`${baseCurrency}.isLoading`, false),
+        set(`${baseCurrency}.quoteCurrency`, quoteCurrency),
+        set(`${baseCurrency}.data`, data)
+    )({})
 })
 
-export const fetchPricesError = error => ({
+export const fetchPricesError = (error, baseCurrency) => ({
     type: FETCH_PRICES_ERROR,
-    payload: { error }
+    payload: flow(
+        set(`${baseCurrency}.isLoading`, false),
+        set(`${baseCurrency}.error`, error)
+    )({})
 })
 
 

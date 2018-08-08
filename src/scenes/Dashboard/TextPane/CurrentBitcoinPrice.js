@@ -5,7 +5,7 @@ import TextPane from './TextPane'
 import StylePercent from 'common/utils/StylePercent'
 import round from 'common/utils/round'
 import { padDecimal } from 'common/utils/padNumber'
-import { areTickersLoading, getTickerBTC } from 'common/cryptoPrices/tickersSelector';
+import { areTickersLoading, getTicker } from 'common/cryptoPrices/tickersSelector';
 
 
 export const CurrentBitcoinPrice = ({loading, tickerBTC}) => {
@@ -27,7 +27,7 @@ export const CurrentBitcoinPrice = ({loading, tickerBTC}) => {
 
 const mapStateToProps = (state) => ({
     loading: areTickersLoading(state),
-    tickerBTC: getTickerBTC(state),
+    tickerBTC: getTicker(state, 'BTC'),
 })
 
 const mapDispatchToProps = (dispatch) => ({

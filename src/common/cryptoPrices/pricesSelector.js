@@ -10,7 +10,7 @@ export const arePricesLoading = createSelector(
 )
 
 export const getPricesOf = createCachedSelector(
-    (state, name) => getOr(false, `prices.data.${name}`, state),
+    (state, name) => getOr(false, `prices.${name}.data`, state),
     (prices) => prices 
 )(
     (state, name) => name

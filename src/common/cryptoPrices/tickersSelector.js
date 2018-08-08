@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
-import { get } from 'lodash'
+import { getOr } from 'lodash/fp'
 
 const tickersLoading = state => state.tickers.loading
 const tickersData = state => state.tickers.data
-const tickerBTC = state => get(state, 'tickers.data.BTC', 0)
+const ticker = (state, name) => getOr(0, `tickers.data.${name}`, state)
 
 export const areTickersLoading = createSelector(
     tickersLoading,
@@ -15,7 +15,7 @@ export const getAllTickers = createSelector(
     (data) => data
 )
 
-export const getTickerBTC = createSelector(
-    tickerBTC,
+export const getTicker = createSelector(
+    ticker,
     (price) => price
 )

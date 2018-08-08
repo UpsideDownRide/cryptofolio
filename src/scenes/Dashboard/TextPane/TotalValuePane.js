@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import TextPane from './TextPane'
 import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
 import { createSelector } from 'reselect'
-import { flow, reduce, round } from 'lodash'
-import { getTickerBTC } from 'common/cryptoPrices/tickersSelector';
+import { flow, reduce, round, partialRight } from 'lodash'
+import { getTicker } from 'common/cryptoPrices/tickersSelector';
 
 const TotalValuePane = ({ totalValue, totalValueBTC, ...props }) => (
     <TextPane title="Total value of coins"
@@ -29,7 +29,7 @@ const getFormattedTotalValue = createSelector(
 
 const getFormattedTotalBTC = createSelector(
     getTotalValue,
-    getTickerBTC,
+    partialRight(getTicker, 'BTC'),
     (num, ticker) => flow(
         (num, ticker) => num / ticker,
         num => round(num, 2),
