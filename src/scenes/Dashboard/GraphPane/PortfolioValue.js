@@ -2,23 +2,23 @@ import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
-import { arePricesLoading, get30DaysPrices } from 'common/cryptoPrices/pricesSelector'
+import { arePricesLoading, getPricesOf } from 'common/cryptoPrices/pricesSelector'
 
 const BitcoinPriceGraph = ({ prices, loading, ...props }) => {
     const data = prices 
     return (
         <GraphPane chart="line"
-            name="Bitcoin price last 30 days"
+            name="Portfolio value"
             data={data}
             loading={loading}
-            loadingMessage="Loading historical Bitcoin prices"
+            loadingMessage="Loading historical prices"
             {...props}
         />
     )
 }
 
 const mapStateToProps = (state) => ({
-    prices: get30DaysPrices(state, 'BTC'),
+    prices: getPricesOf(state, 'BTC'),
     loading: arePricesLoading(state),
 })
 

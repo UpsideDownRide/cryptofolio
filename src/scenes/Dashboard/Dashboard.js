@@ -9,6 +9,7 @@ import ExchangesTreeMap from './GraphPane/ExchangesTreeMap';
 import { FirstTradePane, LastTradePane } from './TextPane/TradeTimePanes';
 import ContentWrapper from 'components/ContentWrapper/ContentWrapper'
 import style from './Dashboard.module.css'
+import PortfolioValue from './GraphPane/PortfolioValue';
 
 const Dashboard = () => (
     <ContentWrapper>
@@ -26,13 +27,14 @@ const Dashboard = () => (
                 <Grid.Column><CurrentBitcoinPrice /></Grid.Column>
             </Grid.Row>
             <Grid.Row as='section'>
-                <Grid.Column><BitcoinPrice /></Grid.Column>
+                <Grid.Column><PortfolioValue /></Grid.Column>
                 <Grid.Column><ExchangesTreeMap /></Grid.Column>
                 <Grid.Column><ValueTreeMap /></Grid.Column>
                 <Grid.Column><BitcoinPrice /></Grid.Column>
             </Grid.Row>
-            <Grid.Row as='section' columns={1}>
-                <Grid.Column><BalanceTablePane /></Grid.Column>
+            <Grid.Row as='section'>
+                <Grid.Column width={4} />
+                <Grid.Column width={12}><BalanceTablePane /></Grid.Column>
             </Grid.Row>
         </Grid>
     </ContentWrapper>
