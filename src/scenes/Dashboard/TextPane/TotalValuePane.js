@@ -2,7 +2,7 @@ import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextPane from './TextPane'
-import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
+import { balanceTableData } from 'common/selectors/BalancesSelectors'
 import { createSelector } from 'reselect'
 import { flow, reduce, round, partialRight } from 'lodash'
 import { getTicker } from 'common/cryptoPrices/tickersSelector';

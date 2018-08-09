@@ -2,7 +2,7 @@ import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
-import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
+import { balanceTableData } from 'common/selectors/BalancesSelectors'
 import { createSelector } from 'reselect';
 
 const ValueTreeMap = ({ data, ...props }) => (

@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
 import { createSelector } from 'reselect';
-import { getExchangesBalances } from 'common/selectors/TransactionsSelectors';
+import { getExchangesCurrentBalances } from 'common/selectors/BalancesSelectors';
 import { getAllTickers } from 'common/cryptoPrices/tickersSelector';
 import _ from 'lodash'
 
@@ -12,7 +12,7 @@ const ExchangeTreeMap = ({ data, ...props }) => (
 )
 
 const graphData = createSelector(
-    getExchangesBalances,
+    getExchangesCurrentBalances,
     getAllTickers,
     (balances, tickers) => _(balances)
                             .mapValues((exchange) => _(exchange)

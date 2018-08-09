@@ -2,6 +2,9 @@ import {
     FETCH_PRICES_BEGIN,
     FETCH_PRICES_SUCCESS,
     FETCH_PRICES_ERROR,
+    FETCH_ALL_PRICES_BEGIN,
+    FETCH_ALL_PRICES_SUCCESS,
+    FETCH_ALL_PRICES_ERROR,
 } from './pricesReducer'
 import { set, get, flow } from 'lodash/fp'
 
@@ -22,7 +25,9 @@ import { set, get, flow } from 'lodash/fp'
 // })
 
 export const fetchPrices = (currencies) => dispatch => {
-    currencies.forEach(el => dispatch(fetchPricesOf(el)))
+    Promise.all(currencies.map(el => dispatch(fetchPricesOf(el))))
+        .then(dispatch(fetchAllPricesSuccess()))
+        .catch(dispatch(fetchAllPricesError()))
 }
 
 export const fetchPricesOf = (baseCurrency) => dispatch => {
@@ -36,6 +41,18 @@ export const fetchPricesOf = (baseCurrency) => dispatch => {
         .then(data => dispatch(fetchPricesSuccess(data, baseCurrency, quoteCurrency)))
         .catch(error => dispatch(fetchPricesError(error, baseCurrency)))
 }
+
+export const fetchAllPricesBegin = () => ({
+    type: FETCH_ALL_PRICES_BEGIN
+})
+
+export const fetchAllPricesSuccess = () => ({
+    type: FETCH_ALL_PRICES_SUCCESS
+})
+
+export const fetchAllPricesError = () => ({
+    type: FETCH_ALL_PRICES_ERROR
+})
 
 export const fetchPricesBegin = (baseCurrency) => ({
     type: FETCH_PRICES_BEGIN,

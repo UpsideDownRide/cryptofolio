@@ -2,7 +2,7 @@ import React from 'react'
 import { TextPane } from './TextPane';
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import { getFirstTransaction, getLastTransaction } from 'common/selectors/TransactionsSelectors'
+import { getFirstTransactionDate, getLastTransactionDate } from 'common/selectors/TransactionsSelectors'
 import moment from 'moment'
 
 export const FirstTrade = ({date, dateAgo, ...props}) => (
@@ -32,26 +32,25 @@ const daysAgo = (date) => {
 const formatDate = date => moment.unix(date).format("DD MMM YYYY")
 
 const getFormattedFirstDate = createSelector(
-    getFirstTransaction,
+    getFirstTransactionDate,
     formatDate
 )
 
 const getFormattedFirstAgo = createSelector(
-    getFirstTransaction,
+    getFirstTransactionDate,
     date => daysAgo(date)
 )
 
 
 const getFormattedLastDate = createSelector(
-    getLastTransaction,
+    getLastTransactionDate,
     formatDate
 )
 
 const getFormattedLastAgo = createSelector(
-    getLastTransaction,
+    getLastTransactionDate,
     date => daysAgo(date)
 )
-
 
 const mapStateToPropsFirst = (state) => ({
     date: getFormattedFirstDate(state),

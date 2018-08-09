@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Segment } from 'semantic-ui-react'
 import balanceSettings from 'scenes/Dashboard/BalanceTablePane/BalanceTableColumnSettings'
 import { connect } from 'react-redux'
-import { balanceTableData } from 'common/selectors/BalanceTableSelectors'
+import { balanceTableData } from 'common/selectors/BalancesSelectors'
 import TitleText from '../TitleText'
 
 const BalanceTablePane = ({data, ...props}) => (
