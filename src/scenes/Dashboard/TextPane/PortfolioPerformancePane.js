@@ -2,14 +2,15 @@ import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextPane from './TextPane'
-import { balanceTableData } from 'common/selectors/BalancesSelectors'
 import { getFormattedTotalValue, getFormattedTotalBTC } from 'common/selectors/BalancesSelectors'
 
-const TotalValuePane = ({ totalValue, totalValueBTC, ...props }) => (
-    <TextPane title="Portfolio value"
+const PortfolioPerformancePane = ({ totalValue, totalValueBTC, ...props }) => (
+    <TextPane
+        title="Portfolio value"
         botLeft={totalValue}
         botRight={totalValueBTC}
-        {...props} />
+        {...props}
+    />
 )
 
 const mapStateToProps = (state) => ({
@@ -17,4 +18,4 @@ const mapStateToProps = (state) => ({
     totalValueBTC: getFormattedTotalBTC(state)
 })
 
-export default connect(mapStateToProps)(TotalValuePane)
+export default connect(mapStateToProps)(PortfolioPerformancePane)

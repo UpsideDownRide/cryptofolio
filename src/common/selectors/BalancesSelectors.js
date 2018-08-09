@@ -1,9 +1,10 @@
 import { getTransactions, getFirstTransactionDate } from './TransactionsSelectors'
 import { getAllTickers } from 'common/cryptoPrices/tickersSelector'
 import { createSelector } from 'reselect'
-import { map } from 'lodash'
+import { map, round } from 'lodash'
 import { sum, rangeRight, reduce, mapKeys, mapValues, set, get, getOr, flow, has, add, subtract, keys, pick, filter  } from 'lodash/fp'
 import moment from 'moment'
+import { getTicker } from 'common/cryptoPrices/tickersSelector';
 
 const updater = (el, type, operation) => (res) => {
     if (!has(type, el)) return res
@@ -122,6 +123,28 @@ export const balanceTableData = createSelector(
     generateCurrentValues
 )
 
+export const getTotalValue = createSelector(
+    balanceTableData,
+    data => reduce((res, obj) => res + obj.value, 0, data),
+)
+
+export const getFormattedTotalValue = createSelector(
+    getTotalValue,
+    num => flow(
+        num => round(num, 2),
+        num => `${num} USD`
+    )(num)
+)
+
+export const getFormattedTotalBTC = createSelector(
+    getTotalValue,
+    state => getTicker(state, 'BTC'),
+    (num, ticker) => flow(
+        (num, ticker) => num / ticker,
+        num => round(num, 2),
+        num => `${num} BTC`
+    )(num, ticker) 
+)
 export const getExchangesCurrentBalances = createSelector(
     getBalances,
     (balances) => get('currentBalance.exchanges', balances)
