@@ -5,11 +5,11 @@ import GraphPane from './GraphPane'
 import { getValuesForHistoricalDates } from 'common/selectors/BalancesSelectors'
 import LineChart from 'components/Charts/Line/LineChart'
 
-const BitcoinPriceGraph = ({ prices, loading, ...props }) => {
+const PortfolioValueGraph = ({ prices, loading, ...props }) => {
     const data = props.balances
     return (
         <GraphPane 
-            title="Portfolio value"
+            title="Portfolio value in USD"
             loading={!data}
             loadingMessage="Loading historical prices"
             {...props}
@@ -25,4 +25,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export default connect(mapStateToProps, mapDispatchToProps)(BitcoinPriceGraph)
+export default connect(mapStateToProps, mapDispatchToProps)(PortfolioValueGraph)

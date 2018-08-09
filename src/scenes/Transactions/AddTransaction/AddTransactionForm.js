@@ -152,18 +152,10 @@ const FormFillerSegment = () => (
     </React.Fragment>
 )
 
-const BuyContent = ({ exchanges, ...props }) => (
+const TradeContent = ({ exchanges, ...props }) => (
     <React.Fragment>
         <InRow label="Bought" exchanges={exchanges} {...props} />
-        <OutRow label="Price" {...props} />
-        <FeeRow {...props} />
-    </React.Fragment>
-)
-
-const SellContent = ({ exchanges, ...props }) => (
-    <React.Fragment>
-        <OutRow label="Sold" exchanges={exchanges} {...props} />
-        <InRow label="Price" {...props} />
+        <OutRow label="Sold" {...props} />
         <FeeRow {...props} />
     </React.Fragment>
 )
@@ -198,8 +190,7 @@ const MiningContent = ({ exchanges, ...props }) => (
 )
 
 const CONTENT_COMPONENTS = {
-    'Buy': BuyContent,
-    'Sell': SellContent,
+    'Trade': TradeContent,
     'Transfer': TransferContent,
     'Deposit': DepositContent,
     'Withdraw': WithdrawContent,
@@ -239,10 +230,10 @@ class TransactionRow extends React.Component {
     }
 
     render() {
-        const isNotPriceOrFee = this.props.label !== "Price" && this.props.operation !== "fee"
+        const isNotSoldOrFee = this.props.label !== "Sold" && this.props.operation !== "fee"
         return (
             <InnerRow label={this.props.label} operation={this.props.operation}>
-                {isNotPriceOrFee && <ExchangeInput exchanges={this.props.exchanges} />}
+                {isNotSoldOrFee && <ExchangeInput exchanges={this.props.exchanges} />}
                 <CurrencyInput optional={this.props.optional} symbols={this.props.symbols} />
                 <ValueInput optional={this.props.optional} />
             </InnerRow>

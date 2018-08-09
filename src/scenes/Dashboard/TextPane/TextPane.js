@@ -1,28 +1,30 @@
 import React from 'react'
-//import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import style from './TextPane.module.css'
-import StylePercent from 'common/utils/StylePercent'
 import { Segment, Dimmer, Loader } from 'semantic-ui-react'
 
-export const TextPane = (props) => {
-    const name = props.title 
-    const topRight = props.topRight || <StylePercent value={0.05329}/>
-    const botLeft = props.botLeft 
-    const botRight = props.botRight
-    
-    return (
-        <Dimmer.Dimmable className={style.segment} as={Segment} blurring dimmed={!!props.loading}>
-            <Dimmer active={!!props.loading} inverted><Loader indeterminate size="tiny">{props.loading && props.loadingMessage}</Loader></Dimmer>
-            <div className={style.title}>
-                <span className={style.titlename}>{name}</span>
-                <span className={style.titlenumber}>{topRight}</span>
-            </div>
-            <div className={style.content}>
-                <span className={style.contentprimary}>{botLeft}</span>
-                <span className={style.contentsecondary}>{botRight}</span>
-            </div>
-        </Dimmer.Dimmable>
-    )
+export const TextPane = ({ title, topRight, botLeft, botRight, loading, loadingMessage }) => (
+    <Dimmer.Dimmable className={style.segment} as={Segment} blurring dimmed={!!loading}>
+        <Dimmer active={!!loading} inverted><Loader indeterminate size="tiny">{loading && loadingMessage}</Loader></Dimmer>
+        <div className={style.title}>
+            <span className={style.titlename}>{title}</span>
+            <span className={style.titlenumber}>{topRight}</span>
+        </div>
+        <div className={style.content}>
+            <span className={style.contentprimary}>{botLeft}</span>
+            <span className={style.contentsecondary}>{botRight}</span>
+        </div>
+    </Dimmer.Dimmable>
+)
+
+TextPane.propTypes = {
+    title: PropTypes.string,
+    topRight: PropTypes.string,
+    botLeft: PropTypes.string,
+    botRight: PropTypes.string,
+    loading: PropTypes.bool,
+    loadingMessage: PropTypes.string,
 }
+
 
 export default TextPane

@@ -8,7 +8,7 @@ import { flow, reduce, round, partialRight } from 'lodash'
 import { getTicker } from 'common/cryptoPrices/tickersSelector';
 
 const TotalValuePane = ({ totalValue, totalValueBTC, ...props }) => (
-    <TextPane title="Total value of coins"
+    <TextPane title="Portfolio value"
         botLeft={totalValue}
         botRight={totalValueBTC}
         {...props} />

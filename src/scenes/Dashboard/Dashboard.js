@@ -33,8 +33,7 @@ const Dashboard = () => (
                 <Grid.Column><BitcoinPrice /></Grid.Column>
             </Grid.Row>
             <Grid.Row as='section'>
-                <Grid.Column width={4} />
-                <Grid.Column width={12}><BalanceTablePane /></Grid.Column>
+                <Grid.Column width={16}><BalanceTablePane /></Grid.Column>
             </Grid.Row>
         </Grid>
     </ContentWrapper>

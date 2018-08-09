@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar/NavBar'
 import Footer from './Footer/Footer'
 import Main from './Main/Main'
-import { fetchPrices as fetchPrices } from 'common/cryptoPrices/pricesActions'
+import { fetchPrices } from 'common/cryptoPrices/pricesActions'
 import { fetchTicker } from 'common/cryptoPrices/tickersActions'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'

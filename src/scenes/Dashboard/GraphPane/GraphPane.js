@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import style from './GraphPane.module.css'
-import Treemap from 'components/Charts/TreeMap/TreeMap'
 
 import { Segment, Dimmer, Loader } from 'semantic-ui-react'
 import TitleText from '../TitleText'

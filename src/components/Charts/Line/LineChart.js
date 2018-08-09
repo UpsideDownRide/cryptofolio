@@ -62,7 +62,7 @@ const CustomTooltip = (props) => {
         return (
             <div className={style.tooltip}>
                 <div className={style.tooltipLabel}>{date}</div>
-                {renderData.map(el => <CustomTooltipData {...el} />)}
+                {renderData.map((el, i) => <CustomTooltipData key={i} {...el} />)}
             </div>
         )
     }
