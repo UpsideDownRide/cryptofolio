@@ -10,14 +10,15 @@ import { FirstTradePane, LastTradePane } from './TextPane/TradeTimePanes';
 import ContentWrapper from 'components/ContentWrapper/ContentWrapper'
 import style from './Dashboard.module.css'
 import PortfolioValue from './GraphPane/PortfolioValue'
-import PortfolioPerformancePane from './TextPane/PortfolioPerformancePane'
+import TotalPerformancePane from './TextPane/TotalPerformancePane'
+import RecentPerformancePane from './TextPane/RecentPerformancePane';
 
 const Dashboard = () => (
     <ContentWrapper>
         <Grid className={style.grid} doubling stackable columns={4} padded>
             <Grid.Row as='section'>
-                <Grid.Column><PortfolioPerformancePane /></Grid.Column>
-                <Grid.Column><FirstTradePane /></Grid.Column>
+                <Grid.Column><TotalPerformancePane /></Grid.Column>
+                <Grid.Column><RecentPerformancePane /></Grid.Column>
                 <Grid.Column><LastTradePane /></Grid.Column>
                 <Grid.Column><CurrentBitcoinPrice /></Grid.Column>
             </Grid.Row>

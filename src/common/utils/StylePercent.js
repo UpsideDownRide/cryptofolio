@@ -6,14 +6,13 @@ import { padDecimal } from './padNumber';
 const SIGNS = {positive: "▲", negative: "▼"}
 
 
-const StylePercent = props => {
-    const number = props.value
-    const isPositive = number > 0
+const StylePercent = ({value, style}) => {
+    const isPositive = value > 0
     const numColor = isPositive ? "green" : "red"
     const sign = isPositive ? SIGNS.positive : SIGNS.negative
-    const styled = padDecimal(goodRound(number*100, 2), 2)+"% "+sign
+    const styled = padDecimal(goodRound(value*100, 2), 2)+"% "+sign
     return (
-        <span style={{color: numColor, ...props.style}}>
+        <span style={{color: numColor, ...style}}>
             {styled}
         </span>
     )

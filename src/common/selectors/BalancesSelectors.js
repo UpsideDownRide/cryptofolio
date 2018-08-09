@@ -2,9 +2,10 @@ import { getTransactions, getFirstTransactionDate } from './TransactionsSelector
 import { getAllTickers } from 'common/cryptoPrices/tickersSelector'
 import { createSelector } from 'reselect'
 import { map, round } from 'lodash'
-import { sum, rangeRight, reduce, mapKeys, mapValues, set, get, getOr, flow, has, add, subtract, keys, pick, filter  } from 'lodash/fp'
+import { sum, rangeRight, reduce, mapKeys, mapValues, set, get, getOr, flow, has, add, subtract, keys, pick, filter } from 'lodash/fp'
 import moment from 'moment'
 import { getTicker } from 'common/cryptoPrices/tickersSelector';
+import createCachedSelector from 're-reselect';
 
 const updater = (el, type, operation) => (res) => {
     if (!has(type, el)) return res
@@ -81,6 +82,16 @@ export const getBalancesForAllDates = createSelector(
 const pickKeysExcept = exceptions => obj => pick(filter(s => !exceptions.includes(s), keys(obj)), obj)
 // const castPrices = (res, el) => assign(set(castUTCMidnightToLocal(el.time), pickKeysExcept('time')(el), {}), res)
 // const timeConvertedPrices = mapValues(obj => obj.data.reduce(castPrices, {}), pickKeysExcept('loading')(prices))
+const arraysFixLength = balances => obj => {
+    const pricesLength = obj.data.length
+    const histBalancesLength = balances.length - 1
+    if (pricesLength >= histBalancesLength) {
+        return obj.data.slice(pricesLength - histBalancesLength)
+    }
+    else {
+        return Array((histBalancesLength) - pricesLength).concat(obj.data)
+    }
+}
 
 export const getValuesForHistoricalDates = createSelector(
     getBalancesForAllDates,
@@ -88,28 +99,31 @@ export const getValuesForHistoricalDates = createSelector(
     (balances, prices) => {
         if (prices.loading || !prices.initialized) return false
 
-        const arraysFixLength = obj => {
-            const pricesLength = obj.data.length
-            const histBalancesLength = balances.length - 1
-            if (pricesLength >= histBalancesLength) {
-                return obj.data.slice(pricesLength - histBalancesLength)
-            }
-            else {
-                return Array((histBalancesLength) - pricesLength).concat(obj.data)
-            }
-        }
-        const relevantPrices = mapValues(arraysFixLength, pickKeysExcept(['loading', 'initialized'])(prices))
+        const relevantPrices = mapValues(arraysFixLength(balances), pickKeysExcept(['loading', 'initialized'])(prices))
         const relevantBalances = balances.slice(0, balances.length - 1)
+        const calcValue = (obj, prices, type, i) => map(obj, (val, key) => val * (key === 'USD' ? 1 : prices[key][i][type]))
+        const valueAt = (type, coins, i) => flow(calcValue, sum)(coins, relevantPrices, type, i)
+
         const coinValues = relevantBalances.map((o, i) => ({
             time: o.date,
-            close: flow(
-                (obj, prices) => map(obj, (val, key) => val * (key === 'USD' ? 1 : prices[key][i]['close'])),
-                sum
-            )(o.coins, relevantPrices),
+            close: valueAt('close', o.coins, i),
         }))
 
         return coinValues
     }
+)
+
+export const getValueDaysAgo = createCachedSelector(
+    (state, days) => days,
+    getValuesForHistoricalDates,
+    (days, values) => values[values.length - days + 1] // +1 since current day is not incorporated currently in the historical data
+)(
+    (state, days) => days
+)
+
+export const getValueFirstDay = createSelector(
+    getValuesForHistoricalDates,
+    (values) => values[0]
 )
 
 export const getCoinsCurrentBalances = createSelector(
@@ -143,7 +157,7 @@ export const getFormattedTotalBTC = createSelector(
         (num, ticker) => num / ticker,
         num => round(num, 2),
         num => `${num} BTC`
-    )(num, ticker) 
+    )(num, ticker)
 )
 export const getExchangesCurrentBalances = createSelector(
     getBalances,

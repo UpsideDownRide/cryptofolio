@@ -14,6 +14,7 @@ export const CurrentBitcoinPrice = ({loading, tickerBTC}) => {
         <TextPane
             title="Current Bitcoin price"
             botLeft={`${displayTicker} USD`}
+            botRight=" "
             loading={!tickerBTC && loading}
             loadingMessage="Loading current Bitcoin price"
         />
