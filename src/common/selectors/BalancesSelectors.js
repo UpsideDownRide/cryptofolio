@@ -2,8 +2,7 @@ import { getTransactions, getFirstTransactionDate } from './TransactionsSelector
 import { getAllTickers } from 'common/cryptoPrices/tickersSelector'
 import { createSelector } from 'reselect'
 import { map } from 'lodash'
-import { sum, rangeRight, reduce, mapKeys, mapValues, set, get, getOr, flow, has, add, subtract, keys, pick, filter, assign } from 'lodash/fp'
-import _ from 'lodash'
+import { sum, rangeRight, reduce, mapKeys, mapValues, set, get, getOr, flow, has, add, subtract, keys, pick, filter  } from 'lodash/fp'
 import moment from 'moment'
 
 const updater = (el, type, operation) => (res) => {
@@ -78,7 +77,7 @@ export const getBalancesForAllDates = createSelector(
 )
 
 // const castUTCMidnightToLocal = time => moment.unix(time).subtract({minutes: moment().utcOffset(), seconds: 1}).unix()
-const pickKeysExcept = exception => obj => pick(filter(s => s !== exception, keys(obj)), obj)
+const pickKeysExcept = exceptions => obj => pick(filter(s => !exceptions.includes(s), keys(obj)), obj)
 // const castPrices = (res, el) => assign(set(castUTCMidnightToLocal(el.time), pickKeysExcept('time')(el), {}), res)
 // const timeConvertedPrices = mapValues(obj => obj.data.reduce(castPrices, {}), pickKeysExcept('loading')(prices))
 
@@ -86,7 +85,7 @@ export const getValuesForHistoricalDates = createSelector(
     getBalancesForAllDates,
     state => state.prices,
     (balances, prices) => {
-        if (prices.loading || (keys(prices).length <= 1)) return false
+        if (prices.loading || !prices.initialized) return false
 
         const arraysFixLength = obj => {
             const pricesLength = obj.data.length
@@ -98,7 +97,7 @@ export const getValuesForHistoricalDates = createSelector(
                 return Array((histBalancesLength) - pricesLength).concat(obj.data)
             }
         }
-        const relevantPrices = mapValues(arraysFixLength, pickKeysExcept('loading')(prices))
+        const relevantPrices = mapValues(arraysFixLength, pickKeysExcept(['loading', 'initialized'])(prices))
         const relevantBalances = balances.slice(0, balances.length - 1)
         const coinValues = relevantBalances.map((o, i) => ({
             time: o.date,

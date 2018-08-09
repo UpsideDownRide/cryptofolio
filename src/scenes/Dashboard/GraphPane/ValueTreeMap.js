@@ -3,17 +3,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
 import { balanceTableData } from 'common/selectors/BalancesSelectors'
-import { createSelector } from 'reselect';
+import { createSelector } from 'reselect'
+import TreeMap from 'components/Charts/TreeMap/TreeMap'
+
 
 const ValueTreeMap = ({ data, ...props }) => (
-    data.length > 0 ? <GraphPane name="Portfolio by currencies" chart="treeMap" data={data} {...props} /> : null
+    <GraphPane
+        title="Portfolio by currencies"
+    >
+        {data.length > 0 && <TreeMap data={data} {...props} />}
+    </GraphPane>
 )
 
 const graphData = createSelector(
     balanceTableData,
     (data) => data.map(el => ({ name: el.currency, size: el.value }))
-                .filter(el => el.size > 0)
-                .sort((a, b) => b.size - a.size)
+        .filter(el => el.size > 0)
+        .sort((a, b) => b.size - a.size)
 )
 
 const mapStateToProps = (state) => ({

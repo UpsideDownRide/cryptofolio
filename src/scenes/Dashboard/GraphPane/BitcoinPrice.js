@@ -3,17 +3,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
 import { arePricesLoading, get30DaysPrices } from 'common/cryptoPrices/pricesSelector'
+import LineChart from 'components/Charts/Line/LineChart'
 
 const BitcoinPriceGraph = ({ prices, loading, ...props }) => {
     const data = prices 
     return (
-        <GraphPane chart="line"
-            name="Bitcoin price last 30 days"
-            data={data}
+        <GraphPane 
+            title="Bitcoin price last 30 days"
             loading={loading}
             loadingMessage="Loading historical Bitcoin prices"
-            {...props}
-        />
+        >
+        {data && <LineChart data={data} {...props} />}
+        </GraphPane>
     )
 }
 

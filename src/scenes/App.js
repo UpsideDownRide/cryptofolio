@@ -11,14 +11,23 @@ import { compose } from 'lodash/fp'
 import { hot } from 'react-hot-loader' 
 
 class App extends Component {
-  state = { intervalId: null }
+  state = { currencies: new Set() }
+
+  static getDerivedStateFromProps(props, state) {
+    const union = new Set([...props.currencies, ...state.currencies])
+    const differenceArray = [...props.currencies].filter(el => !state.currencies.has(el))
+    if (union.size !== state.currencies.size) {
+      props.fetchPrices(differenceArray)
+      return {
+        currencies: union
+      }
+    }
+    return null
+  }
 
   componentDidMount() {
-    this.props.fetchPrices(this.props.currencies)
     this.props.fetchTicker(this.props.currencies)
-    clearInterval(this.state.intervalId)
-    const newIntervalId = setInterval(() => this.props.fetchTicker(this.props.currencies), 15000)
-    this.setState({ intervalId: newIntervalId })
+    setInterval(() => this.props.fetchTicker(this.props.currencies), 10000)
   }
 
   render() {

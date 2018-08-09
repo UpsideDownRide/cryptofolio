@@ -9,7 +9,8 @@ export const FETCH_ALL_PRICES_SUCCESS = 'FETCH_ALL_PRICES_SUCCESS'
 export const FETCH_ALL_PRICES_ERROR = 'FETCH_ALL_PRICES_ERROR'
 
 const initialState = {
-    loading: false
+    initialized: false,
+    loading: false,
 }
 
 const fetchSuccess = (state, action) => ({ ...state, ...action.payload })
@@ -22,9 +23,9 @@ const actions = {
     FETCH_PRICES_BEGIN: fetchBegin,
     FETCH_PRICES_SUCCESS: fetchSuccess,
     FETCH_PRICES_ERROR: (state, action) => ({ ...state, error: action.payload.error }),
-    FETCH_ALL_PRICES_BEGIN: (state) => ({...state, loading: true}),
+    FETCH_ALL_PRICES_BEGIN: (state) => ({...state, initialized: true, loading: true}),
     FETCH_ALL_PRICES_SUCCESS: (state) => ({...state, loading: false}),
-    FETCH_ALL_PRICES_ERROR: (state) => ({...state, loading: false}),
+    FETCH_ALL_PRICES_ERROR: (state, action) => ({...state, loading: false, error: action.payload.error}),
 }
 
 export default createReducer(initialState, actions)

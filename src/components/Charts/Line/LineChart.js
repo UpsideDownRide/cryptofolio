@@ -9,7 +9,7 @@ const BitcoinChart = (props) => {
     return (
         <ResponsiveContainer height={200}>
             <LineChart data={props.data}
-                margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
+                margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
             >
                 <XAxis dataKey="time"
                     tickMargin={8}
@@ -17,7 +17,7 @@ const BitcoinChart = (props) => {
                     tickSize={3}
                     tickFormatter={formatDates}
                 />
-                <YAxis interval="preserveEnd"
+                <YAxis 
                     axisLine={false}
                     minTickGap={2}
                     tickMargin={5}
@@ -44,7 +44,7 @@ const formatNumbers = (tick) => tick !== 0 ? tick / 1000 + "k" : ""
 const getThousands = (num) => Math.floor(num/1000)*1000
 const calculateTicks = (data) => {
     const [min, max] = [getThousands(_.minBy(data, 'close').close), getThousands(_.maxBy(data, 'close').close)]
-    return {ticks: _.range(min + 500, max + 501, 500), domain: [min, max+500]}
+    return {ticks: _.range(min + 500, max + 501, 500), domain: [min, max+501]}
 }
 
 const CustomTooltip = (props) => {

@@ -6,7 +6,7 @@ import {
     FETCH_ALL_PRICES_SUCCESS,
     FETCH_ALL_PRICES_ERROR,
 } from './pricesReducer'
-import { set, get, flow } from 'lodash/fp'
+import { set, get, flow, filter } from 'lodash/fp'
 
 // For reference if needs to be used
 
@@ -25,17 +25,18 @@ import { set, get, flow } from 'lodash/fp'
 // })
 
 export const fetchPrices = (currencies) => dispatch => {
-    Promise.all(currencies.map(el => dispatch(fetchPricesOf(el))))
-        .then(dispatch(fetchAllPricesSuccess()))
-        .catch(dispatch(fetchAllPricesError()))
+    dispatch(fetchAllPricesBegin())
+    const filteredCurrencies = filter(s => s !== 'USD', currencies)
+    Promise.all(filteredCurrencies.map(el => dispatch(fetchPricesOf(el))))
+        .then(() => dispatch(fetchAllPricesSuccess()))
+        .catch((error) => dispatch(fetchAllPricesError(error)))
 }
 
 export const fetchPricesOf = (baseCurrency) => dispatch => {
     const quoteCurrency = 'USD'
-    if (baseCurrency === quoteCurrency) return false
     const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${baseCurrency}&tsym=${quoteCurrency}&allData=true`
     dispatch(fetchPricesBegin(baseCurrency))
-    fetch(url)
+    return fetch(url)
         .then(response => response.json())
         .then(result => get('Data', result))
         .then(data => dispatch(fetchPricesSuccess(data, baseCurrency, quoteCurrency)))
@@ -50,8 +51,9 @@ export const fetchAllPricesSuccess = () => ({
     type: FETCH_ALL_PRICES_SUCCESS
 })
 
-export const fetchAllPricesError = () => ({
-    type: FETCH_ALL_PRICES_ERROR
+export const fetchAllPricesError = (error) => ({
+    type: FETCH_ALL_PRICES_ERROR,
+    payload: {error}
 })
 
 export const fetchPricesBegin = (baseCurrency) => ({

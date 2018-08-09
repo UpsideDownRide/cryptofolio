@@ -11,7 +11,7 @@ export const getTransactions = createSelector(
 
 export const getCurrencies = createSelector(
     getTransactions,
-    (data) => [...data.reduce(extractCurrencies, new Set())],
+    transactions => [...transactions.reduce(extractCurrencies, new Set())],
 )
 
 export const getFirstTransactionDate = createSelector(
@@ -29,4 +29,3 @@ export const getLastTransactionDate = createSelector(
         obj => get('date', obj)
     )(transactions)
 )
-

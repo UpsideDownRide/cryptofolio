@@ -6,9 +6,14 @@ import { createSelector } from 'reselect';
 import { getExchangesCurrentBalances } from 'common/selectors/BalancesSelectors';
 import { getAllTickers } from 'common/cryptoPrices/tickersSelector';
 import _ from 'lodash'
+import TreeMap from 'components/Charts/TreeMap/TreeMap'
 
 const ExchangeTreeMap = ({ data, ...props }) => (
-    data.length > 0 ? <GraphPane name="Portfolio by exchange" chart="treeMap" data={data} {...props} /> : null
+    <GraphPane
+        title="Portfolio by exchange"
+    >
+        {data.length > 0 && <TreeMap data={data} {...props} />}
+    </GraphPane>
 )
 
 const graphData = createSelector(
