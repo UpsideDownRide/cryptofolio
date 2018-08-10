@@ -7,6 +7,7 @@ import ROUTES from 'common/constants/routes'
 import { set } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { createUserSuccess } from 'common/user/userActions'
+import { retrieveTransactions } from 'common/transactions/transactionsActions';
 
 const SignUpPage = () => (
     <div className='signup-form'>
@@ -32,7 +33,12 @@ class FormContainer extends Component {
 
     onSubmit = ({ email, password }) => {
         if (!email && !password) return false
-        const handleSuccess = this.props.successfulSignUp
+        const handleSuccess = user => {
+            Promise.all([
+                this.props.successfulSignUp(user),
+                this.props.loadData(user.uid)
+            ])
+        }
         // const handleFailure 
         this.setSubmitting(true)
 
@@ -46,7 +52,6 @@ class FormContainer extends Component {
                 alert('Sign up success')
                 return result
             })
-            .then((result) => alert(JSON.stringify(result, 0, 2)))
             .catch((error) => alert(error))
             .then(() => this.setSubmitting(false))
     }
@@ -113,7 +118,8 @@ const ErrorLabel = (props) => (
 
 const mapStateToProps = (state) => (state.user)
 const mapDispatchToProps = dispatch => ({
-    successfulSignUp: (response) => dispatch(createUserSuccess(response))
+    successfulSignUp: (response) => dispatch(createUserSuccess(response)),
+    loadData: (uid) => dispatch(retrieveTransactions(uid))
 })
 const ConnectedFormContainer = connect(mapStateToProps, mapDispatchToProps)(FormContainer)
 

@@ -3,24 +3,27 @@ import React from 'react'
 import { connect } from 'react-redux'
 import GraphPane from './GraphPane'
 import { getValuesForHistoricalDates } from 'common/selectors/BalancesSelectors'
+import { arePricesLoading } from 'common/cryptoPrices/pricesSelector'
 import LineChart from 'components/Charts/Line/LineChart'
+import { Segment } from 'semantic-ui-react'
 
-const PortfolioValueGraph = ({ prices, loading, ...props }) => {
-    const data = props.balances
+const PortfolioValueGraph = ({ prices, loading, data, ...props }) => {
     return (
         <GraphPane 
             title="Portfolio value in USD"
-            loading={!data}
+            loading={loading}
             loadingMessage="Loading historical prices"
             {...props}
         >
             {data && <LineChart data={data} {...props} />}
+            {!data && <Segment>Enter transaction</Segment>}
         </GraphPane>
     )
 }
 
 const mapStateToProps = (state) => ({
-    balances: getValuesForHistoricalDates(state)
+    data: getValuesForHistoricalDates(state),
+    loading: arePricesLoading(state),
 })
 
 const mapDispatchToProps = {}

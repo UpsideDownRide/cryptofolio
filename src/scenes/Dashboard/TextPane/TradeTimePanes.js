@@ -2,7 +2,7 @@ import React from 'react'
 import { TextPane } from './TextPane';
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import { getFirstTransactionDate, getLastTransactionDate } from 'common/selectors/TransactionsSelectors'
+import { getFirstTransactionDate, getLastTransactionDate } from 'common/transactions/transactionsSelectors'
 import moment from 'moment'
 
 export const FirstTrade = ({date, dateAgo, ...props}) => (

@@ -3,12 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import tableSettings from '../TransactionTable/TransactionTableSettings'
 import Table from 'components/Table/Table'
-import { getTransactions } from 'common/selectors/TransactionsSelectors';
-import { Container } from '../../../../node_modules/semantic-ui-react';
+import { getTransactions } from 'common/transactions/transactionsSelectors';
+import { Container, Segment } from 'semantic-ui-react';
 
-const TransactionTable = (props) => (
+const TransactionTable = ({data, ...props}) => (
     <Container>
-        <Table {...props} columns={tableSettings} />
+        {data && <Table {...props} data={data} columns={tableSettings} />}
+        {!data && <Segment attached>Enter a transaction</Segment>}
     </Container>
 )
 

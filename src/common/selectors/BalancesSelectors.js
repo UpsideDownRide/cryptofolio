@@ -1,4 +1,4 @@
-import { getTransactions, getFirstTransactionDate } from './TransactionsSelectors'
+import { getTransactions, getFirstTransactionDate } from 'common/transactions/transactionsSelectors'
 import { getAllTickers } from 'common/cryptoPrices/tickersSelector'
 import { createSelector } from 'reselect'
 import { map, round } from 'lodash'
@@ -49,7 +49,7 @@ const generateCurrentValues = (tickers, coinBalances) => (
 
 export const getBalances = createSelector(
     getTransactions,
-    transactions => flow(
+    transactions => transactions && flow(
         reduce(balanceUpdaters, { runningBalance: { coins: {}, exchanges: {} } }),
         mapKeys(k => k === 'runningBalance' ? 'currentBalance' : k)
     )(transactions)
@@ -59,6 +59,7 @@ export const getBalancesForAllDates = createSelector(
     getBalances,
     getFirstTransactionDate,
     (balances, start) => {
+        if (!balances) return false
         const generateBalances = (acc, date, i) => {
             if (has(date, balances)) {
                 acc.arr.splice(i, 1, { ...balances[date], date: date })
@@ -97,7 +98,7 @@ export const getValuesForHistoricalDates = createSelector(
     getBalancesForAllDates,
     state => state.prices,
     (balances, prices) => {
-        if (prices.loading || !prices.initialized) return false
+        if (prices.loading || !prices.initialized || !balances) return false
 
         const relevantPrices = mapValues(arraysFixLength(balances), pickKeysExcept(['loading', 'initialized'])(prices))
         const relevantBalances = balances.slice(0, balances.length - 1)

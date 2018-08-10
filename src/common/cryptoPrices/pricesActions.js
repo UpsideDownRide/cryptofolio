@@ -29,7 +29,7 @@ export const fetchPrices = (currencies) => dispatch => {
     const filteredCurrencies = filter(s => s !== 'USD', currencies)
     Promise.all(filteredCurrencies.map(el => dispatch(fetchPricesOf(el))))
         .then(() => dispatch(fetchAllPricesSuccess()))
-        .catch((error) => dispatch(fetchAllPricesError(error)))
+        .catch(error => dispatch(fetchAllPricesError(error)))
 }
 
 export const fetchPricesOf = (baseCurrency) => dispatch => {
@@ -43,25 +43,25 @@ export const fetchPricesOf = (baseCurrency) => dispatch => {
         .catch(error => dispatch(fetchPricesError(error, baseCurrency)))
 }
 
-export const fetchAllPricesBegin = () => ({
+const fetchAllPricesBegin = () => ({
     type: FETCH_ALL_PRICES_BEGIN
 })
 
-export const fetchAllPricesSuccess = () => ({
+const fetchAllPricesSuccess = () => ({
     type: FETCH_ALL_PRICES_SUCCESS
 })
 
-export const fetchAllPricesError = (error) => ({
+const fetchAllPricesError = (error) => ({
     type: FETCH_ALL_PRICES_ERROR,
-    payload: {error}
+    payload: {error: error}
 })
 
-export const fetchPricesBegin = (baseCurrency) => ({
+const fetchPricesBegin = (baseCurrency) => ({
     type: FETCH_PRICES_BEGIN,
     payload: {baseCurrency: baseCurrency}
 })
 
-export const fetchPricesSuccess = (data, baseCurrency, quoteCurrency) => ({
+const fetchPricesSuccess = (data, baseCurrency, quoteCurrency) => ({
     type: FETCH_PRICES_SUCCESS,
     payload: flow(
         set(`${baseCurrency}.isLoading`, false),
@@ -70,7 +70,7 @@ export const fetchPricesSuccess = (data, baseCurrency, quoteCurrency) => ({
     )({})
 })
 
-export const fetchPricesError = (error, baseCurrency) => ({
+const fetchPricesError = (error, baseCurrency) => ({
     type: FETCH_PRICES_ERROR,
     payload: flow(
         set(`${baseCurrency}.isLoading`, false),

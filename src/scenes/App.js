@@ -6,7 +6,7 @@ import { fetchPrices } from 'common/cryptoPrices/pricesActions'
 import { fetchTicker } from 'common/cryptoPrices/tickersActions'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { getCurrencies } from 'common/selectors/TransactionsSelectors'
+import { getCurrencies } from 'common/transactions/transactionsSelectors'
 import { compose } from 'lodash/fp'
 import { hot } from 'react-hot-loader' 
 

@@ -11,7 +11,10 @@ export const getTransactions = createSelector(
 
 export const getCurrencies = createSelector(
     getTransactions,
-    transactions => [...transactions.reduce(extractCurrencies, new Set())],
+    transactions => {
+        if(!transactions) return ['BTC']
+        else return [...transactions.reduce(extractCurrencies, new Set())]
+    },
 )
 
 export const getFirstTransactionDate = createSelector(
