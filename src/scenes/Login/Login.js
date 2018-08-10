@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { auth } from 'common/firebase/interface'
 import { Field, Form as FinalForm } from 'react-final-form'
 import { Loader, Label, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import ROUTES from 'common/constants/routes'
 import { set } from 'lodash/fp'
 import { loginUser } from 'common/user/userActions'
-import { retrieveTransactions } from 'common/transactions/transactionsActions'
 import { connect } from 'react-redux'
 
 const LoginPage = () => (
@@ -33,19 +31,9 @@ class FormContainer extends Component {
 
     onSubmit = ({ email, password }) => {
         if (!email && !password) return false
-        const handleSuccess = user => {
-            Promise.all([
-                this.props.login(user),
-                this.props.loadData(user.uid),
-            ])
-        }
         this.setSubmitting(true)
-
-        auth.signIn(email, password)
-            .then((result) => {
-                handleSuccess(result.user)
-                alert('Login success')
-            })
+        this.props.loginUser(email, password)
+            .then(() => alert('Login success'))
             .catch((error) => alert(error))
             .then(() => this.setSubmitting(false))
     }
@@ -112,8 +100,7 @@ const ErrorLabel = (props) => (
 
 const mapStateToProps = (state) => (state.user)
 const mapDispatchToProps = dispatch => ({
-    login: (response) => dispatch(loginUser(response)),
-    loadData: (uid) => dispatch(retrieveTransactions(uid)),
+    loginUser: (email, password) => dispatch(loginUser(email, password)),
 })
 const ConnectedFormContainer = connect(mapStateToProps, mapDispatchToProps)(FormContainer)
 

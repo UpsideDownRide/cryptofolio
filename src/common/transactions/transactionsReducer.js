@@ -13,9 +13,9 @@ const initialState = {
 }
 
 const addTransaction = (state, action) => {
-    const insertIndex = sortedIndexBy('date', action.transaction, state.data)
+    const insertIndex = sortedIndexBy('date', action.payload.transaction, state.data)
     const updatedData = [...slice(0, insertIndex, state.data),
-                        action.transaction,
+                        action.payload.transaction,
                         ...slice(insertIndex, state.data.length, state.data)]
     return set('data', updatedData, state)
 }

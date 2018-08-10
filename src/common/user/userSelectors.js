@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect'
+import { getOr } from 'lodash/fp'
 
 const isLoggedIn = state => state.user.isLoggedIn
-const userUID = state => state.user.uid
+const userUID = state => getOr(false, 'user.uid', state)
 
 export const isUserLoggedIn = createSelector(
     isLoggedIn,

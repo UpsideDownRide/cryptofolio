@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { auth, database } from 'common/firebase/interface'
 import { Field, Form as FinalForm } from 'react-final-form'
 import { Loader, Label, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import ROUTES from 'common/constants/routes'
 import { set } from 'lodash/fp'
 import { connect } from 'react-redux'
-import { createUserSuccess } from 'common/user/userActions'
-import { retrieveTransactions } from 'common/transactions/transactionsActions';
+import { createUser } from 'common/user/userActions'
 
 const SignUpPage = () => (
     <div className='signup-form'>
@@ -33,27 +31,13 @@ class FormContainer extends Component {
 
     onSubmit = ({ email, password }) => {
         if (!email && !password) return false
-        const handleSuccess = user => {
-            Promise.all([
-                this.props.successfulSignUp(user),
-                this.props.loadData(user.uid)
-            ])
-        }
-        // const handleFailure 
         this.setSubmitting(true)
-
-        auth.createUser(email, password)
-            .then(result => {
-                database.createUser(result.user.uid)
-                return result
-            })
-            .then(result => {
-                handleSuccess(result.user)
+        this.props.createUser(email, password)
+            .then(() => {
                 alert('Sign up success')
-                return result
-            })
-            .catch((error) => alert(error))
-            .then(() => this.setSubmitting(false))
+            }).catch((error) => {
+                alert(error)
+            }).then(() => this.setSubmitting(false))
     }
 
     render() {
@@ -95,7 +79,7 @@ const FormContent = ({ handleSubmit, isSubmitting }) => {
     )
 }
 
-const TinyLoader = () => <Loader style={{margin: "-1em"}} active inline inverted size='tiny'/>
+const TinyLoader = () => <Loader style={{ margin: "-1em" }} active inline inverted size='tiny' />
 
 const FormInputAdapter = ({ input, meta, ...props }) => {
     const fieldError = meta.error && meta.touched
@@ -118,8 +102,7 @@ const ErrorLabel = (props) => (
 
 const mapStateToProps = (state) => (state.user)
 const mapDispatchToProps = dispatch => ({
-    successfulSignUp: (response) => dispatch(createUserSuccess(response)),
-    loadData: (uid) => dispatch(retrieveTransactions(uid))
+    createUser: (email, password) => dispatch(createUser(email, password)),
 })
 const ConnectedFormContainer = connect(mapStateToProps, mapDispatchToProps)(FormContainer)
 

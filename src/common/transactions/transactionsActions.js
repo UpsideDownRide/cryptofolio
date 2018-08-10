@@ -14,21 +14,35 @@ export const retrieveTransactions = uid => dispatch => {
         .catch(error => dispatch(retrieveTransactionsError(error)))
 }
 
-export const retrieveTransactionsBegin = () => ({
+export const submitTransaction = (transaction, isLoggedIn, uid) => dispatch => ({
+    type: SUBMIT_TRANSACTION,
+    payload: {transaction: transaction}
+})
+
+// const submitTransactionDatabaseBegin = () => ({
+//     type: SUBMIT_DATABASE_TRANSACTION_BEGIN
+// })
+
+// const submitTransactionDatabaseSuccess = (transactions) => ({
+//     type: SUBMIT_DATABASE_TRANSACTION_SUCCESS,
+//     payload: {transactions: transactions}
+// })
+
+// const submitTransactionDatabaseError = (error) => ({
+//     type: SUBMIT_DATABASE_TRANSACTION_ERROR,
+//     payload: {error: error}
+// })
+
+const retrieveTransactionsBegin = () => ({
     type: RETRIEVE_TRANSACTIONS_BEGIN
 })
 
-export const retrieveTransactionsSuccess = (transactions) => ({
+const retrieveTransactionsSuccess = (transactions) => ({
     type: RETRIEVE_TRANSACTIONS_SUCCESS,
     payload: {transactions: transactions}
 })
 
-export const retrieveTransactionsError = (error) => ({
+const retrieveTransactionsError = (error) => ({
     type: RETRIEVE_TRANSACTIONS_ERROR,
     payload: {error: error}
-})
-
-export const submitTransaction = (transaction) => ({
-    type: SUBMIT_TRANSACTION,
-    transaction: transaction
 })
