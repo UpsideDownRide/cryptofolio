@@ -7,7 +7,7 @@ import { getTransactions } from 'common/transactions/transactionsSelectors';
 import { Container, Segment } from 'semantic-ui-react';
 
 const TransactionTable = ({data, ...props}) => (
-    <Container>
+    <Container style={{width: "100%", margin: 0}}>
         {data && <Table {...props} data={data} columns={tableSettings} />}
         {!data && <Segment attached>Enter a transaction</Segment>}
     </Container>

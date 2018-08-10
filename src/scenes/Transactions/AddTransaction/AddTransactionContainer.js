@@ -24,7 +24,7 @@ const AddTransaction = (props) => (
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => ({
-    submitRedux: (transaction) => dispatch(submitTransaction(transaction))
+    submitTransaction: (transaction) => dispatch(submitTransaction(transaction))
 })
 
 const dispatchLink = connect(mapStateToProps, mapDispatchToProps)(AddTransaction)

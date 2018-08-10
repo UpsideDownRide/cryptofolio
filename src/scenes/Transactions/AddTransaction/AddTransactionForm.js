@@ -36,76 +36,85 @@ const formatDateTime = (date, time) => {
     return moment(date).hours(h).minutes(m).seconds(s).milliseconds(0).unix()
 }
 
-const onSubmit = (submitRedux, closeModal) => values => {
+const normalizeBeforeSubmit = values => {
     values.date = formatDateTime(values.date, values.time)
     values.in && !values.in.exchange && _.set(values, 'in.exchange', values.out.exchange)
     values.out && !values.out.exchange && _.set(values, 'out.exchange', values.in.exchange)
     values.fee && _.set(values, 'fee.exchange', _.get(values, 'out.exchange') || _.get(values, 'in.exchange'))
-    const valuesAsNumbers = _(values).pick(['in.value', 'out.value', 'fee.value']).mapValues(key => ({value: Number(key.value)})).value()
-    const finalForm = _(values).omit('time').merge(valuesAsNumbers).value()
-    submitRedux(finalForm)
+    const valuesAsNumbers = _(values).pick(['in.value', 'out.value', 'fee.value']).mapValues(key => ({ value: Number(key.value) })).value()
+    const normalizedTransaction = _(values).omit('time').merge(valuesAsNumbers).value()
+    return normalizedTransaction
+}
+
+
+const onSubmit = (submitTransaction, closeModal) => values => {
+    submitTransaction(normalizeBeforeSubmit(values))
     closeModal()
 };
 
-const TransactionForm = ({ formValues, subscription, submitRedux, closeModal, ...props }) => {
+const TransactionForm = ({ formValues, subscription, submitTransaction, closeModal, ...props }) => {
     const {
         INITIAL_VALUES,
-        TRANSACTIONS,
-        EXCHANGES,
-        SYMBOLS
+        ...CONSTANTS
     } = formValues
 
     return (
         <Grid centered padded>
             <FinalForm
-                onSubmit={onSubmit(submitRedux, closeModal)}
+                onSubmit={onSubmit(submitTransaction, closeModal)}
                 subscription={subscription}
                 initialValues={INITIAL_VALUES}
-                render={({ handleSubmit, reset, submitting, pristine, invalid, form }) => (
-                    <Form onSubmit={handleSubmit}
-                        className={`ui form ${style.form}`}>
-                        <Segment.Group>
-                            <Button.Group attached="top">
-                                <Field
-                                    name="operation"
-                                    component={DropdownAdapter}
-                                    className={`ui primary icon ${style.transaction}`}
-                                    placeholder='Select action'
-                                    options={TRANSACTIONS}
-                                />
-                                <CancelButton onClick={closeModal} />
-                            </Button.Group>
-                            <Segment />
-                            <FormSpy subscription={{ values: true }}>
-                                {({ values }) => {
-                                    const operationValue = _.get(values, 'operation', false)
-                                    return (
-                                        <React.Fragment>
-                                            {!operationValue && <FormFillerSegment />}
-                                            {operationValue &&
-                                                <React.Fragment>
-                                                    <DateTimeSegment />
-                                                    <DisplayConditionalContent operationValue={operationValue}
-                                                        exchanges={EXCHANGES}
-                                                        symbols={SYMBOLS}
-                                                        changeValue={form.change} />
-                                                    <CommentSegment />
-                                                    <Button.Group attached='bottom'>
-                                                        <AddTransactionButton />
-                                                    </Button.Group>
-                                                </React.Fragment>
-                                            }
-                                        </React.Fragment>
-                                    )
-                                }}
-                            </FormSpy>
-                        </Segment.Group>
-                    </Form>
-                )}
+                render={FormContent}
+                {...CONSTANTS}
+                closeModal={closeModal}
             />
         </Grid>
     )
 }
+
+const FormContent = ({ handleSubmit, reset, submitting, pristine, invalid, form, TRANSACTIONS, EXCHANGES, SYMBOLS, closeModal }) => (
+    <Form onSubmit={handleSubmit} className={`ui form ${style.form}`}>
+        <Segment.Group>
+            <Button.Group attached="top">
+                <Field
+                    name="operation"
+                    component={DropdownAdapter}
+                    className={`ui primary icon ${style.transaction}`}
+                    placeholder='Select action'
+                    options={TRANSACTIONS}
+                />
+                <CancelButton onClick={closeModal} />
+            </Button.Group>
+            <Segment />
+            <FormSpy subscription={{ values: true }}>
+                {({ values }) => {
+                    const chosenOperation = _.get(values, 'operation', false)
+                    return (
+                        <React.Fragment>
+                            {!chosenOperation && <FormFillerSegment />}
+                            {chosenOperation &&
+                                <React.Fragment>
+                                    <DateTimeSegment />
+                                    <DisplayConditionalContent
+                                        operation={chosenOperation}
+                                        exchanges={EXCHANGES}
+                                        symbols={SYMBOLS}
+                                        changeValue={form.change}
+                                    />
+                                    <CommentSegment />
+                                    <Button.Group attached='bottom'>
+                                        <AddTransactionButton />
+                                    </Button.Group>
+                                </React.Fragment>
+                            }
+                        </React.Fragment>
+                    )
+                }}
+            </FormSpy>
+        </Segment.Group>
+    </Form>
+)
+
 
 // const ResetButton = (props) => (
 //     <Button
@@ -197,8 +206,8 @@ const CONTENT_COMPONENTS = {
     'Mining': MiningContent,
 }
 
-const DisplayConditionalContent = ({ operationValue, ...props }) => {
-    const ContentComponent = CONTENT_COMPONENTS[operationValue]
+const DisplayConditionalContent = ({ operation, ...props }) => {
+    const ContentComponent = CONTENT_COMPONENTS[operation]
     return <ContentComponent {...props} />
 }
 
@@ -349,7 +358,7 @@ const DateSelectAdapter = ({ input, meta, label, ...props }) => {
     )
 }
 
-const TimeInputAdapter = ({ input, meta, label, ...props}) => (
+const TimeInputAdapter = ({ input, meta, label, ...props }) => (
     <div className={`field ${style.innerinput}`}>
         <label>{label}</label>
         {meta.touched && meta.error && <ErrorLabel>{meta.error}</ErrorLabel>}
