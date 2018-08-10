@@ -2,7 +2,6 @@ import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextPane from './TextPane'
-import { balanceTableData } from 'common/selectors/BalancesSelectors'
 import { getFormattedTotalValue, getFormattedTotalBTC } from 'common/selectors/BalancesSelectors'
 
 const TotalValuePane = ({ totalValue, totalValueBTC, ...props }) => (

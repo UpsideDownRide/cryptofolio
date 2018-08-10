@@ -4,9 +4,8 @@ import { connect } from 'react-redux'
 import TextPane from './TextPane'
 import { getTotalValue, getValueFirstDay } from 'common/selectors/BalancesSelectors'
 import { round } from 'lodash'
-import { getOr, partial } from 'lodash/fp'
+import { getOr } from 'lodash/fp'
 import StylePercent from 'common/utils/StylePercent'
-import moment from 'moment'
 
 const TotalPerformancePane = ({ totalValue, firstValue, firstTransactionDate, ...props }) => {
     const absoluteChange = totalValue - getOr(0, 'close', firstValue)

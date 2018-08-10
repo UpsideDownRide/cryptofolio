@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { auth } from 'common/firebase/interface'
+import { auth, database } from 'common/firebase/interface'
 import { Field, Form as FinalForm } from 'react-final-form'
 import { Loader, Label, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
@@ -37,10 +37,16 @@ class FormContainer extends Component {
         this.setSubmitting(true)
 
         auth.createUser(email, password)
-            .then((result) => {
-                alert('Sign up success')
-                handleSuccess(result.user)
+            .then(result => {
+                database.createUser(result.user.uid)
+                return result
             })
+            .then(result => {
+                handleSuccess(result.user)
+                alert('Sign up success')
+                return result
+            })
+            .then((result) => alert(JSON.stringify(result, 0, 2)))
             .catch((error) => alert(error))
             .then(() => this.setSubmitting(false))
     }
