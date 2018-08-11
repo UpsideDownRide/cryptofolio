@@ -1,0 +1,10 @@
+{
+    "exclude": [
+        "node_modules",
+        "build",
+        ".vscode",
+        "recharts",
+    ],
+    "target": "es2018",
+    "baseUrl": "src"
+}

@@ -4,6 +4,7 @@ import CurrencyIcon from 'common/utils/CurrencyIcon'
 import { padDecimal } from 'common/utils/padNumber'
 import moment from 'moment'
 import { isEqual, get } from 'lodash/fp'
+import { ActionCell } from './tableButtons'
 
 const currencyCell = props => {
     if (!props.value) return null
@@ -49,6 +50,9 @@ const MinorSpan = props => (
 )
 
 const columnsSettings = [{
+    Cell: (props) => <ActionCell {...props} />,
+    width: 35
+}, {
     Header: 'Date',
     accessor: 'date',
     Cell: timeCell,

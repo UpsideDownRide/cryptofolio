@@ -1,10 +1,15 @@
 import { database } from 'common/firebase/interface'
 import { values, flow, orderBy } from 'lodash/fp'
+import { key as firebaseKey } from 'firebase-key'
 import {
+    DELETE_REDUX_TRANSACTION,
     SUBMIT_REDUX_TRANSACTION,
     SUBMIT_DATABASE_TRANSACTION_BEGIN,
     SUBMIT_DATABASE_TRANSACTION_SUCCESS,
     SUBMIT_DATABASE_TRANSACTION_ERROR,
+    DELETE_DATABASE_TRANSACTION_BEGIN,
+    DELETE_DATABASE_TRANSACTION_SUCCESS,
+    DELETE_DATABASE_TRANSACTION_ERROR,
     RETRIEVE_TRANSACTIONS_BEGIN,
     RETRIEVE_TRANSACTIONS_SUCCESS,
     RETRIEVE_TRANSACTIONS_ERROR
@@ -24,18 +29,29 @@ export const retrieveTransactions = uid => dispatch => {
         .catch(error => dispatch(retrieveTransactionsError(error)))
 }
 
-export const submitTransaction = (transaction, isLoggedIn, uid) => dispatch => {
+export const submitTransaction = (transaction, isLoggedIn, uuid) => dispatch => {
+    const key = firebaseKey(transaction.date)
+    const keyedTransaction = { key: key, ...transaction }
     if (!isLoggedIn) {
-        return Promise.resolve(dispatch(submitTransactionToStore(transaction)))
+        return Promise.resolve(dispatch(submitTransactionToStore(keyedTransaction)))
     }
     else {
         dispatch(submitTransactionDatabaseBegin())
-        return database.submitTransaction(uid, transaction)
+        return database.submitTransaction(uuid, transaction, key)
             .then(() => dispatch(submitTransactionDatabaseSuccess()))
-            .then(() => dispatch(submitTransactionToStore(transaction)))
+            .then(() => dispatch(submitTransactionToStore(keyedTransaction)))
             .catch(error => dispatch(submitTransactionDatabaseError(error)))
     }
 }
+
+export const deleteTransaction = (isLoggedin, key) => dispatch => {
+    dispatch(deleteTransactionFromStore(key))
+}
+
+const deleteTransactionFromStore = key => ({
+    type: DELETE_REDUX_TRANSACTION,
+    payload: { key: key }
+})
 
 const submitTransactionToStore = (transaction) => ({
     type: SUBMIT_REDUX_TRANSACTION,

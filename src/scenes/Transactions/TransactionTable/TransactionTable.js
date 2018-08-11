@@ -17,7 +17,5 @@ const mapStateToProps = (state) => ({
     data: getTransactions(state)
 })
 
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionTable)
+export default connect(mapStateToProps)(TransactionTable)
 

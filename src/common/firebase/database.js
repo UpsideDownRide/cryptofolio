@@ -2,16 +2,16 @@ import { database } from './firebase'
 
 //TODO: Sanity check for non existance of the uid we are trying to create
 
-export const createUser = uid => {
-    const setTransactions = database.ref(`transactions/${uid}`).set({ data: false })
-    const setUsers = database.ref(`users/${uid}`).set({ settings: false })
+export const createUser = uuid => {
+    const setTransactions = database.ref(`transactions/${uuid}`).set({ data: false })
+    const setUsers = database.ref(`users/${uuid}`).set({ settings: false })
     return Promise.all([setTransactions, setUsers])
 }
 
-export const getTransactions = uid => {
-    return database.ref(`transactions/${uid}/data`).once('value')
+export const getTransactions = uuid => {
+    return database.ref(`transactions/${uuid}/data`).once('value')
 }
 
-export const submitTransaction = (uid, transaction) => {
-    return database.ref(`transactions/${uid}/data`).push().set(transaction)
+export const submitTransaction = (uuid, transaction, key) => {
+    return database.ref(`transactions/${uuid}/data/${key}`).set(transaction)
 }

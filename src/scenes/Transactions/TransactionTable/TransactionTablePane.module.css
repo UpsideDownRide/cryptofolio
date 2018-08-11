@@ -10,3 +10,7 @@
 .tableCellNumbers > span > div {
     margin: 0.05em 0 0 0.5em;
 }
+
+.clickableIcon:hover {
+    cursor: pointer;
+}
