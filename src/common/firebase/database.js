@@ -15,3 +15,7 @@ export const getTransactions = uuid => {
 export const submitTransaction = (uuid, transaction, key) => {
     return database.ref(`transactions/${uuid}/data/${key}`).set(transaction)
 }
+
+export const deleteTransaction = (uuid, key) => {
+    return database.ref(`transactions/${uuid}/data/${key}`).set(null)
+}

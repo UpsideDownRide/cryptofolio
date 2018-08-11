@@ -6,7 +6,7 @@ import {
 } from './tickersReducer'
 
 export const fetchTicker = (currencies) => dispatch => {
-    const quoteCurrencies = currencies.join(",")
+    const quoteCurrencies = currencies.join(",") || 'BTC'
     const baseCurrency = 'USD'
     const url = `https://min-api.cryptocompare.com/data/price?fsym=${baseCurrency}&tsyms=${quoteCurrencies}`
     dispatch(fetchTickerBegin())
