@@ -29,8 +29,9 @@ export const loginUser = (email, password) => dispatch => {
         .then(result => {
             return dispatch(retrieveTransactions(result.user.uid))
                 .then(() => dispatch(loginUserSuccess(result.user.uid)))
+                .catch(error => dispatch(loginUserFailure(error)))
         })
-        .catch(error => dispatch(loginUserFailure(error)))
+        
 }
 
 const createUserBegin = () => ({

@@ -9,9 +9,9 @@ export const createUser = uid => {
 }
 
 export const getTransactions = uid => {
-    return database.ref(`transactions/${uid}`).once('value')
+    return database.ref(`transactions/${uid}/data`).once('value')
 }
 
 export const submitTransaction = (uid, transaction) => {
-    return database.ref(`transactions/${uid}`).push().set(transaction)
+    return database.ref(`transactions/${uid}/data`).push().set(transaction)
 }

@@ -1,4 +1,5 @@
 import { database } from 'common/firebase/interface'
+import { values, flow, orderBy } from 'lodash/fp'
 import {
     SUBMIT_REDUX_TRANSACTION,
     SUBMIT_DATABASE_TRANSACTION_BEGIN,
@@ -13,7 +14,13 @@ import {
 export const retrieveTransactions = uid => dispatch => {
     dispatch(retrieveTransactionsBegin())
     return database.getTransactions(uid)
-        .then(result => dispatch(retrieveTransactionsSuccess(result.val())))
+        .then(result => flow(
+            values,
+            orderBy(o => o.date, 'asc'),
+            arr => ({ data: arr }),
+            retrieveTransactionsSuccess,
+            dispatch
+        )(result.val()))
         .catch(error => dispatch(retrieveTransactionsError(error)))
 }
 
@@ -25,7 +32,7 @@ export const submitTransaction = (transaction, isLoggedIn, uid) => dispatch => {
         dispatch(submitTransactionDatabaseBegin())
         return database.submitTransaction(uid, transaction)
             .then(() => dispatch(submitTransactionDatabaseSuccess()))
-            .then(transaction => dispatch(submitTransactionToStore(transaction)))
+            .then(() => dispatch(submitTransactionToStore(transaction)))
             .catch(error => dispatch(submitTransactionDatabaseError(error)))
     }
 }
