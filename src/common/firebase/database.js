@@ -11,3 +11,7 @@ export const createUser = uid => {
 export const getTransactions = uid => {
     return database.ref(`transactions/${uid}`).once('value')
 }
+
+export const submitTransaction = (uid, transaction) => {
+    return database.ref(`transactions/${uid}`).push().set(transaction)
+}

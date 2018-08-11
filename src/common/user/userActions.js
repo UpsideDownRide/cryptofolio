@@ -1,13 +1,14 @@
 import { auth, database } from 'common/firebase/interface'
 import { retrieveTransactions } from 'common/transactions/transactionsActions'
-import { 
+import {
     CREATE_USER_BEGIN,
-    CREATE_USER_SUCCESS, 
-    CREATE_USER_FAILURE, 
-    LOGIN_USER_BEGIN, 
-    LOGIN_USER_SUCCESS, 
-    LOGIN_USER_FAILURE, 
-    LOGOUT_USER } from './userReducer'
+    CREATE_USER_SUCCESS,
+    CREATE_USER_FAILURE,
+    LOGIN_USER_BEGIN,
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_FAILURE,
+    LOGOUT_USER
+} from './userReducer'
 
 export const createUser = (email, password) => dispatch => {
     dispatch(createUserBegin())
@@ -26,10 +27,9 @@ export const loginUser = (email, password) => dispatch => {
     dispatch(loginUserBegin())
     return auth.signIn(email, password)
         .then(result => {
-            dispatch(loginUserSuccess(result.user.uid))
-            return result.user.uid
+            return dispatch(retrieveTransactions(result.user.uid))
+                .then(() => dispatch(loginUserSuccess(result.user.uid)))
         })
-        .then(result => dispatch(retrieveTransactions(result.user.uid)))
         .catch(error => dispatch(loginUserFailure(error)))
 }
 

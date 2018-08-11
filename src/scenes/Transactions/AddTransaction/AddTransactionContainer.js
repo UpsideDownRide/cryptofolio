@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    submitTransaction: (isLoggedIn, uid) => (transaction) => dispatch(submitTransaction(transaction))
+    submitTransaction: (isLoggedIn, uid) => (transaction) => dispatch(submitTransaction(transaction, isLoggedIn, uid))
 })
 
 const dispatchLink = connect(mapStateToProps, mapDispatchToProps)(AddTransaction)
