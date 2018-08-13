@@ -15,7 +15,7 @@ const PortfolioValueGraph = ({ prices, loading, data, ...props }) => (
         {...props}
     >
         {data && data.length && <LineChart data={data} {...props} />}
-        {(!data || data.length) && <Segment>Enter transaction</Segment>}
+        {(!data || !data.length) && <Segment>Enter transaction</Segment>}
     </GraphPane>
 )
 

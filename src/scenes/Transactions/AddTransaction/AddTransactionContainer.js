@@ -4,7 +4,7 @@ import AddTransactionForm from './AddTransactionForm'
 import { SYMBOLS } from 'common/mockData/currencies'
 import moment from 'moment'
 import CurrencyIcon from 'common/utils/CurrencyIcon'
-import { submitTransaction } from 'common/transactions/transactionsActions'
+import { submitTransactions } from 'common/transactions/transactionsActions'
 import { isUserLoggedIn, getUserUID } from 'common/user/userSelectors';
 
 const formValues = {
@@ -14,11 +14,11 @@ const formValues = {
     TRANSACTIONS: ["Trade", "Transfer", "Deposit", "Withdraw", "Mining"].map(el => ({ key: el, value: el, text: el }))
 }
 
-const AddTransaction = ({ isLoggedIn, uid, submitTransaction, ...props }) => (
+const AddTransaction = ({ isLoggedIn, uid, submitTransactions, ...props }) => (
     <AddTransactionForm
         formValues={formValues}
         subscription={{ submitting: true, pristine: true }}
-        submitTransaction={submitTransaction(isLoggedIn, uid)}
+        submitTransactions={submitTransactions(isLoggedIn, uid)}
         {...props}
     />
 )
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    submitTransaction: (isLoggedIn, uid) => (transaction) => dispatch(submitTransaction(transaction, isLoggedIn, uid))
+    submitTransactions: (isLoggedIn, uid) => transactions => dispatch(submitTransactions(transactions, isLoggedIn, uid))
 })
 
 const dispatchLink = connect(mapStateToProps, mapDispatchToProps)(AddTransaction)

@@ -27,17 +27,18 @@ class NavigationBar extends Component {
         const isLoggedIn = this.props.isLoggedIn
         return (
             <Segment inverted>
-                    <Menu as='nav' className={style.navbar} fixed='top' inverted>
-                        <HandledNavItem name='landing' header position='left'>
-                            CryptoHaven
+                <Menu as='nav' className={style.navbar} fixed='top' inverted>
+                    <HandledNavItem name='landing' header position='left'>
+                        CryptoHaven
                     </HandledNavItem>
-                        <div style={{ display: "flex" }}>
-                            <HandledNavItem name='dashboard' />
-                            <HandledNavItem name='transactions' />
-                            {!isLoggedIn && <HandledNavItem name='login' />}
-                            {isLoggedIn && <HandledNavItem name='logout' />}
-                        </div>
-                    </Menu>
+                    <div style={{ display: "flex" }}>
+                        <HandledNavItem name='dashboard' />
+                        <HandledNavItem name='transactions' />
+                        {!isLoggedIn && <HandledNavItem name='signup' />}
+                        {!isLoggedIn && <HandledNavItem name='login' />}
+                        {isLoggedIn && <HandledNavItem name='logout' />}
+                    </div>
+                </Menu>
             </Segment>
         )
     }

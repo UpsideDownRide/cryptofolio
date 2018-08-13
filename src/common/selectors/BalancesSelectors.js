@@ -79,10 +79,7 @@ export const getBalancesForAllDates = createSelector(
     }
 )
 
-// const castUTCMidnightToLocal = time => moment.unix(time).subtract({minutes: moment().utcOffset(), seconds: 1}).unix()
 const pickKeysExcept = exceptions => obj => pick(filter(s => !exceptions.includes(s), keys(obj)), obj)
-// const castPrices = (res, el) => assign(set(castUTCMidnightToLocal(el.time), pickKeysExcept('time')(el), {}), res)
-// const timeConvertedPrices = mapValues(obj => obj.data.reduce(castPrices, {}), pickKeysExcept('loading')(prices))
 const arraysFixLength = balances => obj => {
     const pricesLength = obj.data.length
     const histBalancesLength = balances.length - 1

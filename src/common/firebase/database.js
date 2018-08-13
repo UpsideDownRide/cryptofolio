@@ -1,4 +1,5 @@
 import { database } from './firebase'
+import { set } from 'lodash/fp'
 
 //TODO: Sanity check for non existance of the uid we are trying to create
 
@@ -12,8 +13,14 @@ export const getTransactions = uuid => {
     return database.ref(`transactions/${uuid}/data`).once('value')
 }
 
-export const submitTransaction = (uuid, transaction, key) => {
-    return database.ref(`transactions/${uuid}/data/${key}`).set(transaction)
+export const submitTransactions = (uuid, transactions) => {
+    const toDatabase = transactions.reduce((res, el) => {
+        const { key, ...data } = el
+        return set(key, data, res)
+    }, {})
+    console.log(toDatabase)
+    
+    //return database.ref(`transactions/${uuid}/data/${key}`).set(transaction)
 }
 
 export const deleteTransaction = (uuid, key) => {

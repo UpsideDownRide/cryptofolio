@@ -7,6 +7,7 @@ import {
     FETCH_ALL_PRICES_ERROR,
 } from './pricesReducer'
 import { set, get, flow, filter } from 'lodash/fp'
+import Bottleneck from "bottleneck"
 
 // For reference if needs to be used
 
@@ -24,6 +25,11 @@ import { set, get, flow, filter } from 'lodash/fp'
 //         })
 // })
 
+const limiter = new Bottleneck({
+    maxConcurrent: 1,
+    minTime: 100,
+})
+
 export const fetchPrices = (currencies) => dispatch => {
     dispatch(fetchAllPricesBegin())
     const filteredCurrencies = filter(s => s !== 'USD', currencies)
@@ -36,9 +42,11 @@ export const fetchPricesOf = (baseCurrency) => dispatch => {
     const quoteCurrency = 'USD'
     const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${baseCurrency}&tsym=${quoteCurrency}&allData=true`
     dispatch(fetchPricesBegin(baseCurrency))
-    return fetch(url)
+    return limiter.schedule(() => fetch(url))
         .then(response => response.json())
-        .then(result => get('Data', result))
+        .then(result => {
+            console.log(result)
+            return get('Data', result)})
         .then(data => dispatch(fetchPricesSuccess(data, baseCurrency, quoteCurrency)))
         .catch(error => dispatch(fetchPricesError(error, baseCurrency)))
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Segment, Icon, Button, Grid } from 'semantic-ui-react'
-import Modal from './Modal'
+import AddTransactionModal from './AddTransactionModal'
+import ImportTransactionsModal from './ImportTransactionsModal'
 import TransactionTable from './TransactionTable/TransactionTable';
 import ContentWrapper from 'components/ContentWrapper/ContentWrapper'
 
@@ -12,10 +13,14 @@ export default () => (
             <Grid.Row as='section'>
                 <Grid.Column>
                     <Button.Group attached='top'>
-                        <Modal trigger={
-                            <Button positive><Icon name='plus' />Add Transaction</Button>}>
-                        </Modal>
-                        <Button primary disabled><Icon name='edit' />Edit Transactions</Button>
+                        <AddTransactionModal trigger={
+                            <Button positive><Icon name='plus' />Add Transaction</Button>
+                        }>
+                        </AddTransactionModal>
+                        <ImportTransactionsModal trigger={
+                            <Button primary><Icon name='download' />Import Transactions</Button>
+                        }>
+                        </ImportTransactionsModal>
                     </Button.Group>
                     <Segment attached style={{ padding: 0 }}>
                         <TransactionTable />

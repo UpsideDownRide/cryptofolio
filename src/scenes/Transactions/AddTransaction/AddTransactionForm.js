@@ -47,12 +47,12 @@ const normalizeBeforeSubmit = values => {
 }
 
 
-const onSubmit = (submitTransaction, closeModal) => values => {
-    submitTransaction(normalizeBeforeSubmit(values))
+const onSubmit = (submitTransactions, closeModal) => values => {
+    submitTransactions([normalizeBeforeSubmit(values)])
     closeModal()
 };
 
-const TransactionForm = ({ formValues, subscription, submitTransaction, closeModal, ...props }) => {
+const TransactionForm = ({ formValues, subscription, submitTransactions, closeModal, ...props }) => {
     const {
         INITIAL_VALUES,
         ...CONSTANTS
@@ -61,7 +61,7 @@ const TransactionForm = ({ formValues, subscription, submitTransaction, closeMod
     return (
         <Grid centered padded>
             <FinalForm
-                onSubmit={onSubmit(submitTransaction, closeModal)}
+                onSubmit={onSubmit(submitTransactions, closeModal)}
                 subscription={subscription}
                 initialValues={INITIAL_VALUES}
                 render={FormContent}

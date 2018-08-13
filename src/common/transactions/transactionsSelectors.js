@@ -2,7 +2,11 @@ import { createSelector } from 'reselect'
 import { map, pick, minBy, maxBy, get, getOr, flow } from 'lodash/fp'
 
 const getTransactionsData = state => getOr(false, 'transactions.data', state)
-const extractCurrencies = (res, el) => res.add(...map('currency', pick(['in.currency', 'out.currency', 'fee.currency'], el)))
+const extractCurrencies = (res, el) => {
+    map('currency', pick(['in.currency', 'out.currency', 'fee.currency'], el))
+        .forEach(currency => res.add(currency))
+    return res
+}
 
 export const getTransactions = createSelector(
     getTransactionsData,

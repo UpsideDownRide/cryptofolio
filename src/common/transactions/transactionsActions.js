@@ -4,7 +4,7 @@ import { map } from 'lodash'
 import { key as firebaseKey } from 'firebase-key'
 import {
     DELETE_REDUX_TRANSACTION,
-    SUBMIT_REDUX_TRANSACTION,
+    SUBMIT_REDUX_TRANSACTIONS,
     SUBMIT_DATABASE_TRANSACTION_BEGIN,
     SUBMIT_DATABASE_TRANSACTION_SUCCESS,
     SUBMIT_DATABASE_TRANSACTION_ERROR,
@@ -31,17 +31,16 @@ export const retrieveTransactions = uid => dispatch => {
         .catch(error => dispatch(retrieveTransactionsError(error)))
 }
 
-export const submitTransaction = (transaction, isLoggedIn, uuid) => dispatch => {
-    const key = firebaseKey(transaction.date)
-    const keyedTransaction = { key: key, ...transaction }
+export const submitTransactions = (transactions, isLoggedIn, uuid) => dispatch => {
+    const keyedTransactions = transactions.map(transaction => ({ key: firebaseKey(transaction.date), ...transaction}))
     if (!isLoggedIn) {
-        return Promise.resolve(dispatch(submitTransactionToStore(keyedTransaction)))
+        return Promise.resolve(dispatch(submitTransactionsToStore(keyedTransactions)))
     }
     else {
         dispatch(submitTransactionDatabaseBegin())
-        return database.submitTransaction(uuid, transaction, key)
+        return database.submitTransaction(uuid, transactions)
             .then(() => dispatch(submitTransactionDatabaseSuccess()))
-            .then(() => dispatch(submitTransactionToStore(keyedTransaction)))
+            .then(() => dispatch(submitTransactionsToStore(keyedTransactions)))
             .catch(error => dispatch(submitTransactionDatabaseError(error)))
     }
 }
@@ -64,9 +63,9 @@ const deleteTransactionFromStore = key => ({
     payload: { key: key }
 })
 
-const submitTransactionToStore = (transaction) => ({
-    type: SUBMIT_REDUX_TRANSACTION,
-    payload: { transaction: transaction }
+const submitTransactionsToStore = transactions => ({
+    type: SUBMIT_REDUX_TRANSACTIONS,
+    payload: { transactions: transactions }
 })
 
 const deleteTransactionDatabaseBegin = () => ({
