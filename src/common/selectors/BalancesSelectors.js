@@ -99,7 +99,14 @@ export const getValuesForHistoricalDates = createSelector(
 
         const relevantPrices = mapValues(arraysFixLength(balances), pickKeysExcept(['loading', 'initialized'])(prices))
         const relevantBalances = balances.slice(0, balances.length - 1)
-        const calcValue = (obj, prices, type, i) => map(obj, (val, key) => val * (key === 'USD' ? 1 : prices[key][i][type]))
+        const calcValue = (obj, prices, type, i) => map(obj, (val, key) => {
+            try { return val * (key === 'USD' ? 1 : prices[key][i][type]) }
+            catch (err) {
+                console.log(err, key, i, type)
+                return 0
+            }
+        }
+        )
         const valueAt = (type, coins, i) => flow(calcValue, sum)(coins, relevantPrices, type, i)
 
         const coinValues = relevantBalances.map((o, i) => ({
