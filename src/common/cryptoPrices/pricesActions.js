@@ -1,3 +1,5 @@
+import { set, get, flow, filter } from 'lodash/fp'
+import Bottleneck from "bottleneck"
 import {
     FETCH_PRICES_BEGIN,
     FETCH_PRICES_SUCCESS,
@@ -6,28 +8,10 @@ import {
     FETCH_ALL_PRICES_SUCCESS,
     FETCH_ALL_PRICES_ERROR,
 } from './pricesReducer'
-import { set, get, flow, filter } from 'lodash/fp'
-import Bottleneck from "bottleneck"
-
-// For reference if needs to be used
-
-// const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-// const retryOperation = (delay, times, exchange, operation, ...args) => new Promise((resolve, reject) => {
-//     return exchange[operation](...args)
-//         .then(resolve)
-//         .catch((reason) => {
-//             return times === 1 ? reject(reason) :
-//                 sleep(delay)
-//                     .then(retryOperation.bind(null, delay, times - 1, exchange, operation, ...args))
-//                     .then(resolve)
-//                     .catch(reject)
-//         })
-// })
 
 const limiter = new Bottleneck({
-    maxConcurrent: 1,
-    minTime: 100,
+    maxConcurrent: 3,
+    minTime: 400,
 })
 
 export const fetchPrices = (currencies) => dispatch => {
@@ -38,6 +22,8 @@ export const fetchPrices = (currencies) => dispatch => {
         .catch(error => dispatch(fetchAllPricesError(error)))
 }
 
+// TODO: add guard if we receive error response
+
 export const fetchPricesOf = (baseCurrency) => dispatch => {
     const quoteCurrency = 'USD'
     const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${baseCurrency}&tsym=${quoteCurrency}&allData=true`
@@ -45,7 +31,7 @@ export const fetchPricesOf = (baseCurrency) => dispatch => {
     return limiter.schedule(() => fetch(url))
         .then(response => response.json())
         .then(result => {
-            console.log(result)
+            console.log(baseCurrency, result)
             return get('Data', result)})
         .then(data => dispatch(fetchPricesSuccess(data, baseCurrency, quoteCurrency)))
         .catch(error => dispatch(fetchPricesError(error, baseCurrency)))
