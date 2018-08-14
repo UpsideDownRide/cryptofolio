@@ -2,7 +2,7 @@ import React from 'react'
 import style from './TransactionTablePane.module.css'
 import CurrencyIcon from 'common/utils/CurrencyIcon'
 import { padDecimal } from 'common/utils/padNumber'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { isEqual, get } from 'lodash/fp'
 import { ActionCell } from './tableButtons'
 
@@ -19,8 +19,8 @@ const currencyCell = props => {
 }
 
 const timeCell = ({ value }) => {
-    const momentDate = moment.unix(value)
-    const date = momentDate.format('LL')
+    const momentDate = dayjs(value)
+    const date = momentDate.format('D MMM YY')
     const time = momentDate.format('HH:mm:ss')
     return (
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>

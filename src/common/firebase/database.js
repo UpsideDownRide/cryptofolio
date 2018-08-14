@@ -18,7 +18,7 @@ export const submitTransactions = (uuid, transactions) => {
         const { key, ...data } = el
         return set(key, data, res)
     }, {})
-    console.log(toDatabase)
+    // console.log(toDatabase)
     
     //return database.ref(`transactions/${uuid}/data/${key}`).set(transaction)
 }

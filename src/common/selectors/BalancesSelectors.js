@@ -3,14 +3,16 @@ import { getAllTickers } from 'common/cryptoPrices/tickersSelector'
 import { createSelector } from 'reselect'
 import { map, round } from 'lodash'
 import { sum, rangeRight, reduce, mapKeys, mapValues, set, get, getOr, flow, has, add, subtract, keys, pick, filter } from 'lodash/fp'
-import moment from 'moment'
+import dayjs from 'dayjs'
+//import moment from 'moment'
 import { getTicker } from 'common/cryptoPrices/tickersSelector';
 import createCachedSelector from 're-reselect';
 
 const updater = (el, type, operation) => (res) => {
     if (!has(type, el)) return res
 
-    const endOfDay = moment.unix(el.date).endOf('day').unix()
+    const endOfDay = dayjs(el.date).endOf('day').unix()
+    //const endOfDay = moment.unix(el.date).endOf('day').unix()
     const [updateValue, currency, exchange] = [el[type].value, el[type].currency, el[type].exchange]
     const runningBalanceCurrency = `runningBalance.coins.${currency}`
     const runningBalanceExchange = `runningBalance.exchanges.${exchange}.${currency}`
@@ -71,9 +73,9 @@ export const getBalancesForAllDates = createSelector(
             }
         }
         const balancesObject = flow(
-            start => moment().diff(moment.unix(start).endOf('day'), 'days'),
+            start => dayjs().diff(dayjs(start).endOf('day'), 'days'),
             daysAgo => rangeRight(0, daysAgo + 2),
-            daysArray => map(daysArray, daysAgo => moment().subtract(daysAgo, 'days').endOf('day').unix()),
+            daysArray => map(daysArray, daysAgo => dayjs().subtract(daysAgo, 'days').endOf('day').unix()),
             datesArray => datesArray.reduce(generateBalances, { arr: Array(datesArray.length).fill(), last: null }))(start)
         return balancesObject.arr
     }
@@ -90,7 +92,7 @@ const arraysFixLength = balances => obj => {
         return Array((histBalancesLength) - pricesLength).concat(obj.data)
     }
 }
-
+// TODO: Rethink the current try catch approach
 export const getValuesForHistoricalDates = createSelector(
     getBalancesForAllDates,
     state => state.prices,
@@ -102,7 +104,6 @@ export const getValuesForHistoricalDates = createSelector(
         const calcValue = (obj, prices, type, i) => map(obj, (val, key) => {
             try { return val * (key === 'USD' ? 1 : prices[key][i][type]) }
             catch (err) {
-                console.log(err, key, i, type)
                 return 0
             }
         }

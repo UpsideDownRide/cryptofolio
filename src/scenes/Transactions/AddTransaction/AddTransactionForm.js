@@ -1,13 +1,13 @@
-import React from 'react';
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css';
-import './datepicker-overrides.css'
+import React from 'react'
+import DayPickerInput from 'react-day-picker/DayPickerInput'
+import { DateUtils } from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
 //import PropTypes from 'prop-types';
 import { Field, Form as FinalForm, FormSpy } from 'react-final-form'
 import MaskedInput from 'react-text-mask'
 import { Label, Button, Icon, Segment, Dropdown, Grid, Form } from 'semantic-ui-react'
 import style from './AddTransactionForm.module.css'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import _ from 'lodash'
 
 // TODO: Search not working in dropdowns currently - probably related to addition of icons. (Maybe add them using before/after CSS?)
@@ -33,7 +33,7 @@ const normalizeValue = value => {
 
 const formatDateTime = (date, time) => {
     const [h, m, s] = time.split(':')
-    return moment(date).hours(h).minutes(m).seconds(s).milliseconds(0).unix()
+    return dayjs(date).set({hour: h, minute: m, second: s, millisecond: 0}).valueOf()
 }
 
 const normalizeBeforeSubmit = values => {
@@ -339,20 +339,31 @@ const ExchangeInput = ({ operation, exchanges }) => (
     />
 )
 
+const parseDate = string => {
+    const [day, month, year] = string.split('/')
+    const date = dayjs(`${year}-${month}-${day}`)
+    return date.isValid() ? date.toDate() : undefined
+}
+
 const DateSelectAdapter = ({ input, meta, label, ...props }) => {
-    const { value, ...rest } = input
+    const { value, ...inputProps } = input
     return (
         <div className={`field ${style.innerinput} ${style.datepicker}`}>
             <label>{label}</label>
-            <DatePicker
-                fixedHeight
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                selected={moment(value)}
-                onChange={date => (date && date.format())}
-                {...props}
-                {...rest}
+            <DayPickerInput
+                placeholder="DD/MM/YYYY"
+                formatDate={date => dayjs(date).format("DD/MM/YYYY")}
+                parseDate={parseDate}
+                dayPickerProps={{
+                    fromMonth: new Date(2010, 6, 16),
+                    toMonth: new Date(),
+                }}
+                disabledDays={[{
+                    after: new Date(),
+                    before: new Date(2010, 6, 16)
+                }]}
+                inputProps={{ ...inputProps }}
+                value={dayjs(value).format('DD/MM/YYYY')}
             />
         </div>
     )

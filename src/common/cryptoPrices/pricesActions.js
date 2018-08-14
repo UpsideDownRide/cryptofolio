@@ -1,5 +1,5 @@
 import { set, get, flow, filter } from 'lodash/fp'
-import Bottleneck from "bottleneck"
+import Bottleneck from 'bottleneck'
 import {
     FETCH_PRICES_BEGIN,
     FETCH_PRICES_SUCCESS,
@@ -30,9 +30,7 @@ export const fetchPricesOf = (baseCurrency) => dispatch => {
     dispatch(fetchPricesBegin(baseCurrency))
     return limiter.schedule(() => fetch(url))
         .then(response => response.json())
-        .then(result => {
-            console.log(baseCurrency, result)
-            return get('Data', result)})
+        .then(result => get('Data', result))
         .then(data => dispatch(fetchPricesSuccess(data, baseCurrency, quoteCurrency)))
         .catch(error => dispatch(fetchPricesError(error, baseCurrency)))
 }

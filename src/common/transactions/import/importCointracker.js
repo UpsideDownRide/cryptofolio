@@ -1,5 +1,5 @@
 import csvParse from 'common/utils/csvParse'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { isEqual, pickBy, identity } from 'lodash/fp'
 
 const CT_HEADER = ["Type", "Buy", "Cur.", "Sell", "Cur.", "Fee", "Cur.", "Exchange", "Group", "Comment", "Date"]
@@ -10,7 +10,7 @@ const parseRow = (exchange, currency, value) => {
 
 // TODO: merge appropriate deposit+withdrawal into transfer operation
 const parseCointracking = transactions => transactions.map(row => {
-    const date = moment(row[10], "YYYY-MM-DD HH:mm:ss").unix()
+    const date = dayjs(row[10], "YYYY-MM-DD HH:mm:ss").unix()
     const exchange = row[7]
     const result =  {
         date: date,

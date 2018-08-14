@@ -35,3 +35,8 @@
 .datepicker > div {
     display: flex;
 }
+
+.datepicker > div > div > div {
+    top: 2.75em;
+    left: -15.5em
+}

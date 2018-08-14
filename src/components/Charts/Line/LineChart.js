@@ -2,7 +2,7 @@ import React from 'react'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import style from '../ToolTip.module.css'
 import _ from 'lodash'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 const BitcoinChart = (props) => {
     const {ticks, domain} = calculateTicks(props.data)
@@ -39,7 +39,7 @@ const BitcoinChart = (props) => {
     )
 }
 
-const formatDates = (tick) => moment.unix(tick).format('DD MMM')
+const formatDates = (tick) => dayjs(tick).format('DD MMM')
 const formatNumbers = (tick) => tick !== 0 ? tick / 1000 + "k" : ""
 const getThousands = (num) => Math.floor(num/1000)*1000
 const calculateTicks = (data) => {
@@ -51,7 +51,7 @@ const CustomTooltip = (props) => {
     const { active } = props
     if (active) {
         const { payload, label } = props
-        const date = moment.unix(label).format('ddd - DD MMM')
+        const date = dayjs(label).format('ddd - DD MMM')
         const data = payload[0].payload
         const renderData = [
             { name: 'Open', data: data.open },

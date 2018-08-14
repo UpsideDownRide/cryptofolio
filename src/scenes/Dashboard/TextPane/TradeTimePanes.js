@@ -3,7 +3,7 @@ import { TextPane } from './TextPane';
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import { getFirstTransactionDate, getLastTransactionDate } from 'common/transactions/transactionsSelectors'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export const FirstTrade = ({date, dateAgo, ...props}) => (
     <TextPane title="Date of first transaction"
@@ -24,12 +24,12 @@ export const LastTrade = ({date, dateAgo, ...props}) => (
 )
 
 const daysAgo = (date) => {
-    const numDays = moment().diff(moment.unix(date), 'days')
+    const numDays = dayjs().diff(dayjs(date), 'days')
     const dayString = numDays === 1 ? 'day' : 'days'
     return `${numDays} ${dayString} ago`
 }
 
-const formatDate = date => moment.unix(date).format("DD MMM YYYY")
+const formatDate = date => dayjs(date).format("DD MMM YYYY")
 
 const getFormattedFirstDate = createSelector(
     getFirstTransactionDate,
