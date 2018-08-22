@@ -30,7 +30,7 @@ export const retrieveTransactions = uid => dispatch => {
         )(result.val()))
         .catch(error => dispatch(retrieveTransactionsError(error)))
 }
-
+// TODO: Separation of concerns issue - should we be keying the transactions in submit action?
 export const submitTransactions = (transactions, isLoggedIn, uuid) => dispatch => {
     const keyedTransactions = transactions.map(transaction => ({ key: firebaseKey(transaction.date), ...transaction}))
     if (!isLoggedIn) {
@@ -38,7 +38,7 @@ export const submitTransactions = (transactions, isLoggedIn, uuid) => dispatch =
     }
     else {
         dispatch(submitTransactionDatabaseBegin())
-        return database.submitTransaction(uuid, transactions)
+        return database.submitTransactions(uuid, keyedTransactions)
             .then(() => dispatch(submitTransactionDatabaseSuccess()))
             .then(() => dispatch(submitTransactionsToStore(keyedTransactions)))
             .catch(error => dispatch(submitTransactionDatabaseError(error)))

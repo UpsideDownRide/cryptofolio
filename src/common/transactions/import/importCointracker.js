@@ -10,7 +10,7 @@ const parseRow = (exchange, currency, value) => {
 
 // TODO: merge appropriate deposit+withdrawal into transfer operation
 const parseCointracking = transactions => transactions.map(row => {
-    const date = dayjs(row[10], "YYYY-MM-DD HH:mm:ss").unix()
+    const date = dayjs(row[10]).valueOf()
     const exchange = row[7]
     const result =  {
         date: date,
@@ -30,7 +30,7 @@ const importCoinTracker = (file) => {
             const { data, errors } = result
             const [header, ...transactions] = data
             if (!correctCointracking(header)) throw new Error('Header does not match with Cointracker template')
-            return { transactions: parseCointracking(transactions), errors: errors }
+            return ({ transactions: parseCointracking(transactions), errors: errors })
         })
         .catch(error => error)
 }
