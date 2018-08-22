@@ -11,8 +11,7 @@ import createCachedSelector from 're-reselect';
 const updater = (el, type, operation) => (res) => {
     if (!has(type, el)) return res
 
-    const endOfDay = dayjs(el.date).endOf('day').unix()
-    //const endOfDay = moment.unix(el.date).endOf('day').unix()
+    const endOfDay = dayjs(el.date).endOf('day').valueOf()
     const [updateValue, currency, exchange] = [el[type].value, el[type].currency, el[type].exchange]
     const runningBalanceCurrency = `runningBalance.coins.${currency}`
     const runningBalanceExchange = `runningBalance.exchanges.${exchange}.${currency}`
@@ -75,7 +74,7 @@ export const getBalancesForAllDates = createSelector(
         const balancesObject = flow(
             start => dayjs().diff(dayjs(start).endOf('day'), 'days'),
             daysAgo => rangeRight(0, daysAgo + 2),
-            daysArray => map(daysArray, daysAgo => dayjs().subtract(daysAgo, 'days').endOf('day').unix()),
+            daysArray => map(daysArray, daysAgo => dayjs().subtract(daysAgo, 'days').endOf('day').valueOf()),
             datesArray => datesArray.reduce(generateBalances, { arr: Array(datesArray.length).fill(), last: null }))(start)
         return balancesObject.arr
     }

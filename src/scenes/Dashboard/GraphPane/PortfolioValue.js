@@ -7,7 +7,7 @@ import { arePricesLoading } from 'common/cryptoPrices/pricesSelector'
 import LineChart from 'components/Charts/Line/LineChart'
 import { Segment } from 'semantic-ui-react'
 
-const PortfolioValueGraph = ({ prices, loading, data, ...props }) => (
+const PortfolioValueGraph = ({ loading, data, ...props }) => (
     <GraphPane
         title="Portfolio value in USD"
         loading={loading}

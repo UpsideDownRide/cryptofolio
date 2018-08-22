@@ -4,11 +4,11 @@ import style from '../ToolTip.module.css'
 import _ from 'lodash'
 import dayjs from 'dayjs'
 
-const BitcoinChart = (props) => {
-    const {ticks, domain} = calculateTicks(props.data)
+const BitcoinChart = ({ data }) => {
+    const { ticks, domain } = calculateTicks(data)
     return (
         <ResponsiveContainer height={200}>
-            <LineChart data={props.data}
+            <LineChart data={data}
                 margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
             >
                 <XAxis dataKey="time"
@@ -17,7 +17,7 @@ const BitcoinChart = (props) => {
                     tickSize={3}
                     tickFormatter={formatDates}
                 />
-                <YAxis 
+                <YAxis
                     axisLine={false}
                     minTickGap={2}
                     tickMargin={5}
@@ -25,7 +25,7 @@ const BitcoinChart = (props) => {
                     tickSize={3}
                     ticks={ticks}
                     domain={domain}
-                    tickFormatter={formatNumbers} 
+                    tickFormatter={formatNumbers}
                 />
                 <CartesianGrid strokeWidth={0.75} vertical={false} stroke="#eee" />
                 <Tooltip
@@ -33,7 +33,7 @@ const BitcoinChart = (props) => {
                     cursor={{ strokeWidth: 0.75 }}
                     isAnimationActive={false}
                 />
-                <Line type="linear" dataKey="close" stroke="#8884d8" strokeWidth={2} dot={false}/>
+                <Line type="linear" dataKey="close" stroke="#8884d8" strokeWidth={2} dot={false} />
             </LineChart>
         </ResponsiveContainer>
     )
@@ -41,16 +41,14 @@ const BitcoinChart = (props) => {
 
 const formatDates = (tick) => dayjs(tick).format('DD MMM')
 const formatNumbers = (tick) => tick !== 0 ? tick / 1000 + "k" : ""
-const getThousands = (num) => Math.floor(num/1000)*1000
+const getThousands = (num) => Math.floor(num / 1000) * 1000
 const calculateTicks = (data) => {
     const [min, max] = [getThousands(_.minBy(data, 'close').close), getThousands(_.maxBy(data, 'close').close)]
-    return {ticks: _.range(min + 500, max + 501, 500), domain: [min, max+501]}
+    return { ticks: _.range(min + 500, max + 501, 500), domain: [min, max + 501] }
 }
 
-const CustomTooltip = (props) => {
-    const { active } = props
+const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
-        const { payload, label } = props
         const date = dayjs(label).format('ddd - DD MMM')
         const data = payload[0].payload
         const renderData = [
@@ -69,10 +67,10 @@ const CustomTooltip = (props) => {
     return null
 }
 
-const CustomTooltipData = (props) => (
+const CustomTooltipData = ({ name, data }) => (
     <div className={style.tooltipData}>
-        <span className={style.tooltipName}>{props.name}</span>
-        <span className={style.tooltipNumbers}>{props.data}</span>
+        <span className={style.tooltipName}>{name}</span>
+        <span className={style.tooltipNumbers}>{data}</span>
     </div>
 )
 

@@ -31,6 +31,7 @@ export const fetchPricesOf = (baseCurrency) => dispatch => {
     return limiter.schedule(() => fetch(url))
         .then(response => response.json())
         .then(result => get('Data', result))
+        .then(data => data.map(el => ({ ...el, time: el.time * 1000 })))
         .then(data => dispatch(fetchPricesSuccess(data, baseCurrency, quoteCurrency)))
         .catch(error => dispatch(fetchPricesError(error, baseCurrency)))
 }
@@ -45,12 +46,12 @@ const fetchAllPricesSuccess = () => ({
 
 const fetchAllPricesError = (error) => ({
     type: FETCH_ALL_PRICES_ERROR,
-    payload: {error: error}
+    payload: { error: error }
 })
 
 const fetchPricesBegin = (baseCurrency) => ({
     type: FETCH_PRICES_BEGIN,
-    payload: {baseCurrency: baseCurrency}
+    payload: { baseCurrency: baseCurrency }
 })
 
 const fetchPricesSuccess = (data, baseCurrency, quoteCurrency) => ({

@@ -1,4 +1,4 @@
-import { mapValues } from 'lodash'
+import { mapValues, union } from 'lodash'
 import {
     FETCH_TICKER_BEGIN,
     FETCH_TICKER_SUCCESS,
@@ -6,7 +6,7 @@ import {
 } from './tickersReducer'
 
 export const fetchTicker = (currencies) => dispatch => {
-    const quoteCurrencies = currencies.join(",") || 'BTC'
+    const quoteCurrencies = union(['BTC'], currencies).join(",")
     const baseCurrency = 'USD'
     const url = `https://min-api.cryptocompare.com/data/price?fsym=${baseCurrency}&tsyms=${quoteCurrencies}`
     dispatch(fetchTickerBegin())

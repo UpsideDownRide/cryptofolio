@@ -15,7 +15,7 @@ const parseCointracking = transactions => transactions.map(row => {
     const result =  {
         date: date,
         operation: row[0],
-        in: parseRow(exchange, row[2], row[1]),
+        in:  parseRow(exchange, row[2], row[1]),
         out: parseRow(exchange, row[4], row[3]),
         fee: parseRow(exchange, row[6], row[5]),
         comment: `${row[9]} CT import`,

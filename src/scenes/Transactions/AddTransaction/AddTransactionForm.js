@@ -364,7 +364,7 @@ const YearMonthForm = ({ date, localeUtils, onChange }) => {
     };
 
     return (
-        <div class="DayPicker-Caption">
+        <div className="DayPicker-Caption">
             <div style={{display: "flex", justifyContent: "space-between"}}> 
             <Dropdown placeholder='Month' options={months.map(el => ({text: el, value: el}))} />
             <Dropdown placeholder='Year' options={years.map(el => ({text: el, value: el}))} />
