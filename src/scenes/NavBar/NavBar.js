@@ -1,71 +1,31 @@
-import React, { Component } from 'react'
-//import PropTypes from 'prop-types'
+import React from 'react'
+import PropTypes from 'prop-types'
 import style from './NavBar.module.css'
-import { NavLink } from 'react-router-dom'
-import { Menu, Segment, Icon } from 'semantic-ui-react'
-import ROUTES from 'common/constants/routes'
-import { connect } from 'react-redux'
-import { isUserLoggedIn } from 'common/user/userSelectors'
+import { Menu, Segment, Icon, Responsive } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom'
-import { compose } from 'lodash/fp'
+import { NavLanding, NavItems } from 'components/NavMenuItems/NavMenuItems';
 
-class NavigationBar extends Component {
-    state = { activeItem: '' }
+//TODO: Replace fixed width with dynamic width calculation and switch to hamburger when we surpass it
+const WIDTH_BREAKPOINT = 600
 
-    handleItemClick = (e, { name }) => {
-        this.setState({ activeItem: name })
-    }
-
-    isActiveItem = (string) => {
-        return (string === this.state.activeItem)
-    }
-
-    HandledNavItem = props => <NavItem handleItemClick={this.handleItemClick} isActiveItem={this.isActiveItem} {...props} />
-
-    render() {
-        const HandledNavItem = this.HandledNavItem
-        const isLoggedIn = this.props.isLoggedIn
-        return (
-            
-                    <Segment inverted className={style.wrapper}>
-                        <Menu as='nav' className={style.navbar} fixed='top' inverted secondary pointing>
-                            <HandledNavItem name='landing' position='left'>
-                                CryptoHaven
-                            </HandledNavItem>
-                            <div style={{ display: "flex" }}>
-                                <HandledNavItem name='dashboard' />
-                                <HandledNavItem name='transactions' />
-                                {!isLoggedIn && <HandledNavItem name='signup' />}
-                                {!isLoggedIn && <HandledNavItem name='login' />}
-                                {isLoggedIn && <HandledNavItem name='logout' />}
-                            </div>
-                            <Menu.Item onClick={this.props.handleSidebarToggle}><Icon name="sidebar" /></Menu.Item>
-                        </Menu>
-                    </Segment>
-                
-        )
-    }
-}
-
-const NavItem = ({ isActiveItem, handleItemClick, name, children, ...props }) => (
-    <Menu.Item
-        exact
-        name={name}
-        as={NavLink}
-        to={ROUTES[name]}
-        active={isActiveItem({ name })}
-        onClick={handleItemClick}
-        {...props}
-    >
-        {children}
-    </Menu.Item>
+const NavigationBar = ({ handleSidebarToggle }) => (
+    <Segment inverted className={style.wrapper}>
+        <Menu as='nav' className={style.navbar} fixed='top' inverted secondary pointing>
+            <NavLanding position='left' />
+            <Responsive minWidth={WIDTH_BREAKPOINT}>
+                <div style={{ display: "flex" }}>
+                    <NavItems />
+                </div>
+            </Responsive>
+            <Responsive maxWidth={WIDTH_BREAKPOINT}>
+                <Menu.Item onClick={handleSidebarToggle}><Icon name="sidebar" /></Menu.Item>
+            </Responsive>
+        </Menu>
+    </Segment>
 )
 
-const mapStateToProps = (state) => ({
-    isLoggedIn: isUserLoggedIn(state)
-})
+NavigationBar.propTypes = {
+    handleSidebarToggle: PropTypes.func.isRequired
+}
 
-export default compose(
-    withRouter,
-    connect(mapStateToProps)
-)(NavigationBar)
+export default withRouter(NavigationBar)
