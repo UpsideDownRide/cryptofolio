@@ -12,6 +12,8 @@ import style from './Dashboard.module.css'
 import PortfolioValue from './GraphPane/PortfolioValue'
 import TotalPerformancePane from './TextPane/TotalPerformancePane'
 import RecentPerformancePane from './TextPane/RecentPerformancePane';
+import TotalTrades from './TextPane/TotalTrades'
+import TradesLastMonth from './TextPane/TradesLastMonth';
 
 const Dashboard = () => (
     <ContentWrapper>
@@ -19,8 +21,8 @@ const Dashboard = () => (
             <Grid.Row as='section'>
                 <Grid.Column><TotalPerformancePane /></Grid.Column>
                 <Grid.Column><RecentPerformancePane /></Grid.Column>
-                <Grid.Column><LastTradePane /></Grid.Column>
-                <Grid.Column><CurrentBitcoinPrice /></Grid.Column>
+                <Grid.Column><TotalTrades /></Grid.Column>
+                <Grid.Column><TradesLastMonth /></Grid.Column>
             </Grid.Row>
             <Grid.Row as='section'>
                 <Grid.Column><TotalValuePane /></Grid.Column>
@@ -34,7 +36,9 @@ const Dashboard = () => (
                 <Grid.Column><ValueTreeMap /></Grid.Column>
                 <Grid.Column><BitcoinPrice /></Grid.Column>
             </Grid.Row>
-            <Grid.Row as='section'>
+        </Grid>
+        <Grid className={style.grid} as='section' padded>
+            <Grid.Row>
                 <Grid.Column width={16}><BalanceTablePane /></Grid.Column>
             </Grid.Row>
         </Grid>

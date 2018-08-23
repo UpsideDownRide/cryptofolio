@@ -5,13 +5,13 @@ const data = [{
     operation: 'Deposit',
     in: { exchange: 'Kraken', currency: 'USD', value: 5000 },
 }, { 
-    key: key(1533051589),
+    key: key(1533051589000),
     date: 1533051589000,
     operation: 'Trade',
     in: { exchange: 'Kraken', currency: 'ETH', value: 10 },
     out: { exchange: 'Kraken', currency: 'USD', value: 2000 },
     fee: { exchange: 'Kraken', currency: 'USD', value: 5 },
-    comment: 'First coins wooohooo!'
+    comment: 'Bought first ETH'
 }, {
     key: key(1533051711000),
     date: 1533051711000,
@@ -19,7 +19,7 @@ const data = [{
     in: { exchange: 'Kraken', currency: 'BTC', value: 1 },
     out: { exchange: 'Kraken', currency: 'USD', value: 2990 },
     fee: { exchange: 'Kraken', currency: 'USD', value: 5 },
-    comment: 'BTC BTC BTC!!'
+    comment: 'Bought first BTC'
 },
 ]
 

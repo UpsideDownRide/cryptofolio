@@ -1,14 +1,14 @@
 import React from 'react'
 //import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import tableSettings from '../TransactionTable/TransactionTableSettings'
+import { columnsSettings, defaultSorting } from '../TransactionTable/TransactionTableSettings'
 import Table from 'components/Table/Table'
 import { getTransactions } from 'common/transactions/transactionsSelectors';
 import { Container, Segment } from 'semantic-ui-react';
 
 const TransactionTable = ({data, ...props}) => (
     <Container style={{width: "100%", margin: 0}}>
-        {data && <Table {...props} data={data} columns={tableSettings} />}
+        {data && <Table {...props} data={data} columns={columnsSettings} defaultSorted={defaultSorting}/>}
         {!data && <Segment attached>Enter a transaction</Segment>}
     </Container>
 )

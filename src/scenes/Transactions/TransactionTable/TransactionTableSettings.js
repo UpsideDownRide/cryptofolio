@@ -20,13 +20,11 @@ const currencyCell = props => {
 
 const timeCell = ({ value }) => {
     const momentDate = dayjs(value)
-    const date = momentDate.format('D MMM YY')
+    const date = momentDate.format('D MMMM YY')
     const time = momentDate.format('HH:mm:ss')
     return (
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-            <span style={{ fontSize: "0.8em" }}>
-                <strong>{date}</strong>
-            </span>
+            <span>{date}</span>
             <MinorSpan>{time}</MinorSpan>
         </div>
     )
@@ -49,7 +47,8 @@ const MinorSpan = props => (
     </span>
 )
 
-const columnsSettings = [{
+export const columnsSettings = [{
+    accessor: 'buttons',
     Cell: (props) => <ActionCell {...props} />,
     width: 35
 }, {
@@ -61,6 +60,7 @@ const columnsSettings = [{
     accessor: 'operation',
 }, {
     Header: 'Exchange',
+    accessor: 'exchange',
     Cell: exchangeCell,
 }, {
     Header: 'In',
@@ -75,7 +75,6 @@ const columnsSettings = [{
 }, {
     Header: 'Fee',
     accessor: 'fee',
-    width: 85,
     className: style.tableCellNumbers,
     Cell: currencyCell
 }, {
@@ -84,4 +83,7 @@ const columnsSettings = [{
 },
 ]
 
-export default columnsSettings
+export const defaultSorting = [{
+    id: 'date',
+    desc: true
+}]
