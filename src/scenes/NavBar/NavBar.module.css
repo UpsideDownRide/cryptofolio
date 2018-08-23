@@ -1,4 +1,7 @@
 .navbar {
-    font-size: 1.25em !important;
     background-color: rgb(27, 28, 29) !important;
+}
+
+.wrapper:first-child {
+    margin-top: -2px !important;
 }

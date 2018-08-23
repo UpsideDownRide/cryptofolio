@@ -8,8 +8,6 @@ import ContentWrapper from 'components/ContentWrapper/ContentWrapper'
 export default () => (
     <ContentWrapper>
         <Grid>
-            <Grid.Row>
-            </Grid.Row>
             <Grid.Row as='section'>
                 <Grid.Column>
                     <Button.Group attached='top'>
