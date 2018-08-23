@@ -9,10 +9,7 @@ import {
     FETCH_ALL_PRICES_ERROR,
 } from './pricesReducer'
 
-const limiter = new Bottleneck({
-    maxConcurrent: 3,
-    minTime: 400,
-})
+const limiter = new Bottleneck(3, 400)
 
 export const fetchPrices = (currencies) => dispatch => {
     dispatch(fetchAllPricesBegin())

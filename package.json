@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bottleneck": "^2.7.1",
+    "bottleneck": "^1.16.0",
     "cryptocurrency-icons": "^0.2.0",
     "dayjs": "^1.7.5",
     "final-form": "^4.9.1",
