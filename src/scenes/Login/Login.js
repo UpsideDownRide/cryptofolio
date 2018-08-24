@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Field, Form as FinalForm } from 'react-final-form'
-import { Loader, Label, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
+import { Loader, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import ROUTES from 'common/constants/routes'
-import { set } from 'lodash/fp'
+import { set, compose } from 'lodash/fp'
 import { loginUser } from 'common/user/userActions'
 import { connect } from 'react-redux'
 import ErrorLabel from 'components/ErrorLabel'
+import { withRouter } from 'react-router-dom'
+import { getAllTrades } from 'common/transactions/transactionsSelectors';
 
 const LoginPage = () => (
     <div className='login-form'>
@@ -34,7 +36,7 @@ class FormContainer extends Component {
         if (!email && !password) return false
         this.setSubmitting(true)
         this.props.loginUser(email, password)
-            .then(() => alert('Login success'))
+            .then(() => this.props.history.push(this.props.tradesCount ? ROUTES.dashboard : ROUTES.transactions))
             .catch(error => alert(error))
             .finally(() => this.setSubmitting(false))
     }
@@ -94,10 +96,17 @@ const FormInputAdapter = ({ input, meta, ...props }) => {
     )
 }
 
-const mapStateToProps = (state) => (state.user)
+const mapStateToProps = (state) => ({
+    tradesCount: getAllTrades(state)
+})
+
 const mapDispatchToProps = dispatch => ({
     loginUser: (email, password) => dispatch(loginUser(email, password)),
 })
-const ConnectedFormContainer = connect(mapStateToProps, mapDispatchToProps)(FormContainer)
+
+const ConnectedFormContainer = compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(FormContainer)
 
 export default LoginPage

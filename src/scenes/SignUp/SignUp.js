@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Field, Form as FinalForm } from 'react-final-form'
-import { Loader, Label, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
+import { Loader, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import ROUTES from 'common/constants/routes'
-import { set } from 'lodash/fp'
+import { set, compose } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { createUser } from 'common/user/userActions'
 import ErrorLabel from 'components/ErrorLabel'
+import { withRouter } from 'react-router-dom'
+
+//TODO: Think about refactoring the SignUp and Login since they are so similar
 
 const SignUpPage = () => (
     <div className='signup-form'>
@@ -34,11 +37,9 @@ class FormContainer extends Component {
         if (!email && !password) return false
         this.setSubmitting(true)
         this.props.createUser(email, password)
-            .then(() => {
-                alert('Sign up success')
-            }).catch((error) => {
-                alert(error)
-            }).then(() => this.setSubmitting(false))
+            .then(() => this.props.history.push(ROUTES.transactions))
+            .catch(error => alert(error))
+            .finally(() => this.setSubmitting(false))
     }
 
     render() {
@@ -101,6 +102,9 @@ const mapStateToProps = (state) => (state.user)
 const mapDispatchToProps = dispatch => ({
     createUser: (email, password) => dispatch(createUser(email, password)),
 })
-const ConnectedFormContainer = connect(mapStateToProps, mapDispatchToProps)(FormContainer)
+const ConnectedFormContainer = compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(FormContainer)
 
 export default SignUpPage

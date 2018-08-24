@@ -21,7 +21,10 @@ export const createUser = (email, password) => dispatch => {
             dispatch(createUserSuccess(resolvedUser.user.uid))
             dispatch(retrieveTransactions(resolvedUser.user.uid))
         })
-        .catch(error => dispatch(createUserFailure(error)))
+        .catch(error => {
+            dispatch(createUserFailure(error))
+            throw error
+        })
 
 }
 
@@ -31,7 +34,10 @@ export const loginUser = (email, password) => dispatch => {
         .then(result => {
             return dispatch(retrieveTransactions(result.user.uid))
                 .then(() => dispatch(loginUserSuccess(result.user.uid)))
-                .catch(error => dispatch(loginUserFailure(error)))
+                .catch(error => {
+                    dispatch(loginUserFailure(error))
+                    throw error
+                })
         })
         
 }
@@ -43,7 +49,10 @@ export const logoutUser = () => dispatch => {
             dispatch(loadDefaultTransactions())
             dispatch(logoutUserSuccess())
         })
-        .catch(error => dispatch(logoutUserFailure(error)))
+        .catch(error => {
+            dispatch(logoutUserFailure(error))
+            throw error
+        })
 }
 
 const createUserBegin = () => ({

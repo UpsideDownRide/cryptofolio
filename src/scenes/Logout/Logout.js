@@ -1,13 +1,14 @@
 import React from 'react'
 import { Grid, Segment, Header, Button } from 'semantic-ui-react'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose } from 'lodash/fp'
 import { logoutUser } from 'common/user/userActions'
 import returnEmptyObject from 'common/utils/returnEmptyObject'
 import PropTypes from 'prop-types'
+import ROUTES from 'common/constants/routes'
 
-const handleLogout = (logoutUser, history) => () => logoutUser().then(() => history.push('/'))
+const handleLogout = (logoutUser, history) => () => logoutUser().then(() => history.push(ROUTES.landing))
 
 const LogoutPage = ({ logoutUser, history }) => (
     <div className='logout-box'>

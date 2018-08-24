@@ -20,18 +20,19 @@ const loginUser = (state, action) => flow(
     partial(set, ['uid', action.payload.uid])
 )(state)
 
-const logoutUser = (state) => ({isLoggedIn: false})
+const logoutUser = () => (initialState)
 
+// TODO: Investigate why state does not get changed on failures
 const actions = {
     CREATE_USER_BEGIN: (state) => state,
     CREATE_USER_SUCCESS: loginUser,
-    CREATE_USER_ERROR: (state, action) => ({...state, createUserError: action.payload.error}),
+    CREATE_USER_ERROR: (state, action) => ({ ...state, createUserError: action.payload.error }),
     LOGIN_USER_BEGIN: (state) => state,
     LOGIN_USER_SUCCESS: loginUser,
-    LOGIN_USER_FAILURE: (state, action) => ({...state, loginUserError: action.payload.error}),
+    LOGIN_USER_FAILURE: (state, action) => ({ ...state, loginUserError: action.payload.error }),
     LOGOUT_USER_BEGIN: (state) => state,
     LOGOUT_USER_SUCCESS: logoutUser,
-    LOGOUT_USER_FAILURE: (state, action) => ({...state, logoutUserError: action.payload.error}),
+    LOGOUT_USER_FAILURE: (state, action) => ({ ...state, logoutUserError: action.payload.error }),
 }
 
 export default createReducer(initialState, actions)
