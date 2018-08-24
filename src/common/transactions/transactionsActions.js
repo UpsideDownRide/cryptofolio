@@ -3,6 +3,7 @@ import { values, flow, orderBy } from 'lodash/fp'
 import { map } from 'lodash'
 import { key as firebaseKey } from 'firebase-key'
 import {
+    LOAD_DEFAULT_TRANSACTIONS,
     DELETE_REDUX_TRANSACTION,
     SUBMIT_REDUX_TRANSACTIONS,
     SUBMIT_DATABASE_TRANSACTION_BEGIN,
@@ -105,4 +106,8 @@ const retrieveTransactionsSuccess = (transactions) => ({
 const retrieveTransactionsError = (error) => ({
     type: RETRIEVE_TRANSACTIONS_ERROR,
     payload: { error: error }
+})
+
+export const loadDefaultTransactions = () => ({
+    type: LOAD_DEFAULT_TRANSACTIONS
 })

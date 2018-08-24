@@ -8,10 +8,12 @@ const BitcoinChart = ({ data }) => {
     const { ticks, domain } = calculateTicks(data)
     return (
         <ResponsiveContainer height={200}>
-            <LineChart data={data}
+            <LineChart 
+                data={data}
                 margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
             >
-                <XAxis dataKey="time"
+                <XAxis 
+                    dataKey="time"
                     tickMargin={8}
                     tickLine={{ strokeWidth: 0.5 }}
                     tickSize={3}
@@ -33,7 +35,13 @@ const BitcoinChart = ({ data }) => {
                     cursor={{ strokeWidth: 0.75 }}
                     isAnimationActive={false}
                 />
-                <Line type="linear" dataKey="close" stroke="#8884d8" strokeWidth={2} dot={false} />
+                <Line
+                    type="linear"
+                    dataKey="close"
+                    stroke="#8884d8"
+                    strokeWidth={2}
+                    dot={false}
+                />
             </LineChart>
         </ResponsiveContainer>
     )

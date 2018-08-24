@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import style from './GraphPane.module.css'
-
 import { Segment, Dimmer, Loader } from 'semantic-ui-react'
 import TitleText from '../TitleText'
 

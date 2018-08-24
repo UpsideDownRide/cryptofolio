@@ -1,6 +1,6 @@
 import React from 'react'
 import BalanceTablePane from './BalanceTablePane/BalanceTablePane'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Responsive } from 'semantic-ui-react'
 import TotalValuePane from './TextPane/TotalValuePane';
 import ValueTreeMap from './GraphPane/ValueTreeMap'
 import CurrentBitcoinPrice from './TextPane/CurrentBitcoinPrice';
@@ -15,26 +15,31 @@ import RecentPerformancePane from './TextPane/RecentPerformancePane';
 import TotalTrades from './TextPane/TotalTrades'
 import TradesLastMonth from './TextPane/TradesLastMonth';
 
+const ResponsiveGridColumn = ({ children, ...props }) => <Responsive as={Grid.Column} {...props}>{children}</Responsive>
+
 const Dashboard = () => (
     <ContentWrapper>
-        <Grid className={style.grid} doubling stackable columns={4} padded>
+        <Grid className={style.grid} doubling columns={4} padded>
             <Grid.Row as='section'>
                 <Grid.Column><TotalPerformancePane /></Grid.Column>
                 <Grid.Column><RecentPerformancePane /></Grid.Column>
-                <Grid.Column><TotalTrades /></Grid.Column>
-                <Grid.Column><TradesLastMonth /></Grid.Column>
+                <ResponsiveGridColumn minWidth={1240}><TotalTrades /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={1240}><TradesLastMonth /></ResponsiveGridColumn>
             </Grid.Row>
             <Grid.Row as='section'>
                 <Grid.Column><TotalValuePane /></Grid.Column>
-                <Grid.Column><FirstTradePane /></Grid.Column>
-                <Grid.Column><LastTradePane /></Grid.Column>
+                <ResponsiveGridColumn minWidth={1240}><FirstTradePane /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={1240}><LastTradePane /></ResponsiveGridColumn>
                 <Grid.Column><CurrentBitcoinPrice /></Grid.Column>
             </Grid.Row>
             <Grid.Row as='section'>
                 <Grid.Column><PortfolioValue /></Grid.Column>
-                <Grid.Column><ExchangesTreeMap /></Grid.Column>
-                <Grid.Column><ValueTreeMap /></Grid.Column>
-                <Grid.Column><BitcoinPrice /></Grid.Column>
+                <ResponsiveGridColumn minWidth={1240}><ExchangesTreeMap /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={1240}><ValueTreeMap /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={1240}><BitcoinPrice /></ResponsiveGridColumn>
+                <ResponsiveGridColumn maxWidth={1240}><BitcoinPrice /></ResponsiveGridColumn>
+                <ResponsiveGridColumn maxWidth={1240}><ExchangesTreeMap /></ResponsiveGridColumn>
+                <ResponsiveGridColumn maxWidth={1240}><ValueTreeMap /></ResponsiveGridColumn>
             </Grid.Row>
         </Grid>
         <Grid className={style.grid} as='section' padded>

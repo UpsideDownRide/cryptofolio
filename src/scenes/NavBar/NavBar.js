@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { NavLanding, NavItems } from 'components/NavMenuItems/NavMenuItems';
 
 //TODO: Replace fixed width with dynamic width calculation and switch to hamburger when we surpass it
-const WIDTH_BREAKPOINT = 600
+const WIDTH_BREAKPOINT = 400
 
 const NavigationBar = ({ handleSidebarToggle }) => (
     <Segment inverted className={style.wrapper}>

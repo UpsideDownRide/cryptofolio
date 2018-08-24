@@ -24,6 +24,4 @@ const mapStateToProps = (state) => ({
     loading: arePricesLoading(state),
 })
 
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PortfolioValueGraph)
+export default connect(mapStateToProps)(PortfolioValueGraph)

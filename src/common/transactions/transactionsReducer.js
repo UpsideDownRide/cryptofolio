@@ -2,6 +2,7 @@ import { set, sortedIndexBy, slice } from 'lodash/fp'
 import createReducer from 'common/utils/createReducer'
 import transactionData from 'common/mockData/transactions'
 
+export const LOAD_DEFAULT_TRANSACTIONS = 'LOAD_DEFAULT_TRANSACTIONS'
 export const DELETE_REDUX_TRANSACTION = 'DELETE_REDUX_TRANSACTION'
 export const SUBMIT_REDUX_TRANSACTIONS = 'SUBMIT_REDUX_TRANSACTIONS'
 export const RETRIEVE_TRANSACTIONS_BEGIN = 'RETRIEVE_TRANSACTIONS_BEGIN'
@@ -41,7 +42,10 @@ const addTransactionToStore = (state, action) => {
 
 const deleteTransactionFromStore = (state, action) => ({...state, data: state.data.filter(row => row.key !== action.payload.key)})
 
+const loadDefaultTransactions = () => initialState
+
 const actions = {
+    LOAD_DEFAULT_TRANSACTIONS: loadDefaultTransactions,
     DELETE_REDUX_TRANSACTION: deleteTransactionFromStore,
     SUBMIT_REDUX_TRANSACTIONS: addTransactionToStore,
     SUBMIT_DATABASE_TRANSACTION_BEGIN: state => ({...state, isSubmitting: true}),

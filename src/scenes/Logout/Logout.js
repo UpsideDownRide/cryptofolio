@@ -1,11 +1,15 @@
 import React from 'react'
 import { Grid, Segment, Header, Button } from 'semantic-ui-react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { compose } from 'lodash/fp'
 import { logoutUser } from 'common/user/userActions'
+import returnEmptyObject from 'common/utils/returnEmptyObject'
+import PropTypes from 'prop-types'
 
-const LogoutPage = (props) => (
+const handleLogout = (logoutUser, history) => () => logoutUser().then(() => history.push('/'))
+
+const LogoutPage = ({ logoutUser, history }) => (
     <div className='logout-box'>
         <Grid padded textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
             <Grid.Column style={{ minWidth: "22em" }}>
@@ -14,8 +18,8 @@ const LogoutPage = (props) => (
                         <Header>Are you sure?</Header>
                     </Segment>
                     <Segment>
-                        <Button primary onClick={props.logout}>Logout</Button>
-                        <Button color='red' onClick={props.history.goBack}>Cancel</Button>
+                        <Button primary onClick={handleLogout(logoutUser, history)}>Logout</Button>
+                        <Button color='red' onClick={history.goBack}>Cancel</Button>
                     </Segment>
                 </Segment.Group>
             </Grid.Column>
@@ -23,12 +27,16 @@ const LogoutPage = (props) => (
     </div>
 )
 
-const mapStateToProps = () => ({})
+LogoutPage.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired,
+}
+
 const mapDispatchToProps = dispatch => ({
-    logout: () => dispatch(logoutUser())
+    logoutUser: () => dispatch(logoutUser())
 })
 
 export default compose(
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(returnEmptyObject, mapDispatchToProps)
 )(LogoutPage)

@@ -1,35 +1,11 @@
 /* TODO: Graph and text panes should have single point of reference for css as they overlap */
 
 .segment {
-    width: "100%"
-}
-
-.body {
-    padding: 10px 15px;
-    background-color: white;
-    border-radius: 5px;
-    border: 1px solid lightgrey;
-}
-
-.red {
-    color: red;
-}
-
-.green {
-    color: green;
+    width: 100%
 }
 
 .content {
     display: flex;
     justify-content: space-between;
     align-items: flex-end; 
-}
-
-.contentprimary {
-    font-size: 1.75em;
-}
-
-.contentsecondary {
-    font-size: 1.5em;
-    color: darkgrey;
 }

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Modal } from 'semantic-ui-react'
-
+import { Modal, Responsive } from 'semantic-ui-react'
 import AddTransactionForm from './AddTransaction/AddTransactionContainer'
+import style from './AddTransactionModal.module.css'
 
 class AddTransactionModal extends React.Component {
     state = { modalOpen: false }
@@ -16,19 +16,23 @@ class AddTransactionModal extends React.Component {
 
     render() {
         return (
-    <Modal 
-        size="small"
-        trigger={React.cloneElement(this.props.trigger, {onClick: this.handleOpen})}
-        open={this.state.modalOpen}
-        onClose={this.handleClose}
-        closeOnDimmerClick={false}
-    >
-        <Modal.Header style={{ textAlign: "center", backgroundColor: "rgb(0, 0, 0, 0.05)", color: "rgb(0, 0, 0, 0.87)" }}>Add a new transaction</Modal.Header>
-        <Modal.Content>
-            <AddTransactionForm closeModal={this.handleClose} />
-        </Modal.Content>
-    </Modal>
-)}
+            <Modal
+                size="small"
+                trigger={React.cloneElement(this.props.trigger, { onClick: this.handleOpen })}
+                open={this.state.modalOpen}
+                onClose={this.handleClose}
+                closeOnDimmerClick={false}
+                className={style.modal}
+            >
+                <Responsive as={Modal.Header} minWidth={500} className={style.header}>
+                        Add a new transaction
+                </Responsive>
+                <Modal.Content scrolling className={style.content}>
+                    <AddTransactionForm closeModal={this.handleClose} />
+                </Modal.Content>
+            </Modal>
+        )
+    }
 }
 
 export default AddTransactionModal

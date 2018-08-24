@@ -26,6 +26,4 @@ const mapStateToProps = (state) => ({
     data: graphData(state)
 })
 
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ValueTreeMap)
+export default connect(mapStateToProps)(ValueTreeMap)

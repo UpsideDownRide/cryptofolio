@@ -7,7 +7,9 @@ export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE'
 export const LOGIN_USER_BEGIN = 'LOGIN_USER_BEGIN'
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE'
-export const LOGOUT_USER = 'LOGOUT_USER'
+export const LOGOUT_USER_BEGIN = 'LOGOUT_USER_BEGIN'
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS'
+export const LOGOUT_USER_FAILURE = 'LOGOUT_USER_FAILURE'
 
 const initialState = {
     isLoggedIn: false
@@ -27,7 +29,9 @@ const actions = {
     LOGIN_USER_BEGIN: (state) => state,
     LOGIN_USER_SUCCESS: loginUser,
     LOGIN_USER_FAILURE: (state, action) => ({...state, loginUserError: action.payload.error}),
-    LOGOUT_USER: logoutUser,
+    LOGOUT_USER_BEGIN: (state) => state,
+    LOGOUT_USER_SUCCESS: logoutUser,
+    LOGOUT_USER_FAILURE: (state, action) => ({...state, logoutUserError: action.payload.error}),
 }
 
 export default createReducer(initialState, actions)

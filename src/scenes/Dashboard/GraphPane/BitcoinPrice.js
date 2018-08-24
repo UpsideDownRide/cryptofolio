@@ -21,6 +21,4 @@ const mapStateToProps = (state) => ({
     loading: arePricesLoading(state),
 })
 
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BitcoinPriceGraph)
+export default connect(mapStateToProps)(BitcoinPriceGraph)

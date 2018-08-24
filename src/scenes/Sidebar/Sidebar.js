@@ -16,7 +16,7 @@ class Sidebar extends Component {
                     <NavLanding onClick={this.handleSidebarToggle} />
                     <NavItems onClick={this.handleSidebarToggle} />
                 </SemanticSidebar>
-                <SemanticSidebar.Pusher style={{ minHeight: "100vh" }} inverted dimmed={this.state.sidebarOpen} onClick={this.handlePusherClick}>
+                <SemanticSidebar.Pusher style={{ minHeight: "100vh" }} dimmed={this.state.sidebarOpen} onClick={this.handlePusherClick}>
                     {React.Children.map(this.props.children, child => React.cloneElement(child, { handleSidebarToggle: this.handleSidebarToggle }))}
                 </SemanticSidebar.Pusher>
             </SemanticSidebar.Pushable>

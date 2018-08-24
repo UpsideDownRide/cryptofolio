@@ -4,7 +4,7 @@ import { Segment, Container } from 'semantic-ui-react'
 const Footer = () => {
     return (
         <Segment as="footer" inverted style={{ borderRadius: 0, marginTop: 0 }}>
-            <Container textAlign="center">The best ever cryptofolio</Container>
+            <Container textAlign="center">Made with ☕ in Warsaw</Container>
         </Segment>
     )
 }

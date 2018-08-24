@@ -1,11 +1,11 @@
 import React from 'react'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
-import { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 //import PropTypes from 'prop-types';
 import { Field, Form as FinalForm, FormSpy } from 'react-final-form'
 import MaskedInput from 'react-text-mask'
-import { Label, Button, Icon, Segment, Dropdown, Grid, Form } from 'semantic-ui-react'
+import { Button, Icon, Segment, Dropdown, Grid, Form } from 'semantic-ui-react'
+import { ErrorLabel } from 'components/ErrorLabel'
 import style from './AddTransactionForm.module.css'
 import dayjs from 'dayjs'
 import _ from 'lodash'
@@ -316,10 +316,6 @@ const ValueInputAdapter = ({ input, meta, ...props }) => (
         {meta.touched && meta.error && <ErrorLabel>{meta.error}</ErrorLabel>}
         <input {...input} {...props} />
     </div>
-)
-
-const ErrorLabel = (props) => (
-    <Label color='red' pointing='below'>{props.children}</Label>
 )
 
 const CurrencyInput = ({ operation, symbols, ...props }) => (

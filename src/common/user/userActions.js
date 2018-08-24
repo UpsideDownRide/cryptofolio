@@ -1,5 +1,5 @@
 import { auth, database } from 'common/firebase/interface'
-import { retrieveTransactions } from 'common/transactions/transactionsActions'
+import { retrieveTransactions, loadDefaultTransactions } from 'common/transactions/transactionsActions'
 import {
     CREATE_USER_BEGIN,
     CREATE_USER_SUCCESS,
@@ -7,7 +7,9 @@ import {
     LOGIN_USER_BEGIN,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILURE,
-    LOGOUT_USER
+    LOGOUT_USER_BEGIN,
+    LOGOUT_USER_SUCCESS,
+    LOGOUT_USER_FAILURE,
 } from './userReducer'
 
 export const createUser = (email, password) => dispatch => {
@@ -32,6 +34,16 @@ export const loginUser = (email, password) => dispatch => {
                 .catch(error => dispatch(loginUserFailure(error)))
         })
         
+}
+
+export const logoutUser = () => dispatch => {
+    dispatch(logoutUserBegin())
+    return auth.signOut()
+        .then(() => {
+            dispatch(loadDefaultTransactions())
+            dispatch(logoutUserSuccess())
+        })
+        .catch(error => dispatch(logoutUserFailure(error)))
 }
 
 const createUserBegin = () => ({
@@ -62,6 +74,15 @@ const loginUserFailure = (error) => ({
     payload: { error: error }
 })
 
-export const logoutUser = () => ({
-    type: LOGOUT_USER
+const logoutUserBegin = () => ({
+    type: LOGOUT_USER_BEGIN
+})
+
+const logoutUserSuccess = () => ({
+    type: LOGOUT_USER_SUCCESS
+})
+
+const logoutUserFailure = (error) => ({
+    type: LOGOUT_USER_FAILURE,
+    payload: { error: error }
 })

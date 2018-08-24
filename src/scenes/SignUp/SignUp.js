@@ -6,6 +6,7 @@ import ROUTES from 'common/constants/routes'
 import { set } from 'lodash/fp'
 import { connect } from 'react-redux'
 import { createUser } from 'common/user/userActions'
+import ErrorLabel from 'components/ErrorLabel'
 
 const SignUpPage = () => (
     <div className='signup-form'>
@@ -95,10 +96,6 @@ const FormInputAdapter = ({ input, meta, ...props }) => {
         </React.Fragment>
     )
 }
-
-const ErrorLabel = (props) => (
-    <Label color='red' pointing='below'>{props.children}</Label>
-)
 
 const mapStateToProps = (state) => (state.user)
 const mapDispatchToProps = dispatch => ({

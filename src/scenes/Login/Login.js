@@ -6,6 +6,7 @@ import ROUTES from 'common/constants/routes'
 import { set } from 'lodash/fp'
 import { loginUser } from 'common/user/userActions'
 import { connect } from 'react-redux'
+import ErrorLabel from 'components/ErrorLabel'
 
 const LoginPage = () => (
     <div className='login-form'>
@@ -34,8 +35,8 @@ class FormContainer extends Component {
         this.setSubmitting(true)
         this.props.loginUser(email, password)
             .then(() => alert('Login success'))
-            .catch((error) => alert(error))
-            .then(() => this.setSubmitting(false))
+            .catch(error => alert(error))
+            .finally(() => this.setSubmitting(false))
     }
 
     render() {
@@ -48,7 +49,6 @@ class FormContainer extends Component {
         )
     }
 }
-
 
 const FormContent = ({ handleSubmit, isSubmitting }) => {
     return (
@@ -93,10 +93,6 @@ const FormInputAdapter = ({ input, meta, ...props }) => {
         </React.Fragment>
     )
 }
-
-const ErrorLabel = (props) => (
-    <Label color='red' pointing='below'>{props.children}</Label>
-)
 
 const mapStateToProps = (state) => (state.user)
 const mapDispatchToProps = dispatch => ({

@@ -21,11 +21,11 @@
     margin-bottom: 1.5em;
 }
 
-.titlename {
+.name {
     font-size: 1.25em;
 }
 
-.titlenumber {
+.number {
     font-weight: bold;
     white-space: nowrap;
 }
@@ -36,11 +36,11 @@
     align-items: baseline; 
 }
 
-.contentprimary {
+.primary {
     font-size: 1.5em;
     font-weight: 600;
 }
 
-.contentsecondary {
+.secondary {
     color: darkgrey;
 }

@@ -31,6 +31,4 @@ const mapStateToProps = (state) => ({
     data: graphData(state)
 })
 
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ExchangeTreeMap)
+export default connect(mapStateToProps)(ExchangeTreeMap)
