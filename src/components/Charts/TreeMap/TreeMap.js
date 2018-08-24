@@ -59,6 +59,7 @@ const CustomizedContent = ({ root, depth, x, y, width, height, index, colors, na
                     fill="#fff"
                     fontSize="1em"
                     fontVariant="small-caps"
+                    letterSpacing="0.1em"
                 >
                     {name}
                 </text>
