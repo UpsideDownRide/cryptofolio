@@ -22,8 +22,8 @@ yarn-error.log*
 /.vscode
 
 # Semantic config and dist
+semantic/*/**
 !semantic/src/theme.config
 !semantic/dist/themes
 !semantic/dist/semantic.min.css
-!semantic/.gitignore
 
