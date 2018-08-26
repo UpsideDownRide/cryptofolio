@@ -9,12 +9,12 @@ import { ErrorLabel } from 'components/ErrorLabel'
 import style from './AddTransactionForm.module.css'
 import dayjs from 'dayjs'
 import _ from 'lodash'
+import DownshiftInput from './DownshiftInput';
+import FloatingLabel from './FloatingLabel';
 
 // TODO: Search not working in dropdowns currently - probably related to addition of icons. (Maybe add them using before/after CSS?)
 // TODO: Icon in dropdown is not aligned with the text.
 // TODO: cursor for search seems to be displaced.
-// TODO: Top and buttom button groups overflow when viewport is narrow.
-// TODO: Check downshift for currencies and exchanges input https://github.com/paypal/downshift
 // TODO: Reset button - currently bad implementation is commented out in the code.
 // TODO: Refactor missing exchanges and values casting code in onSubmit
 
@@ -80,12 +80,11 @@ const FormContent = ({ handleSubmit, reset, submitting, pristine, invalid, form,
                     name="operation"
                     component={DropdownAdapter}
                     className={`ui primary icon ${style.transaction}`}
-                    placeholder='Select action'
+                    placeholder='Select operation'
                     options={TRANSACTIONS}
                 />
                 <CancelButton onClick={closeModal} />
             </Button.Group>
-            <Segment />
             <FormSpy subscription={{ values: true }}>
                 {({ values }) => {
                     const chosenOperation = _.get(values, 'operation', false)
@@ -102,7 +101,7 @@ const FormContent = ({ handleSubmit, reset, submitting, pristine, invalid, form,
                                         changeValue={form.change}
                                     />
                                     <CommentSegment />
-                                    <Button.Group style={{zIndex: 0}} attached='bottom'>
+                                    <Button.Group style={{ zIndex: 0 }} attached='bottom'>
                                         <AddTransactionButton />
                                     </Button.Group>
                                 </React.Fragment>
@@ -152,14 +151,15 @@ const AddTransactionButton = (props) => (
     </Button>
 )
 
-
 const FormFillerSegment = () => (
     <React.Fragment>
-        <div style={{ padding: "10em 0" }}>
+        <div style={{ padding: "10em" }}>
             <span style={{ color: "#aaa" }}>Choose an operation</span>
         </div>
     </React.Fragment>
 )
+
+// TODO: following are very repetitive consider refactor
 
 const TradeContent = ({ exchanges, ...props }) => (
     <React.Fragment>
@@ -212,7 +212,7 @@ const DisplayConditionalContent = ({ operation, ...props }) => {
 }
 
 const DateTimeSegment = () => (
-    <InnerRow label={`Date & time`}>
+    <InnerRow label="">
         <Field name="date" component={DateSelectAdapter} />
         <Field name="time" component={TimeInputAdapter} validate={properTime} />
     </InnerRow>
@@ -222,7 +222,7 @@ const CommentSegment = () => (
     <Segment>
         <Field className="field"
             name="comment"
-            placeholder="If you want, enter a comment here"
+            placeholder="Enter a comment"
             component={TextAreaAdapter}
         />
     </Segment>
@@ -239,6 +239,7 @@ class TransactionRow extends React.Component {
     }
 
     render() {
+        // TODO: Refactor so that we pass in what we want to render as an option
         const isNotSoldOrFee = this.props.label !== "Sold" && this.props.operation !== "fee"
         return (
             <InnerRow label={this.props.label} operation={this.props.operation}>
@@ -252,7 +253,7 @@ class TransactionRow extends React.Component {
 
 const InnerRow = ({ label, children, ...props }) => (
     <Segment className={style.formRow}>
-        <InnerRowTitle label={label} />
+        {!!label && <InnerRowTitle label={label} /> }
         <FieldsGroup width="equal" style={{ marginBottom: "0.25em" }}>
             {React.Children.map(children, (child) => {
                 return !!child && React.cloneElement(child, { ...props })
@@ -262,28 +263,12 @@ const InnerRow = ({ label, children, ...props }) => (
 )
 
 const InnerRowTitle = (props) => (
-    <div style={{ margin: "-1.8em 0 0.2em 0", background: "none" }}>
-        <span style={{ background: "white", padding: "0 4em", fontWeight: "bold" }}>
+    <div style={{ margin: "-1.8em auto 0.4em auto", width: "9em", background: "white" }}>
+        <span style={{ fontWeight: "bold" }}>
             {props.label}
         </span>
     </div>
 )
-
-const InnerRowDropdown = ({ input, meta, optional, ...props }) => {
-    const validate = optional ? null : required
-    return (
-        <div className={`field fluid ${style.innerinput}`}>
-            <Field
-                component={DropdownAdapter}
-                className={`fluid icon basic ${style.dropdown}`}
-                search
-                {...props}
-                {...input}
-                validate={validate}
-            />
-        </div>
-    )
-}
 
 const DropdownAdapter = ({ input, meta, ...props }) => {
     const fieldError = meta.error && meta.touched
@@ -307,31 +292,46 @@ const ValueInput = ({ operation, optional, ...props }) => (
         placeholder="Enter amount"
         parse={normalizeValue}
         validate={!optional && composeValidators(required, mustBeNumber)}
-        {...props}
-        component={ValueInputAdapter} />
-)
-
-const ValueInputAdapter = ({ input, meta, ...props }) => (
-    <div className={`field ${style.innerinput}`}>
-        {meta.touched && meta.error && <ErrorLabel>{meta.error}</ErrorLabel>}
-        <input {...input} {...props} />
-    </div>
-)
-
-const CurrencyInput = ({ operation, symbols, ...props }) => (
-    <InnerRowDropdown
-        name={`${operation}.currency`}
-        placeholder='Currency'
-        options={symbols}
+        component={ValueInputAdapter}
         {...props}
     />
 )
 
-const ExchangeInput = ({ operation, exchanges }) => (
-    <InnerRowDropdown
+const ValueInputAdapter = ({ input, meta, ...props }) => (
+    <div className={`field ${style.innerinput}`}>
+        <div style={{ position: "relative" }}>
+            <FloatingLabel visible={!!input.value.length} label="Amount" />
+            {meta.touched && meta.error && <ErrorLabel>{meta.error}</ErrorLabel>}
+            <input {...input} {...props} />
+        </div>
+    </div>
+)
+
+const CurrencyInput = ({ operation, symbols, ...props }) => (
+    <InnerRowDownshift
+        name={`${operation}.currency`}
+        placeholder='Enter currency'
+        items={symbols.map(({ value }) => ({ value: value, label: value }))}
+        {...props}
+    />
+)
+
+const InnerRowDownshift = ({ optional, ...props }) => (
+    <div className={`field fluid ${style.innerinput}`}>
+        <Field
+            component={DownshiftInput}
+            validate={!optional && required}
+            {...props}
+        />
+    </div>
+)
+
+const ExchangeInput = ({ operation, exchanges, ...props }) => (
+    <InnerRowDownshift
         name={`${operation}.exchange`}
-        placeholder='Exchange'
-        options={exchanges}
+        placeholder='Enter exchange'
+        items={exchanges.map(({ value }) => ({ value: value, label: value }))}
+        {...props}
     />
 )
 
@@ -361,9 +361,9 @@ const YearMonthForm = ({ date, localeUtils, onChange }) => {
 
     return (
         <div className="DayPicker-Caption">
-            <div style={{display: "flex", justifyContent: "space-between"}}> 
-            <Dropdown placeholder='Month' options={months.map(el => ({text: el, value: el}))} />
-            <Dropdown placeholder='Year' options={years.map(el => ({text: el, value: el}))} />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Dropdown placeholder='Month' options={months.map(el => ({ text: el, value: el }))} />
+                <Dropdown placeholder='Year' options={years.map(el => ({ text: el, value: el }))} />
             </div>
             {/* <select name="month" onChange={handleChange} value={date.getMonth()}>
                 {months.map((month, i) => (
@@ -392,6 +392,7 @@ const DateSelectAdapter = ({ input, meta, label, ...props }) => {
                 keepFocus={false}
                 placeholder="DD/MM/YYYY"
                 formatDate={date => dayjs(date).format("DD/MM/YYYY")}
+                component={DayInput}
                 parseDate={parseDate}
                 dayPickerProps={{
                     fromMonth: new Date(2010, 6, 16),
@@ -415,16 +416,27 @@ const DateSelectAdapter = ({ input, meta, label, ...props }) => {
     )
 }
 
+const DayInput = (props) => (
+    <div style={{ position: "relative" }}>
+        <FloatingLabel visible={!!props.value.length} label="Date" />
+        <input autoComplete="off" {...props} />
+    </div>
+)
+
 const TimeInputAdapter = ({ input, meta, label, ...props }) => (
     <div className={`field ${style.innerinput}`}>
         <label>{label}</label>
         {meta.touched && meta.error && <ErrorLabel>{meta.error}</ErrorLabel>}
-        <MaskedInput
-            mask={[/\d/, /\d/, ':', /\d/, /\d/, ':', /\d/, /\d/]}
-            placeholder="HH:MM:SS"
-            keepCharPositions
-            {...input}
-            {...props} />
+        <div style={{ position: "relative" }}>
+            <FloatingLabel visible={!!input.value.length} label="Time" />
+            <MaskedInput
+                mask={[/\d/, /\d/, ':', /\d/, /\d/, ':', /\d/, /\d/]}
+                placeholder="HH:MM:SS"
+                keepCharPositions
+                {...input}
+                {...props}
+            />
+        </div>
     </div>
 )
 

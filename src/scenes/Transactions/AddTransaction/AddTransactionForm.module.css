@@ -4,6 +4,10 @@
     flex: 1;
 }
 
+:local(.formRow) > :global(.fields.fluid) {
+    margin: 0em;
+}
+
 .form {
     flex: 1 0;
 }
@@ -18,13 +22,16 @@
 }
 
 .innerinput {
-    flex: 0 auto !important;
-    min-width: 33%;
+    flex: 1 !important;
+    min-width: 9em;
+    max-width: 12em;
     margin: 0.5em 0em !important;
 }
 
 .innerinput input {
     text-align: center;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 
@@ -36,7 +43,7 @@
     display: flex;
 }
 
-.datepicker > div > div > div {
+:local(.datepicker) :global(.DayPickerInput-Overlay) {
     top: 2.75em;
-    left: -15.5em
+    left: -8.9em
 }

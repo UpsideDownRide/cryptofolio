@@ -17,16 +17,13 @@ class AddTransactionModal extends React.Component {
     render() {
         return (
             <Modal
-                size="small"
+                size="tiny"
                 trigger={React.cloneElement(this.props.trigger, { onClick: this.handleOpen })}
                 open={this.state.modalOpen}
                 onClose={this.handleClose}
                 closeOnDimmerClick={false}
                 className={style.modal}
             >
-                <Responsive as={Modal.Header} minWidth={500} className={style.header}>
-                        Add a new transaction
-                </Responsive>
                 <Modal.Content scrolling className={style.content}>
                     <AddTransactionForm closeModal={this.handleClose} />
                 </Modal.Content>

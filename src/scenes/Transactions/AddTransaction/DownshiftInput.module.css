@@ -1,0 +1,14 @@
+.results {
+    margin-top: -1px !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    width: 100% !important;
+}
+
+:global(.ui.search.downshift)>:local(.results>:first-child) {
+    border-radius: 0
+}
+
+:global(.ui.search.downshift)>:local(.results) {
+    border-color: #85b7d9 !important;
+}

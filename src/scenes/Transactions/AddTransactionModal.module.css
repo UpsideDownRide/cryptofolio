@@ -4,23 +4,27 @@
     color: rgb(0, 0, 0, 0.87) !important;
 }
 
+:global(.ui.modal) :local(.content):global(.scrolling.content) {
+    padding: 0 !important;
+    overflow-x: hidden;
+    max-height: 100vh;
+    border-radius: 2.5px;
+}
+
+:local(.modal) :global(.ui.form) {
+    padding: 0 !important
+}
+:local(.modal) :global(.ui.segments) {
+    border: none;
+}
+
+:local(.modal):global(.ui.tiny.modal) {
+    width: auto;
+}
+
 @media only screen and (max-width: 500px) {
-    :local(.modal):global(.ui.modal) {
+    :local(.modal.modal):global(.ui.modal) {
         margin: 0;
         width: 100vw;
-    }
-
-    :global(.ui.modal) :local(.content):global(.scrolling.content) {
-        padding: 0 !important;
-        overflow-x: hidden;
-        max-height: 100vh;
-    }
-
-    :local(.modal) :global(.ui.form) {
-        padding: 0 !important
-    }
-
-    :local(.modal) :global(.ui.segments) {
-        border: none;
     }
 }

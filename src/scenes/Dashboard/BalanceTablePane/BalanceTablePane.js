@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { balanceTableData } from 'common/selectors/BalancesSelectors'
 import TitleText from '../TitleText'
 
+// TODO: Reactive design for mobile - current table is not good for narrow screens, should probably design different layout for them
+
 const BalanceTablePane = ({data, ...props}) => (
     <Segment>
         <TitleText text='Total balances by currency' />

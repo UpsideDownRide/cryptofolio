@@ -1,0 +1,25 @@
+:local(.hidden):global(.ui.basic.floating.label) {
+    opacity: 0;
+    font-size: 1em;
+    font-weight: 500;
+    left: 6.5em;
+    top: 0.3em;
+    visibility: hidden;
+    transition: all ease-in 0.2s, background-color 0.2s cubic-bezier(0.5,0,1,0);
+    background-color: rgba(0,0,0,0);
+    border: none;
+    padding: 0;
+}
+
+:local(.visible):global(.ui.basic.floating.label) {
+    opacity: 1;
+    text-transform: capitalize;
+    top: -0.5em;
+    left: 2.5em;
+    font-size: 0.75em;
+    color: rgba(0, 0, 0, 0.5);
+    transition: all ease-in 0.2s, background-color 0.2s cubic-bezier(0.5,0,1,0);
+    z-index: 0 !important;
+    border: none;
+    padding: 0 0.75em;
+}
