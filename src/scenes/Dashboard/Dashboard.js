@@ -17,29 +17,31 @@ import TradesLastMonth from './TextPane/TradesLastMonth';
 
 const ResponsiveGridColumn = ({ children, ...props }) => <Responsive as={Grid.Column} {...props}>{children}</Responsive>
 
+//TODO: Correct the breakpoints in dashboard so that it doesn't look so ugly at around 1k px wide
+
 const Dashboard = () => (
     <ContentWrapper>
         <Grid className={style.grid} doubling columns={4} padded>
             <Grid.Row as='section'>
                 <Grid.Column><TotalPerformancePane /></Grid.Column>
                 <Grid.Column><RecentPerformancePane /></Grid.Column>
-                <ResponsiveGridColumn minWidth={1240}><TotalTrades /></ResponsiveGridColumn>
-                <ResponsiveGridColumn minWidth={1240}><TradesLastMonth /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={992}><TotalTrades /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={992}><TradesLastMonth /></ResponsiveGridColumn>
             </Grid.Row>
             <Grid.Row as='section'>
                 <Grid.Column><TotalValuePane /></Grid.Column>
-                <ResponsiveGridColumn minWidth={1240}><FirstTradePane /></ResponsiveGridColumn>
-                <ResponsiveGridColumn minWidth={1240}><LastTradePane /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={992}><FirstTradePane /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={992}><LastTradePane /></ResponsiveGridColumn>
                 <Grid.Column><CurrentBitcoinPrice /></Grid.Column>
             </Grid.Row>
             <Grid.Row as='section'>
                 <Grid.Column><PortfolioValue /></Grid.Column>
-                <ResponsiveGridColumn minWidth={1240}><ExchangesTreeMap /></ResponsiveGridColumn>
-                <ResponsiveGridColumn minWidth={1240}><ValueTreeMap /></ResponsiveGridColumn>
-                <ResponsiveGridColumn minWidth={1240}><BitcoinPrice /></ResponsiveGridColumn>
-                <ResponsiveGridColumn maxWidth={1240}><BitcoinPrice /></ResponsiveGridColumn>
-                <ResponsiveGridColumn maxWidth={1240}><ExchangesTreeMap /></ResponsiveGridColumn>
-                <ResponsiveGridColumn maxWidth={1240}><ValueTreeMap /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={992}><ExchangesTreeMap /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={992}><ValueTreeMap /></ResponsiveGridColumn>
+                <ResponsiveGridColumn minWidth={992}><BitcoinPrice /></ResponsiveGridColumn>
+                <ResponsiveGridColumn maxWidth={992}><BitcoinPrice /></ResponsiveGridColumn>
+                <ResponsiveGridColumn maxWidth={992}><ExchangesTreeMap /></ResponsiveGridColumn>
+                <ResponsiveGridColumn maxWidth={992}><ValueTreeMap /></ResponsiveGridColumn>
             </Grid.Row>
         </Grid>
         <Grid className={style.grid} as='section' padded>
