@@ -9,6 +9,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import SignUp from '../SignUp/SignUp'
 import NotFound404 from 'components/NotFound404'
 import Logout from '../Logout/Logout'
+import Settings from '../Settings/Settings'
 
 const Main = () => (
     <main className={style.wrapper}>
@@ -19,6 +20,7 @@ const Main = () => (
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/logout" component={Logout} />
                 <Route exact path="/signup" component={SignUp} />
+                <Route exact path="/settings" component={Settings} />
                 <Route component={NotFound404} />
             </Switch>
     </main>

@@ -9,7 +9,7 @@ import { isUserLoggedIn } from 'common/user/userSelectors';
 import { compose } from 'lodash/fp'
 
 //TODO: Replace fixed width with dynamic width calculation and switch to hamburger when we surpass it
-const WIDTH_BREAKPOINT = 400
+const WIDTH_BREAKPOINT = 450
 
 const NavigationBar = ({ handleSidebarToggle, isLoggedIn }) => (
     <Segment inverted className={style.wrapper}>
