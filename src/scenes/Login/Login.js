@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, Form as FinalForm } from 'react-final-form'
-import { Loader, Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
+import { Loader, Button, Form, Grid, Message, Segment, Input } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import ROUTES from 'common/constants/routes'
 import { set, compose } from 'lodash/fp'
@@ -9,14 +9,18 @@ import { connect } from 'react-redux'
 import ErrorLabel from 'components/ErrorLabel'
 import { withRouter } from 'react-router-dom'
 import { getAllTrades } from 'common/transactions/transactionsSelectors';
+import style from './Login.module.css'
+import PasswordEye from 'components/PasswordEye'
+import ValidateSpinner from 'components/ValidateSpinner'
+import FloatingLabel from '../Transactions/AddTransaction/FloatingLabel';
 
 const LoginPage = () => (
     <div className='login-form'>
-        <Grid padded textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+        <Grid className={style.grid} verticalAlign='middle'>
             <Grid.Column style={{ minWidth: "22em" }}>
                 <ConnectedFormContainer />
-                <Message>
-                    <Link to={ROUTES.signup}>Signup</Link>
+                <Message positive>
+                    Don't have account yet? <Link to={ROUTES.signup}><strong>Sign up here</strong>, it's free.</Link>
                 </Message>
             </Grid.Column>
         </Grid>
@@ -26,11 +30,12 @@ const LoginPage = () => (
 class FormContainer extends Component {
     constructor(props) {
         super(props)
-        this.state = { submitting: false }
+        this.state = { submitting: false, visiblePassword: false, error: false }
         this.onSubmit = this.onSubmit.bind(this)
     }
 
     setSubmitting = (bool) => this.setState(set('submitting', bool, this.state))
+    togglePasswordVisibility = () => this.setState({ visiblePassword: !this.state.visiblePassword })
 
     onSubmit = ({ email, password }) => {
         if (!email && !password) return false
@@ -42,25 +47,33 @@ class FormContainer extends Component {
             })
             .catch(error => {
                 this.setSubmitting(false)
-                alert(error)
+                this.setState({ error: error.message })
             })
     }
 
     render() {
+        const options = {
+            togglePasswordVisibility: this.togglePasswordVisibility,
+            visiblePassword: this.state.visiblePassword,
+            errorMessage: this.state.error,
+        }
         return (
             <FinalForm
                 onSubmit={this.onSubmit}
                 render={FormContent}
+                render={(props) => <FormContent {...options} {...props} />}
                 isSubmitting={this.state.submitting}
+                validateOnBlur={true}
             />
         )
     }
 }
 
-const FormContent = ({ handleSubmit, isSubmitting }) => {
+const FormContent = ({ handleSubmit, isSubmitting, errorMessage, visiblePassword, togglePasswordVisibility }) => {
     return (
         <Form onSubmit={handleSubmit}>
             <Segment attached>
+                {!!errorMessage && <Message negative style={{ maxWidth: "22em" }}>{errorMessage}</Message>}
                 <Field
                     name='email'
                     component={FormInputAdapter}
@@ -68,14 +81,16 @@ const FormContent = ({ handleSubmit, isSubmitting }) => {
                     iconPosition='left'
                     placeholder='E-mail address'
                 />
-                <Field
-                    name='password'
-                    component={FormInputAdapter}
-                    icon='lock'
-                    iconPosition='left'
-                    placeholder='Password'
-                    type='password'
-                />
+                <PasswordEye handleOnClick={togglePasswordVisibility} visiblePassword={visiblePassword}>
+                    <Field
+                        name='password'
+                        component={FormInputAdapter}
+                        icon='lock'
+                        iconPosition='left'
+                        placeholder='Password'
+                        type={visiblePassword ? "text" : "password"}
+                    />
+                </PasswordEye>
                 <Button color='blue' fluid size='large'>
                     {isSubmitting ? <TinyLoader /> : 'Login'}
                 </Button>
@@ -91,12 +106,14 @@ const FormInputAdapter = ({ input, meta, ...props }) => {
     return (
         <React.Fragment>
             {fieldError && <ErrorLabel>{meta.error}</ErrorLabel>}
-            <Form.Input
-                fluid
-                {...input}
-                {...props}
-                onChange={(_, data) => input.onChange(data.value)}
-            />
+            <Form.Input>
+                <FloatingLabel style={{left: "4.5em"}} visible={!!input.value.length} label={input.name} />
+                <Input 
+                    fluid
+                    {...input}
+                    {...props}
+                    onChange={(_, data) => input.onChange(data.value)} />
+            </Form.Input>
         </React.Fragment>
     )
 }

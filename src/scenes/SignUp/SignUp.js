@@ -14,7 +14,8 @@ import PasswordEye from 'components/PasswordEye'
 import ValidateSpinner from 'components/ValidateSpinner'
 import FloatingLabel from '../Transactions/AddTransaction/FloatingLabel';
 
-//TODO: Think about refactoring the SignUp and Login since they are so similar
+//TODO: Refactor login and signup - they are almost carbon copies
+//TODO: Refuse routing to signup and login when authenticated
 
 const SignUpPage = () => (
     <div className='signup-form'>
@@ -44,9 +45,14 @@ class FormContainer extends Component {
         this.setSubmitting(true)
         this.setState({ error: false })
         return this.props.createUser(email, password)
-            .then(() => this.props.history.push(ROUTES.transactions))
-            .catch(error => this.setState({ error: error.message }))
-            .finally(() => this.setSubmitting(false))
+            .then(() => {
+                this.setSubmitting(false)
+                this.props.history.push(ROUTES.transactions)
+            })
+            .catch(error => {
+                this.setSubmitting(false)
+                this.setState({ error: error.message })
+            })
     }
 
     render() {
@@ -99,6 +105,7 @@ const FormContent = ({ handleSubmit, isSubmitting, errorMessage, visiblePassword
                         iconPosition='left'
                         placeholder='Password'
                         type={visiblePassword ? "text" : "password"}
+                        validate={value => value && value.length >= 6 ? undefined : "Password too short"}
                     />
                 </PasswordEye>
                 <Button color='green' fluid size='large'>
