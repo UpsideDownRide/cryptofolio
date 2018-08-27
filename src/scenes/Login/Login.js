@@ -36,9 +36,14 @@ class FormContainer extends Component {
         if (!email && !password) return false
         this.setSubmitting(true)
         this.props.loginUser(email, password)
-            .then(() => this.props.history.push(this.props.tradesCount ? ROUTES.dashboard : ROUTES.transactions))
-            .catch(error => alert(error))
-            .finally(() => this.setSubmitting(false))
+            .then(() => {
+                this.setSubmitting(false)
+                this.props.history.push(this.props.tradesCount ? ROUTES.dashboard : ROUTES.transactions)
+            })
+            .catch(error => {
+                this.setSubmitting(false)
+                alert(error)
+            })
     }
 
     render() {

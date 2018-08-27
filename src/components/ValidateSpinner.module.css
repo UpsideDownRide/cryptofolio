@@ -1,0 +1,11 @@
+/* TODO: figure out why CSS modules composes from is not working */
+.loader {
+    position: absolute;
+    top: 50%;
+    right: 0.15em;
+    left: auto !important;
+}
+
+.loader input {
+    padding-right: 2.5em
+}

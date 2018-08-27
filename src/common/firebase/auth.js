@@ -15,7 +15,6 @@ export const passwordUpdate = (password) =>
     auth.currentUser.updatePassword(password)
 
 export const isEmailAvailable = async (email) => {
-    const response = await auth.fetchProvidersForEmail(email)
-    console.log(response)
-    return true
+    const response = await auth.fetchSignInMethodsForEmail(email)
+    return !response.length
 }

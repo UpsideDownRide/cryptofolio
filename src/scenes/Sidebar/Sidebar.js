@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Sidebar as SemanticSidebar, Menu } from 'semantic-ui-react'
 import { NavLanding, NavItems } from 'components/NavMenuItems/NavMenuItems'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { isUserLoggedIn } from 'common/user/userSelectors';
+import { compose } from 'lodash/fp'
 
 class Sidebar extends Component {
     state = { sidebarOpen: false }
@@ -12,9 +16,9 @@ class Sidebar extends Component {
     render() {
         return (
             <SemanticSidebar.Pushable>
-                <SemanticSidebar as={Menu} direction='right' inverted vertical visible={this.state.sidebarOpen}>
+                <SemanticSidebar as={Menu} animation='overlay' width='thin' direction='right' inverted vertical visible={this.state.sidebarOpen}>
                     <NavLanding onClick={this.handleSidebarToggle} />
-                    <NavItems onClick={this.handleSidebarToggle} />
+                    <NavItems isLoggedIn={this.props.isLoggedIn} onClick={this.handleSidebarToggle} />
                 </SemanticSidebar>
                 <SemanticSidebar.Pusher style={{ minHeight: "100vh" }} dimmed={this.state.sidebarOpen} onClick={this.handlePusherClick}>
                     {React.Children.map(this.props.children, child => React.cloneElement(child, { handleSidebarToggle: this.handleSidebarToggle }))}
@@ -24,4 +28,12 @@ class Sidebar extends Component {
     }
 }
 
-export default withRouter(Sidebar)
+Sidebar.propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    isLoggedIn: isUserLoggedIn(state)
+})
+
+export default compose(withRouter, connect(mapStateToProps))(Sidebar)
