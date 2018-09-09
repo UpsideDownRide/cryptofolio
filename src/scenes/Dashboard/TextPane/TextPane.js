@@ -20,7 +20,7 @@ export const TextPane = ({ title, topRight, botLeft, botRight, loading, loadingM
 TextPane.propTypes = {
     title: PropTypes.string,
     topRight: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    botLeft: PropTypes.string,
+    botLeft: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     botRight: PropTypes.string,
     loading: PropTypes.bool,
     loadingMessage: PropTypes.string,

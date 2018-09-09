@@ -20,7 +20,7 @@ const LoginPage = () => (
             <Grid.Column style={{ minWidth: "22em" }}>
                 <ConnectedFormContainer />
                 <Message positive>
-                    Don't have account yet? <Link to={ROUTES.signup}><strong>Sign up here</strong>, it's free.</Link>
+                    Don't have account yet? <Link to={ROUTES.signup}><strong>Sign up here</strong></Link>, it's free.
                 </Message>
             </Grid.Column>
         </Grid>
