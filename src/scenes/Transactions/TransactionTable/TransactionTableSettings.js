@@ -34,9 +34,9 @@ const exchangeCell = ({ original }) => {
     const sameExchanges = isEqual(get('in.exchange', original), get('out.exchange', original))
     return (
         <div>
-            <span>{original.in && original.in.exchange}</span>
+            <span>{original.out && original.out.exchange}</span>
             <span>{original.in && original.out && !sameExchanges && ' -> '}</span>
-            <span>{original.out && !sameExchanges && original.out.exchange}</span>
+            <span>{original.in && !sameExchanges && original.in.exchange}</span>
         </div>
     )
 }
