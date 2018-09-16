@@ -27,9 +27,7 @@ const data = [{
     in: { exchange: 'Coinbase', currency: 'BTC', value: 0.5 },
     out: { exchange: 'Kraken', currency: 'BTC', value: 0.5 },
 },
-
 ]
 
-1537126789
 
 export default data
