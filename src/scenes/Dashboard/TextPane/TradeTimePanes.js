@@ -26,10 +26,10 @@ export const LastTrade = ({date, dateAgo, ...props}) => (
 const daysAgo = (date) => {
     const numDays = dayjs().diff(dayjs(date), 'days')
     const dayString = numDays === 1 ? 'day' : 'days'
-    return `${numDays} ${dayString} ago`
+    return date ? `${numDays} ${dayString} ago` : ''
 }
 
-const formatDate = date => dayjs(date).format("DD MMM YYYY")
+const formatDate = date => date ? dayjs(date).format("DD MMM YYYY") : 'No transactions'
 
 const getFormattedFirstDate = createSelector(
     getFirstTransactionDate,

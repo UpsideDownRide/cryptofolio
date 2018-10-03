@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Responsive } from 'semantic-ui-react'
+import { Modal } from 'semantic-ui-react'
 import AddTransactionForm from './AddTransaction/AddTransactionContainer'
 import style from './AddTransactionModal.module.css'
 

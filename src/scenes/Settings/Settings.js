@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Segment, Grid, Menu } from 'semantic-ui-react'
+import { Container, Segment, Menu } from 'semantic-ui-react'
 const Settings = () => {
     return (
         <Container>

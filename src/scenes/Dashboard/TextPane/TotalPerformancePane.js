@@ -16,7 +16,7 @@ const TotalPerformancePane = ({ totalValue, firstValue, firstTransactionDate, ..
             title="Total performance"
             botLeft={`${round(absoluteChange, 2)} USD`}
             botRight=" "
-            topRight={<StylePercent value={round(percentageChange, 4)} />}
+            topRight={percentageChange ? <StylePercent value={round(percentageChange, 4)} /> : '' }
             {...props}
         />
     )

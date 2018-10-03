@@ -50,7 +50,7 @@ const generateCurrentValues = (tickers, coinBalances) => (
 
 export const getBalances = createSelector(
     getTransactions,
-    transactions => transactions && flow(
+    transactions => transactions.length && flow(
         reduce(balanceUpdaters, { runningBalance: { coins: {}, exchanges: {} } }),
         mapKeys(k => k === 'runningBalance' ? 'currentBalance' : k)
     )(transactions)

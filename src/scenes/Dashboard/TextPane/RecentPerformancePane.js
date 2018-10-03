@@ -16,7 +16,7 @@ const RecentPerformancePane = ({ totalValue, valueWeekAgo, ...props }) => {
             title="Recent performance"
             botLeft={`${round(absoluteChange, 2)} USD`}
             botRight="7d change"
-            topRight={<StylePercent value={round(percentageChange, 4)} />}
+            topRight={percentageChange ? <StylePercent value={round(percentageChange, 4)} /> : '' }
             {...props}
         />
     )

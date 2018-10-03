@@ -9,6 +9,8 @@ const Table = ({ data, columns, className, ...props }) => (
         columns={columns}
         minRows={0}
         className={[className, '-striped', '-highlight'].join(' ')}
+        NoDataComponent={React.Fragment}
+        noDataText=''
         {...props}
     />
 )

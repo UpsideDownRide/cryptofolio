@@ -11,7 +11,6 @@ import { withRouter } from 'react-router-dom'
 import { getAllTrades } from 'common/transactions/transactionsSelectors';
 import style from './Login.module.css'
 import PasswordEye from 'components/PasswordEye'
-import ValidateSpinner from 'components/ValidateSpinner'
 import FloatingLabel from '../Transactions/AddTransaction/FloatingLabel';
 
 const LoginPage = () => (
@@ -60,7 +59,6 @@ class FormContainer extends Component {
         return (
             <FinalForm
                 onSubmit={this.onSubmit}
-                render={FormContent}
                 render={(props) => <FormContent {...options} {...props} />}
                 isSubmitting={this.state.submitting}
                 validateOnBlur={true}

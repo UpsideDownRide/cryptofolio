@@ -17,8 +17,10 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth()
 const database = firebase.database()
+const sessionPersistence = firebase.auth.Auth.Persistence.SESSION
 
 export {
     auth,
     database,
+    sessionPersistence,
 }

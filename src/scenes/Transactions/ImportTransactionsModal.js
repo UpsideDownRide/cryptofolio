@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Form, Input, Dropdown, Button, Icon } from 'semantic-ui-react'
+import { Modal, Form, Dropdown, Button, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { isUserLoggedIn, getUserUID } from 'common/user/userSelectors'
 import importCointracker from 'common/transactions/import/importCointracker'

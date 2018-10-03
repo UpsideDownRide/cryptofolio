@@ -48,3 +48,7 @@
     left: -8.9em;
     z-index: 2;
 }
+
+:local(.datepicker) :global(.DayPicker-Caption .dropdown > .menu > .item) {
+    padding: .5rem 1rem !important;
+}
